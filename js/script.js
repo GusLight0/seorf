@@ -578,23 +578,30 @@ function initializeProductsScrollHandoff() {
     let lastTouchY = null;
 
     const canScroll = () => scrollContainer.scrollHeight > scrollContainer.clientHeight + tolerance;
-    const isAtTop = () => scrollContainer.scrollTop <= tolerance;
-    const isAtBottom = () => (
-        scrollContainer.scrollTop + scrollContainer.clientHeight >= scrollContainer.scrollHeight - tolerance
-    );
-    const shouldPassScroll = deltaY => (
-        canScroll() && ((deltaY > 0 && isAtBottom()) || (deltaY < 0 && isAtTop()))
-    );
+    const getPageScrollDelta = deltaY => {
+        if (!canScroll() || deltaY === 0) return 0;
+
+        if (deltaY > 0) {
+            const remaining = scrollContainer.scrollHeight - scrollContainer.clientHeight - scrollContainer.scrollTop;
+            return deltaY > remaining + tolerance ? deltaY - Math.max(remaining, 0) : 0;
+        }
+
+        const remaining = scrollContainer.scrollTop;
+        return Math.abs(deltaY) > remaining + tolerance ? deltaY + Math.max(remaining, 0) : 0;
+    };
 
     const passScrollToPage = deltaY => {
-        window.scrollBy({ top: deltaY, behavior: 'auto' });
+        const pageScroller = document.scrollingElement || document.documentElement;
+        pageScroller.scrollTop += deltaY;
     };
 
     scrollContainer.addEventListener('wheel', event => {
-        if (!shouldPassScroll(event.deltaY)) return;
+        const pageDelta = getPageScrollDelta(event.deltaY);
+        if (!pageDelta) return;
 
         event.preventDefault();
-        passScrollToPage(event.deltaY);
+        scrollContainer.scrollTop += event.deltaY - pageDelta;
+        passScrollToPage(pageDelta);
     }, { passive: false });
 
     scrollContainer.addEventListener('touchstart', event => {
@@ -607,10 +614,12 @@ function initializeProductsScrollHandoff() {
 
         const currentY = event.touches[0].clientY;
         const deltaY = lastTouchY - currentY;
+        const pageDelta = getPageScrollDelta(deltaY);
 
-        if (shouldPassScroll(deltaY)) {
+        if (pageDelta) {
             event.preventDefault();
-            passScrollToPage(deltaY);
+            scrollContainer.scrollTop += deltaY - pageDelta;
+            passScrollToPage(pageDelta);
         }
 
         lastTouchY = currentY;
