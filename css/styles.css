@@ -963,41 +963,6 @@ p {
     margin-top: 0.2rem;
 }
 
-.products-scroll {
-    overflow-y: auto;
-    overflow-x: hidden;
-    overscroll-behavior-y: auto;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-y;
-    padding: 0.1rem 0.55rem 0.1rem 0;
-    scrollbar-color: var(--sea-dark) rgba(20, 40, 65, 0.08);
-    scrollbar-gutter: stable;
-    scrollbar-width: thin;
-}
-
-.products-scroll.is-scrollable {
-    border-bottom: 1px solid var(--border);
-}
-
-.products-scroll::-webkit-scrollbar {
-    width: 10px;
-}
-
-.products-scroll::-webkit-scrollbar-track {
-    border-radius: 99px;
-    background: rgba(20, 40, 65, 0.06);
-}
-
-.products-scroll::-webkit-scrollbar-thumb {
-    border: 2px solid var(--shell);
-    border-radius: 99px;
-    background: linear-gradient(180deg, var(--ink), var(--sea-dark));
-}
-
-.products-scroll::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, var(--sea-dark), var(--coral));
-}
-
 .catalog-filter-shell {
     margin: 0 0 1.35rem;
 }
