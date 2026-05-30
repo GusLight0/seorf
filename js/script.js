@@ -514,6 +514,13 @@ function initializeProducts() {
     const visibleProducts = Number.isFinite(limit) ? products.slice(0, limit) : products;
 
     grid.innerHTML = visibleProducts.map(product => createProductCard(product)).join('');
+    grid.querySelectorAll('img').forEach(image => {
+        if (!image.complete) {
+            image.addEventListener('load', updateProductsViewportHeight, { once: true });
+        }
+    });
+    requestAnimationFrame(updateProductsViewportHeight);
+    window.addEventListener('resize', updateProductsViewportHeight);
 
     grid.addEventListener('click', event => {
         const addButton = event.target.closest('[data-add-product]');
@@ -559,6 +566,41 @@ function createProductCard(product) {
             </div>
         </article>
     `;
+}
+
+function updateProductsViewportHeight() {
+    const scrollContainer = document.querySelector('[data-products-scroll]');
+    if (!scrollContainer) return;
+
+    const visibleRows = Number.parseInt(scrollContainer.dataset.visibleRows || '3', 10) || 3;
+    const cards = [...scrollContainer.querySelectorAll('.product-card')]
+        .filter(card => getComputedStyle(card).display !== 'none');
+
+    if (!cards.length) {
+        scrollContainer.style.maxHeight = '';
+        scrollContainer.classList.remove('is-scrollable');
+        return;
+    }
+
+    const rowTops = [];
+    cards.forEach(card => {
+        const top = Math.round(card.offsetTop);
+        if (!rowTops.some(rowTop => Math.abs(rowTop - top) <= 4)) {
+            rowTops.push(top);
+        }
+    });
+
+    const visibleRowTops = rowTops.slice(0, visibleRows);
+    const visibleCards = cards.filter(card => {
+        const top = Math.round(card.offsetTop);
+        return visibleRowTops.some(rowTop => Math.abs(rowTop - top) <= 4);
+    });
+    const firstTop = Math.min(...visibleCards.map(card => card.offsetTop));
+    const visibleBottom = Math.max(...visibleCards.map(card => card.offsetTop + card.offsetHeight));
+    const height = Math.ceil(visibleBottom - firstTop);
+
+    scrollContainer.style.maxHeight = `${height}px`;
+    scrollContainer.classList.toggle('is-scrollable', rowTops.length > visibleRows);
 }
 
 function getProductPriceRange() {
@@ -628,7 +670,7 @@ function initializeFilters() {
     const priceMinLabel = document.querySelector('[data-price-min-label]');
     const priceCurrent = document.querySelector('[data-price-current]');
     const redirectSearch = searchInput?.dataset.searchMode === 'redirect';
-    const searchTarget = searchInput?.dataset.searchTarget || './produtos.index/';
+    const searchTarget = searchInput?.dataset.searchTarget || '#produtos';
     const scrollTarget = searchInput?.dataset.searchSection || 'produtos';
     const priceRange = getProductPriceRange();
     const hasApplyButton = Boolean(applyFiltersBtn);
@@ -773,6 +815,7 @@ function initializeFilters() {
 function applyProductFilters() {
     const cards = document.querySelectorAll('.product-card');
     const noResults = document.getElementById('noResults');
+    const scrollContainer = document.querySelector('[data-products-scroll]');
     let visible = 0;
 
     cards.forEach(card => {
@@ -791,6 +834,8 @@ function applyProductFilters() {
     });
 
     if (noResults) noResults.classList.toggle('hidden', visible !== 0);
+    if (scrollContainer) scrollContainer.scrollTop = 0;
+    requestAnimationFrame(updateProductsViewportHeight);
 }
 
 function initializeCart() {

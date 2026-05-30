@@ -42,7 +42,7 @@
             <nav class="nav-menu" id="primaryNav" aria-label="Navegação principal">
                 <div class="nav-search">
                     <i class="fas fa-search" aria-hidden="true"></i>
-                    <input type="search" id="searchInput" placeholder="Buscar no catálogo" enterkeyhint="search" autocomplete="off" data-search-mode="redirect" data-search-target="./produtos.index/">
+                    <input type="search" id="searchInput" placeholder="Buscar no catálogo" enterkeyhint="search" autocomplete="off" data-search-section="produtos">
                 </div>
                 <a href="#home" data-nav-link="home">Início</a>
                 <a href="#produtos" data-nav-link="produtos">Produtos</a>
@@ -91,21 +91,117 @@
             </div>
         </section>
 
-        <section id="produtos" class="products-section">
+        <section id="produtos" class="products-section catalog-products">
             <div class="container">
-                <div class="section-heading">
-                    <p class="eyebrow">Catálogo inicial</p>
-                    <h2>Produtos em destaque</h2>
-                    <p>Uma seleção rápida dos modelos em destaque. O catálogo completo fica a um toque daqui.</p>
+                <div class="catalog-heading">
+                    <div class="section-heading">
+                        <p class="eyebrow">Catálogo completo</p>
+                        <h2>Todos os produtos</h2>
+                        <p>Filtre por categoria, busque pelo nome ou abra os detalhes para escolher cor e quantidade.</p>
+                    </div>
+                    <a href="https://wa.me/5598985254472?text=Ol%C3%A1!%20Gostaria%20de%20tirar%20uma%20d%C3%BAvida%20sobre%20os%20produtos%20da%20SEORF." target="_blank" rel="noreferrer" class="btn btn-light catalog-help">
+                        <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                        Tirar dúvida
+                    </a>
                 </div>
 
-                <div class="products-grid products-grid--featured" id="productsGrid" data-limit="3" aria-live="polite"></div>
+                <div class="catalog-filter-shell">
+                    <button class="filter-toggle" type="button" data-filter-toggle aria-controls="catalogFilterPanel" aria-expanded="false">
+                        <span class="filter-toggle-icon">
+                            <i class="fas fa-sliders" aria-hidden="true"></i>
+                        </span>
+                        <span>
+                            <strong>Filtros</strong>
+                            <small data-filter-summary>Todos os produtos</small>
+                        </span>
+                        <i class="fas fa-chevron-down filter-toggle-chevron" aria-hidden="true"></i>
+                    </button>
 
-                <div class="products-more">
-                    <a class="btn btn-dark" href="./produtos.index/">
-                        <i class="fas fa-table-cells-large" aria-hidden="true"></i>
-                        Ver mais produtos
-                    </a>
+                    <div class="catalog-filter-panel" id="catalogFilterPanel" aria-hidden="true">
+                        <div class="filter-panel-grid">
+                            <fieldset class="filter-group">
+                                <legend>Categorias</legend>
+                                <div class="filter-chip-list">
+                                    <button class="filter-btn filter-chip" type="button" data-filter="destaque">
+                                        <span>Destaques</span>
+                                        <strong data-filter-count="destaque">0</strong>
+                                    </button>
+                                    <button class="filter-btn filter-chip" type="button" data-filter="novidade">
+                                        <span>Novidades</span>
+                                        <strong data-filter-count="novidade">0</strong>
+                                    </button>
+                                    <button class="filter-btn filter-chip" type="button" data-filter="colares">
+                                        <span>Colares</span>
+                                        <strong data-filter-count="colares">0</strong>
+                                    </button>
+                                    <button class="filter-btn filter-chip" type="button" data-filter="pulseiras">
+                                        <span>Pulseiras</span>
+                                        <strong data-filter-count="pulseiras">0</strong>
+                                    </button>
+                                </div>
+                            </fieldset>
+
+                            <fieldset class="filter-group price-filter">
+                                <legend>Preço</legend>
+                                <div class="price-filter-head">
+                                    <span data-price-min-label>R$ 0,00</span>
+                                    <strong data-price-current>Todos</strong>
+                                </div>
+                                <input type="range" id="priceMaxInput" min="0" max="0" step="1" value="0" aria-label="Preço máximo">
+                            </fieldset>
+
+                            <fieldset class="filter-group color-filter">
+                                <legend>Cores</legend>
+                                <div class="color-chip-list">
+                                    <button class="color-chip" type="button" data-color-filter="Preto">
+                                        <span class="color-swatch color-swatch--preto"></span>
+                                        Preto
+                                    </button>
+                                    <button class="color-chip" type="button" data-color-filter="Prata">
+                                        <span class="color-swatch color-swatch--prata"></span>
+                                        Prata
+                                    </button>
+                                    <button class="color-chip" type="button" data-color-filter="Dourado">
+                                        <span class="color-swatch color-swatch--dourado"></span>
+                                        Dourado
+                                    </button>
+                                    <button class="color-chip" type="button" data-color-filter="Azul">
+                                        <span class="color-swatch color-swatch--azul"></span>
+                                        Azul
+                                    </button>
+                                    <button class="color-chip" type="button" data-color-filter="Vermelha">
+                                        <span class="color-swatch color-swatch--vermelha"></span>
+                                        Vermelha
+                                    </button>
+                                </div>
+                            </fieldset>
+                        </div>
+
+                        <div class="filter-panel-actions">
+                            <button class="filter-clear" type="button" data-reset-filters>
+                                <i class="fas fa-rotate-left" aria-hidden="true"></i>
+                                Limpar
+                            </button>
+                            <button class="btn btn-dark" type="button" data-apply-filters>
+                                <i class="fas fa-check" aria-hidden="true"></i>
+                                Aplicar filtro
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="products-scroll" data-products-scroll data-visible-rows="3" tabindex="0" aria-label="Lista de produtos com rolagem interna">
+                    <div class="products-grid catalog-grid" id="productsGrid" aria-live="polite"></div>
+                </div>
+
+                <div id="noResults" class="no-results hidden">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                    <h3>Nenhum produto encontrado.</h3>
+                    <p>Ajuste a busca ou limpe os filtros para ver tudo de novo.</p>
+                    <button class="btn btn-dark" type="button" id="clearSearchBtn">
+                        <i class="fas fa-rotate-left" aria-hidden="true"></i>
+                        Limpar filtros
+                    </button>
                 </div>
             </div>
         </section>

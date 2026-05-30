@@ -5,7 +5,6 @@ Site estatico da SEORF com visual premium e versatil, produtos em imagens 1:1 e 
 ## Estrutura
 
 - `index.html`: home, produtos, coleções, inspiração, sobre, FAQ, carrinho e modal de produto.
-- `produtos.index/index.html`: catálogo completo com filtros.
 - `pages/contato.html`: informações de contato com links diretos para WhatsApp e Instagram.
 - `css/styles.css`: identidade visual, responsividade e componentes.
 - `js/script.js`: produtos, filtros, carrinho, modais, carrossel e loader.

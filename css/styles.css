@@ -629,12 +629,6 @@ p {
     grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.products-more {
-    display: flex;
-    justify-content: center;
-    margin-top: 1.8rem;
-}
-
 .product-card {
     min-width: 0;
     overflow: hidden;
@@ -940,6 +934,34 @@ p {
 
 .catalog-grid {
     margin-top: 0.2rem;
+}
+
+.products-scroll {
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    padding: 0.1rem 0.55rem 0.1rem 0;
+    scrollbar-color: rgba(20, 40, 65, 0.34) rgba(20, 40, 65, 0.08);
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+}
+
+.products-scroll.is-scrollable {
+    border-bottom: 1px solid var(--border);
+}
+
+.products-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.products-scroll::-webkit-scrollbar-track {
+    border-radius: 99px;
+    background: rgba(20, 40, 65, 0.08);
+}
+
+.products-scroll::-webkit-scrollbar-thumb {
+    border-radius: 99px;
+    background: rgba(20, 40, 65, 0.34);
 }
 
 .catalog-filter-shell {
@@ -2676,8 +2698,7 @@ p {
         width: 100%;
     }
 
-    .catalog-help,
-    .products-more .btn {
+    .catalog-help {
         width: 100%;
     }
 
