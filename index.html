@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="is-loading">
+<body class="is-loading" data-page="home">
     <div id="siteLoader" class="site-loader" role="status" aria-live="polite" aria-label="Carregando SEORF">
         <div class="loader-mark">
             <img src="./assets/icons/logo-circular.png" alt="SEORF" class="loader-logo">
@@ -44,12 +44,12 @@
                     <i class="fas fa-search" aria-hidden="true"></i>
                     <input type="search" id="searchInput" placeholder="Buscar no catálogo" enterkeyhint="search" autocomplete="off" data-search-mode="redirect" data-search-target="./produtos.index/">
                 </div>
-                <a href="#home">Início</a>
-                <a href="#produtos">Produtos</a>
-                <a href="#colecoes">Coleções</a>
-                <a href="#inspiracao">Inspiração</a>
-                <a href="#sobre">Sobre</a>
-                <a href="./pages/contato.html">Contato</a>
+                <a href="#home" data-nav-link="home">Início</a>
+                <a href="#produtos" data-nav-link="produtos">Produtos</a>
+                <a href="#colecoes" data-nav-link="colecoes">Coleções</a>
+                <a href="#inspiracao" data-nav-link="inspiracao">Inspiração</a>
+                <a href="#sobre" data-nav-link="sobre">Sobre</a>
+                <a href="./pages/contato.html" data-nav-link="contato">Contato</a>
             </nav>
 
             <div class="nav-actions">
@@ -72,7 +72,7 @@
             <div class="hero-content">
                 <p class="eyebrow">Beach luxury brasileiro</p>
                 <h1>SEORF</h1>
-                <p class="hero-text">Acessórios de verão com presença elegante, linhas limpas e uma energia de litoral sofisticado.</p>
+                <p class="hero-text">Acessórios com presença elegante, linhas limpas e uma energia de litoral sofisticado.</p>
                 <div class="hero-actions">
                     <button class="btn btn-light" type="button" data-scroll-to="produtos">
                         <i class="fas fa-bag-shopping" aria-hidden="true"></i>
@@ -88,14 +88,6 @@
                 <span>Pronta entrega</span>
                 <span>Curadoria premium</span>
                 <span>WhatsApp direto</span>
-            </div>
-        </section>
-
-        <section class="brand-note">
-            <div class="container note-grid">
-                <p class="eyebrow">Nova maré</p>
-                <h2>Uma loja praiana sem obviedade: limpa, solar e com acabamento de luxo.</h2>
-                <p>A SEORF combina o frescor do mar com uma leitura mais precisa de moda. Nada de excesso: apenas bons materiais, boas imagens e uma compra simples pelo WhatsApp.</p>
             </div>
         </section>
 
@@ -135,11 +127,11 @@
                         </div>
                     </article>
                     <article class="collection-tile">
-                        <img src="./assets/images/produto-22.png" alt="Pulseira Vermelha Elegante">
+                        <img src="./assets/images/produto-21.png" alt="Pulseira Vermelha Elegante">
                         <div>
                             <span>02</span>
                             <h3>Sunset Club</h3>
-                            <p>Acabamentos quentes para fim de tarde.</p>
+                            <p>Acabamentos resistentes e minimalistas</p>
                         </div>
                     </article>
                     <article class="collection-tile">

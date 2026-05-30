@@ -97,13 +97,6 @@ cor: Prata
 preço: R$ 79,90
 
 Produto 14:
-imagem: assets/images/produto-22.png
-nome: Pulseira Rio
-descrição(apenas na aba de mais detalhes): VOCÊ CRIA, tem que ser CURTA E DIRETA
-cor: Preto
-preço: R$ 49,90
-
-Produto 15:
 imagem: assets/images/produto-23.png
 nome: Colar Belém
 descrição(apenas na aba de mais detalhes): VOCÊ CRIA, tem que ser CURTA E DIRETA

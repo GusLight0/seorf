@@ -175,18 +175,6 @@ const products = [
     },
     {
         id: 'seorf-14',
-        name: 'Pulseira Rio',
-        price: 49.90,
-        color: 'Preto',
-        colors: ['Preto'],
-        tag: '',
-        categories: ['pulseiras'],
-        image: './assets/images/produto-22.png',
-        description: 'Pulseira preta essencial, fácil de usar em qualquer combinação.',
-        specs: ['Cor: preto', 'Modelo casual', 'Acabamento discreto']
-    },
-    {
-        id: 'seorf-15',
         name: 'Colar Belém',
         price: 79.90,
         color: 'Prata',
@@ -367,6 +355,93 @@ function initializeNavigation() {
     document.querySelectorAll('.nav-menu a').forEach(link => {
         link.addEventListener('click', () => closeMobileMenu());
     });
+
+    initializeActiveNavigation();
+}
+
+function initializeActiveNavigation() {
+    const navLinks = [...document.querySelectorAll('.nav-menu a[data-nav-link]')];
+    if (!navLinks.length) return;
+
+    const page = document.body.dataset.page || 'home';
+    const setActiveNav = activeKey => {
+        navLinks.forEach(link => {
+            const isActive = link.dataset.navLink === activeKey;
+            link.classList.toggle('is-active', isActive);
+            if (isActive) {
+                link.setAttribute('aria-current', 'page');
+                return;
+            }
+
+            link.removeAttribute('aria-current');
+        });
+    };
+
+    if (page !== 'home') {
+        setActiveNav(page);
+        return;
+    }
+
+    const sectionIds = [...new Set(navLinks.map(link => link.dataset.navLink))];
+    const sections = sectionIds
+        .map(sectionId => document.getElementById(sectionId))
+        .filter(Boolean);
+
+    if (!sections.length) return;
+
+    let activeLockTimer = null;
+
+    const getHeaderOffset = () => (
+        Number.parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height'), 10) || 76
+    );
+
+    const updateActiveFromScroll = () => {
+        if (activeLockTimer) return;
+
+        const marker = window.scrollY + getHeaderOffset() + Math.min(window.innerHeight * 0.32, 220);
+        const activeSection = sections.reduce((current, section) => (
+            section.offsetTop <= marker ? section : current
+        ), sections[0]);
+
+        setActiveNav(activeSection.id);
+    };
+
+    const lockActiveSection = sectionId => {
+        if (!document.getElementById(sectionId)) return;
+
+        setActiveNav(sectionId);
+        window.clearTimeout(activeLockTimer);
+        activeLockTimer = window.setTimeout(() => {
+            activeLockTimer = null;
+            updateActiveFromScroll();
+        }, 750);
+    };
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            const sectionId = link.dataset.navLink;
+            if (sectionId) lockActiveSection(sectionId);
+        });
+    });
+
+    window.addEventListener('scroll', updateActiveFromScroll, { passive: true });
+    window.addEventListener('resize', updateActiveFromScroll);
+    window.addEventListener('hashchange', () => {
+        const sectionId = window.location.hash.replace('#', '');
+        if (sectionId) {
+            lockActiveSection(sectionId);
+            return;
+        }
+
+        updateActiveFromScroll();
+    });
+
+    const initialSectionId = window.location.hash.replace('#', '');
+    if (initialSectionId && document.getElementById(initialSectionId)) {
+        lockActiveSection(initialSectionId);
+    } else {
+        updateActiveFromScroll();
+    }
 }
 
 function closeMobileMenu() {
@@ -970,10 +1045,12 @@ function openProductModal(productId) {
             const image = button.dataset.modalImage;
             const mainImage = modal.querySelector('[data-main-modal-image]');
             if (mainImage) mainImage.src = resolveAsset(image);
+            resetProductZoom(modal);
             modal.querySelectorAll('[data-modal-image]').forEach(item => item.classList.remove('active'));
             button.classList.add('active');
         });
     });
+    initializeProductZoom(modal);
 
     modal.addEventListener('click', event => {
         if (event.target === modal) closeProductModal();
@@ -992,7 +1069,13 @@ function createProductModal(product) {
             </button>
             <div class="product-modal-layout">
                 <div class="modal-media">
-                    <img src="${resolveAsset(primaryImage)}" alt="${escapeHTML(product.name)}" data-main-modal-image>
+                    <button class="modal-zoom" type="button" data-zoom-stage aria-label="Ampliar imagem do produto" aria-pressed="false">
+                        <img src="${resolveAsset(primaryImage)}" alt="${escapeHTML(product.name)}" data-main-modal-image draggable="false">
+                        <span class="modal-zoom-indicator" aria-hidden="true">
+                            <i class="fas fa-magnifying-glass-plus zoom-in-icon"></i>
+                            <i class="fas fa-magnifying-glass-minus zoom-out-icon"></i>
+                        </span>
+                    </button>
                     ${images.length > 1 ? `
                         <div class="modal-thumbs">
                             ${images.map((image, index) => `
@@ -1042,6 +1125,91 @@ function createProductModal(product) {
     `;
 }
 
+function initializeProductZoom(modal) {
+    const zoomStage = modal.querySelector('[data-zoom-stage]');
+    if (!zoomStage) return;
+
+    let pointerIsDown = false;
+    let pointerMoved = false;
+
+    zoomStage.addEventListener('click', event => {
+        if (pointerMoved) {
+            pointerMoved = false;
+            return;
+        }
+
+        setProductZoomState(zoomStage, !zoomStage.classList.contains('is-zoomed'), event.detail ? event : null);
+    });
+
+    zoomStage.addEventListener('pointerdown', event => {
+        pointerIsDown = true;
+        pointerMoved = false;
+
+        if (zoomStage.classList.contains('is-zoomed')) {
+            zoomStage.setPointerCapture?.(event.pointerId);
+            updateProductZoomPosition(zoomStage, event);
+        }
+    });
+
+    zoomStage.addEventListener('pointermove', event => {
+        if (!zoomStage.classList.contains('is-zoomed')) return;
+
+        if (pointerIsDown) {
+            pointerMoved = true;
+            event.preventDefault();
+        }
+
+        updateProductZoomPosition(zoomStage, event);
+    });
+
+    const releasePointer = () => {
+        pointerIsDown = false;
+    };
+
+    zoomStage.addEventListener('pointerup', releasePointer);
+    zoomStage.addEventListener('pointercancel', releasePointer);
+    zoomStage.addEventListener('lostpointercapture', releasePointer);
+
+}
+
+function updateProductZoomPosition(zoomStage, event) {
+    const bounds = zoomStage.getBoundingClientRect();
+    if (!bounds.width || !bounds.height) return;
+
+    const x = Math.min(100, Math.max(0, ((event.clientX - bounds.left) / bounds.width) * 100));
+    const y = Math.min(100, Math.max(0, ((event.clientY - bounds.top) / bounds.height) * 100));
+
+    zoomStage.style.setProperty('--zoom-x', `${x}%`);
+    zoomStage.style.setProperty('--zoom-y', `${y}%`);
+}
+
+function setProductZoomState(zoomStage, shouldZoom, event) {
+    zoomStage.classList.toggle('is-zoomed', shouldZoom);
+    zoomStage.setAttribute('aria-pressed', String(shouldZoom));
+    zoomStage.setAttribute('aria-label', shouldZoom ? 'Reduzir imagem do produto' : 'Ampliar imagem do produto');
+
+    if (shouldZoom && event) {
+        updateProductZoomPosition(zoomStage, event);
+        return;
+    }
+
+    if (shouldZoom) {
+        zoomStage.style.setProperty('--zoom-x', '50%');
+        zoomStage.style.setProperty('--zoom-y', '50%');
+        return;
+    }
+
+    zoomStage.style.removeProperty('--zoom-x');
+    zoomStage.style.removeProperty('--zoom-y');
+}
+
+function resetProductZoom(modal) {
+    const zoomStage = modal.querySelector('[data-zoom-stage]');
+    if (!zoomStage) return;
+
+    setProductZoomState(zoomStage, false);
+}
+
 function updateModalQuantity(change) {
     modalQuantity = Math.max(1, modalQuantity + change);
     const quantityElement = document.querySelector('[data-modal-quantity]');
@@ -1078,6 +1246,12 @@ function initializeFAQ() {
 function handleInitialHash() {
     if (window.location.hash === '#cartModal' || window.location.hash === '#cart') {
         openCart();
+        return;
+    }
+
+    const sectionId = window.location.hash.replace('#', '');
+    if (sectionId && document.getElementById(sectionId)) {
+        window.setTimeout(() => scrollToSection(sectionId), 120);
     }
 }
 
