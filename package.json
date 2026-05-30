@@ -1,7 +1,7 @@
 {
   "name": "seorf-site",
   "version": "1.0.0",
-  "description": "SEORF beach luxury storefront with WhatsApp cart",
+  "description": "SEORF elegant accessories storefront with WhatsApp cart",
   "main": "index.html",
   "scripts": {
     "start": "python -m http.server 8000",
@@ -10,7 +10,7 @@
   },
   "keywords": [
     "seorf",
-    "beach",
+    "elegant",
     "luxury",
     "storefront",
     "whatsapp"
