@@ -1,6 +1,6 @@
 # SEORF Site
 
-Site estatico da SEORF com visual premium e versatil, produtos em imagens 1:1 e carrinho que encaminha o pedido para WhatsApp.
+Site estático da SEORF com visual premium e versátil, produtos em imagens 1:1 e carrinho que encaminha o pedido para WhatsApp.
 
 ## Estrutura
 
