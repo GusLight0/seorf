@@ -521,6 +521,7 @@ function initializeProducts() {
     });
     requestAnimationFrame(updateProductsViewportHeight);
     window.addEventListener('resize', updateProductsViewportHeight);
+    initializeProductsScrollHandoff();
 
     grid.addEventListener('click', event => {
         const addButton = event.target.closest('[data-add-product]');
@@ -566,6 +567,62 @@ function createProductCard(product) {
             </div>
         </article>
     `;
+}
+
+function initializeProductsScrollHandoff() {
+    const scrollContainer = document.querySelector('[data-products-scroll]');
+    if (!scrollContainer || scrollContainer.dataset.scrollHandoff === 'true') return;
+
+    scrollContainer.dataset.scrollHandoff = 'true';
+    const tolerance = 2;
+    let lastTouchY = null;
+
+    const canScroll = () => scrollContainer.scrollHeight > scrollContainer.clientHeight + tolerance;
+    const isAtTop = () => scrollContainer.scrollTop <= tolerance;
+    const isAtBottom = () => (
+        scrollContainer.scrollTop + scrollContainer.clientHeight >= scrollContainer.scrollHeight - tolerance
+    );
+    const shouldPassScroll = deltaY => (
+        canScroll() && ((deltaY > 0 && isAtBottom()) || (deltaY < 0 && isAtTop()))
+    );
+
+    const passScrollToPage = deltaY => {
+        window.scrollBy({ top: deltaY, behavior: 'auto' });
+    };
+
+    scrollContainer.addEventListener('wheel', event => {
+        if (!shouldPassScroll(event.deltaY)) return;
+
+        event.preventDefault();
+        passScrollToPage(event.deltaY);
+    }, { passive: false });
+
+    scrollContainer.addEventListener('touchstart', event => {
+        if (event.touches.length !== 1) return;
+        lastTouchY = event.touches[0].clientY;
+    }, { passive: true });
+
+    scrollContainer.addEventListener('touchmove', event => {
+        if (lastTouchY === null || event.touches.length !== 1) return;
+
+        const currentY = event.touches[0].clientY;
+        const deltaY = lastTouchY - currentY;
+
+        if (shouldPassScroll(deltaY)) {
+            event.preventDefault();
+            passScrollToPage(deltaY);
+        }
+
+        lastTouchY = currentY;
+    }, { passive: false });
+
+    scrollContainer.addEventListener('touchend', () => {
+        lastTouchY = null;
+    }, { passive: true });
+
+    scrollContainer.addEventListener('touchcancel', () => {
+        lastTouchY = null;
+    }, { passive: true });
 }
 
 function updateProductsViewportHeight() {

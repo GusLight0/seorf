@@ -27,6 +27,33 @@
 
 html {
     scroll-behavior: smooth;
+    scrollbar-color: var(--sea-dark) rgba(20, 40, 65, 0.08);
+    scrollbar-width: thin;
+}
+
+* {
+    scrollbar-color: var(--sea-dark) rgba(20, 40, 65, 0.08);
+    scrollbar-width: thin;
+}
+
+*::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+*::-webkit-scrollbar-track {
+    background:
+        linear-gradient(180deg, rgba(251, 250, 246, 0.96), rgba(231, 220, 205, 0.44));
+}
+
+*::-webkit-scrollbar-thumb {
+    border: 3px solid rgba(251, 250, 246, 0.96);
+    border-radius: 99px;
+    background: linear-gradient(180deg, var(--ink), var(--sea-dark));
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--sea-dark), var(--coral));
 }
 
 body {
@@ -939,9 +966,11 @@ p {
 .products-scroll {
     overflow-y: auto;
     overflow-x: hidden;
-    overscroll-behavior: contain;
+    overscroll-behavior-y: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
     padding: 0.1rem 0.55rem 0.1rem 0;
-    scrollbar-color: rgba(20, 40, 65, 0.34) rgba(20, 40, 65, 0.08);
+    scrollbar-color: var(--sea-dark) rgba(20, 40, 65, 0.08);
     scrollbar-gutter: stable;
     scrollbar-width: thin;
 }
@@ -951,17 +980,22 @@ p {
 }
 
 .products-scroll::-webkit-scrollbar {
-    width: 8px;
+    width: 10px;
 }
 
 .products-scroll::-webkit-scrollbar-track {
     border-radius: 99px;
-    background: rgba(20, 40, 65, 0.08);
+    background: rgba(20, 40, 65, 0.06);
 }
 
 .products-scroll::-webkit-scrollbar-thumb {
+    border: 2px solid var(--shell);
     border-radius: 99px;
-    background: rgba(20, 40, 65, 0.34);
+    background: linear-gradient(180deg, var(--ink), var(--sea-dark));
+}
+
+.products-scroll::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--sea-dark), var(--coral));
 }
 
 .catalog-filter-shell {
