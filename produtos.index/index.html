@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Catálogo completo da SEORF com pulseiras, colares e acessórios de verão.">
+    <title>Produtos | SEORF</title>
+    <link rel="shortcut icon" href="../assets/icons/logo-circular.png" type="image/x-icon">
+    <link rel="preload" href="../assets/images/resort-luxury.jpg" as="image">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="is-loading">
+    <div id="siteLoader" class="site-loader" role="status" aria-live="polite" aria-label="Carregando SEORF">
+        <div class="loader-mark">
+            <img src="../assets/icons/logo-circular.png" alt="SEORF" class="loader-logo">
+            <span class="loader-ring"></span>
+        </div>
+        <div class="loader-copy">
+            <strong>SEORF</strong>
+            <span>Ajustando luz, mar e curadoria</span>
+        </div>
+        <div class="loader-tide" role="progressbar" aria-label="Carregamento" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <span></span>
+        </div>
+    </div>
+
+    <header class="site-header" data-site-header>
+        <div class="nav-shell">
+            <a href="../index.html#home" class="brand-link" aria-label="SEORF - início">
+                <img src="../assets/icons/logo-circular.png" alt="SEORF" class="brand-logo">
+                <span class="brand-word">SEORF</span>
+            </a>
+
+            <nav class="nav-menu" id="primaryNav" aria-label="Navegação principal">
+                <div class="nav-search">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                    <input type="search" id="searchInput" placeholder="Buscar no catálogo" enterkeyhint="search" autocomplete="off" data-search-section="produtos">
+                </div>
+                <a href="../index.html#home">Início</a>
+                <a href="#produtos">Produtos</a>
+                <a href="../index.html#colecoes">Coleções</a>
+                <a href="../index.html#inspiracao">Inspiração</a>
+                <a href="../index.html#sobre">Sobre</a>
+                <a href="../pages/contato.html">Contato</a>
+            </nav>
+
+            <div class="nav-actions">
+                <a href="#cartModal" class="icon-action cart-trigger" aria-label="Abrir carrinho">
+                    <i class="fas fa-bag-shopping" aria-hidden="true"></i>
+                    <span class="cart-count">0</span>
+                </a>
+                <button class="icon-action menu-toggle" type="button" aria-label="Abrir menu" aria-controls="primaryNav" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="catalog-hero" data-promo-carousel aria-label="Destaques do catálogo">
+            <div class="promo-carousel">
+                <article class="promo-slide active" aria-hidden="false">
+                    <img class="promo-slide-bg" src="../assets/images/produto-17.jpeg" alt="">
+                    <div class="promo-product-frame">
+                        <img class="promo-product-image" src="../assets/images/produto-17.jpeg" alt="Riviera SEORF">
+                    </div>
+                    <div class="promo-copy">
+                        <p class="eyebrow">Novidades SEORF</p>
+                        <h1>Produtos com clima de verão premium.</h1>
+                        <p>Pulseiras e colares selecionados para compor praia, cidade e fim de tarde com presença.</p>
+                    </div>
+                </article>
+                <article class="promo-slide" aria-hidden="true">
+                    <img class="promo-slide-bg" src="../assets/images/produto-12.png" alt="">
+                    <div class="promo-product-frame">
+                        <img class="promo-product-image" src="../assets/images/produto-12.png" alt="Pulseira Mônaco">
+                    </div>
+                    <div class="promo-copy">
+                        <p class="eyebrow">Curadoria solar</p>
+                        <h1>Detalhes para usar todos os dias.</h1>
+                        <p>Modelos versáteis, acabamento limpo e compra direta pelo WhatsApp.</p>
+                    </div>
+                </article>
+                <article class="promo-slide" aria-hidden="true">
+                    <img class="promo-slide-bg" src="../assets/images/produto-23.png" alt="">
+                    <div class="promo-product-frame">
+                        <img class="promo-product-image" src="../assets/images/produto-23.png" alt="Colar Belém">
+                    </div>
+                    <div class="promo-copy">
+                        <p class="eyebrow">Catálogo completo</p>
+                        <h1>Encontre sua próxima peça SEORF.</h1>
+                        <p>Use a busca ou filtre por pulseiras, colares, destaques e novidades.</p>
+                    </div>
+                </article>
+            </div>
+
+            <div class="promo-dots" aria-label="Selecionar destaque">
+                <button class="active" type="button" data-promo-dot aria-label="Ver destaque 1" aria-current="true"></button>
+                <button type="button" data-promo-dot aria-label="Ver destaque 2" aria-current="false"></button>
+                <button type="button" data-promo-dot aria-label="Ver destaque 3" aria-current="false"></button>
+            </div>
+        </section>
+
+        <section id="produtos" class="products-section catalog-products">
+            <div class="container">
+                <div class="catalog-heading">
+                    <div class="section-heading">
+                        <p class="eyebrow">Catálogo completo</p>
+                        <h2>Todos os produtos</h2>
+                        <p>Filtre por categoria, busque pelo nome ou abra os detalhes para escolher cor e quantidade.</p>
+                    </div>
+                    <a href="https://wa.me/5598985254472?text=Ol%C3%A1!%20Gostaria%20de%20tirar%20uma%20d%C3%BAvida%20sobre%20os%20produtos%20da%20SEORF." target="_blank" rel="noreferrer" class="btn btn-light catalog-help">
+                        <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                        Tirar dúvida
+                    </a>
+                </div>
+
+                <div class="catalog-filter-shell">
+                    <button class="filter-toggle" type="button" data-filter-toggle aria-controls="catalogFilterPanel" aria-expanded="false">
+                        <span class="filter-toggle-icon">
+                            <i class="fas fa-sliders" aria-hidden="true"></i>
+                        </span>
+                        <span>
+                            <strong>Filtros</strong>
+                            <small data-filter-summary>Todos os produtos</small>
+                        </span>
+                        <i class="fas fa-chevron-down filter-toggle-chevron" aria-hidden="true"></i>
+                    </button>
+
+                    <div class="catalog-filter-panel" id="catalogFilterPanel" aria-hidden="true">
+                        <div class="filter-panel-grid">
+                            <fieldset class="filter-group">
+                                <legend>Categorias</legend>
+                                <div class="filter-chip-list">
+                                    <button class="filter-btn filter-chip" type="button" data-filter="destaque">
+                                        <span>Destaques</span>
+                                        <strong data-filter-count="destaque">0</strong>
+                                    </button>
+                                    <button class="filter-btn filter-chip" type="button" data-filter="novidade">
+                                        <span>Novidades</span>
+                                        <strong data-filter-count="novidade">0</strong>
+                                    </button>
+                                    <button class="filter-btn filter-chip" type="button" data-filter="colares">
+                                        <span>Colares</span>
+                                        <strong data-filter-count="colares">0</strong>
+                                    </button>
+                                    <button class="filter-btn filter-chip" type="button" data-filter="pulseiras">
+                                        <span>Pulseiras</span>
+                                        <strong data-filter-count="pulseiras">0</strong>
+                                    </button>
+                                </div>
+                            </fieldset>
+
+                            <fieldset class="filter-group price-filter">
+                                <legend>Preço</legend>
+                                <div class="price-filter-head">
+                                    <span data-price-min-label>R$ 0,00</span>
+                                    <strong data-price-current>Todos</strong>
+                                </div>
+                                <input type="range" id="priceMaxInput" min="0" max="0" step="1" value="0" aria-label="Preço máximo">
+                            </fieldset>
+
+                            <fieldset class="filter-group color-filter">
+                                <legend>Cores</legend>
+                                <div class="color-chip-list">
+                                    <button class="color-chip" type="button" data-color-filter="Preto">
+                                        <span class="color-swatch color-swatch--preto"></span>
+                                        Preto
+                                    </button>
+                                    <button class="color-chip" type="button" data-color-filter="Prata">
+                                        <span class="color-swatch color-swatch--prata"></span>
+                                        Prata
+                                    </button>
+                                    <button class="color-chip" type="button" data-color-filter="Dourado">
+                                        <span class="color-swatch color-swatch--dourado"></span>
+                                        Dourado
+                                    </button>
+                                    <button class="color-chip" type="button" data-color-filter="Azul">
+                                        <span class="color-swatch color-swatch--azul"></span>
+                                        Azul
+                                    </button>
+                                    <button class="color-chip" type="button" data-color-filter="Vermelha">
+                                        <span class="color-swatch color-swatch--vermelha"></span>
+                                        Vermelha
+                                    </button>
+                                </div>
+                            </fieldset>
+                        </div>
+
+                        <div class="filter-panel-actions">
+                            <button class="filter-clear" type="button" data-reset-filters>
+                                <i class="fas fa-rotate-left" aria-hidden="true"></i>
+                                Limpar
+                            </button>
+                            <button class="btn btn-dark" type="button" data-apply-filters>
+                                <i class="fas fa-check" aria-hidden="true"></i>
+                                Aplicar filtro
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="products-grid catalog-grid" id="productsGrid" aria-live="polite"></div>
+
+                <div id="noResults" class="no-results hidden">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                    <h3>Nenhum produto encontrado.</h3>
+                    <p>Ajuste a busca ou limpe os filtros para ver tudo de novo.</p>
+                    <button class="btn btn-dark" type="button" id="clearSearchBtn">
+                        <i class="fas fa-rotate-left" aria-hidden="true"></i>
+                        Limpar filtros
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="cartModal" class="cart-modal" aria-hidden="true">
+        <div class="cart-backdrop" data-close-cart></div>
+        <aside class="cart-panel" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+            <div class="cart-header">
+                <div>
+                    <span class="eyebrow">Pedido SEORF</span>
+                    <h2 id="cartTitle">Carrinho</h2>
+                </div>
+                <button class="icon-action close-cart" type="button" aria-label="Fechar carrinho">
+                    <i class="fas fa-xmark" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="cart-items" id="cartItems"></div>
+            <div class="cart-summary">
+                <div>
+                    <span>Subtotal</span>
+                    <strong id="subtotal">R$ 0,00</strong>
+                </div>
+                <div>
+                    <span>Total</span>
+                    <strong id="total">R$ 0,00</strong>
+                </div>
+            </div>
+            <label class="cart-note">
+                <span>Observações</span>
+                <textarea id="observacoes" placeholder="Tamanho, cor, entrega ou preferência de atendimento"></textarea>
+            </label>
+            <button class="btn btn-dark full-width" type="button" id="checkoutButton">
+                <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                Enviar pelo WhatsApp
+            </button>
+        </aside>
+    </div>
+
+    <div id="productDetailModal" class="product-modal" aria-hidden="true"></div>
+    <div id="toastRoot" class="toast-root" aria-live="polite"></div>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <img src="../assets/icons/logo-retangular.jpeg" alt="SEORF" class="footer-logo">
+                <p>Acessórios de verão com estética praiana, curadoria premium e compra direta pelo WhatsApp.</p>
+            </div>
+            <div>
+                <h3>Mapa</h3>
+                <a href="#produtos">Produtos</a>
+                <a href="../index.html#colecoes">Coleções</a>
+                <a href="../index.html#sobre">Sobre</a>
+                <a href="../pages/contato.html">Contato</a>
+            </div>
+            <div>
+                <h3>Contato</h3>
+                <a href="https://instagram.com/useseorf" target="_blank" rel="noreferrer">@useseorf</a>
+                <a href="https://wa.me/5598985254472" target="_blank" rel="noreferrer">+55 (98) 9 8525-4472</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 SEORF. Todos os direitos reservados.</span>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/5598985254472?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20os%20produtos%20da%20SEORF." target="_blank" rel="noreferrer" class="whatsapp-float" aria-label="Chamar SEORF no WhatsApp">
+        <i class="fab fa-whatsapp" aria-hidden="true"></i>
+    </a>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

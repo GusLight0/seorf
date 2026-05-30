@@ -1,794 +1,1105 @@
-// Global Variables
-let cart = [];
-const WHATSAPP_NUMBER = '5598970216233';
-const FORMATADOR_PRECO = new Intl.NumberFormat('pt-BR', {
+const SEORF = {
+    whatsapp: '5598985254472',
+    instagram: 'https://instagram.com/useseorf',
+    cartKey: 'seorf_cart_v1'
+};
+
+const formatterBRL = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL'
 });
 
-function formatarPreco(preco) {
-    return FORMATADOR_PRECO.format(preco);
-}
-
-function montarPrecoMarkup(preco) {
-    const partes = FORMATADOR_PRECO.formatToParts(preco);
-    let moeda = 'R$';
-    let valor = '';
-
-    partes.forEach(parte => {
-        if (parte.type === 'currency') moeda = parte.value;
-        if (['integer', 'group', 'decimal', 'fraction'].includes(parte.type)) {
-            valor += parte.value;
-        }
-    });
-
-    return `<span class="preco-moeda">${moeda}</span><span class="preco-valor">${valor}</span>`;
-}
-
-// Mock Database para Detalhes Profissionais
-const PRODUTOS_DB = {
-    'produto-1': {
-        nome: 'Óculos Sunset Safari',
-        preco: 79.99,
-        cor: 'Tartaruga / Tartoise',
-        descricao: 'Armação tartaruga com lentes verde oliva, trazendo um visual resort clássico e leve. O formato arredondado valoriza o rosto sem pesar e combina bem com produções de praia, linho e tons naturais.',
-        especificacoes: ['Proteção UV400', 'Lentes verde oliva', 'Armação tartaruga', 'Formato arredondado', 'Detalhe metálico lateral'],
-        imagens: ['./assets/images/insta-7.png']
+const products = [
+    {
+        id: 'seorf-01',
+        name: 'Pulseira Viena',
+        price: 69.90,
+        color: 'Preto com Dourado',
+        colors: ['Preto com Dourado'],
+        tag: 'Destaque',
+        categories: ['pulseiras', 'destaque', 'novidade'],
+        image: './assets/images/produto-1.jpeg',
+        description: 'Pulseira preta com detalhe dourado, elegante e fácil de combinar.',
+        specs: ['Cor: preto com dourado', 'Pulseira de corda', 'Acabamento metálico premium']
     },
-    'produto-2': {
-        nome: 'Óculos Midnight',
-        preco: 79.99,
-        cor: 'Preto',
-        descricao: 'Modelo preto com lente escura e presença noturna sofisticada. A silhueta levemente oval entrega um acabamento urbano, minimalista e elegante para quem prefere um visual discreto e marcante.',
-        especificacoes: ['Proteção UV400', 'Lentes escuras', 'Armação preta', 'Design oval minimalista', 'Detalhe lateral discreto'],
-        imagens: ['./assets/images/insta-3.jpg']
+    {
+        id: 'seorf-02',
+        name: 'Pulseira São Bento',
+        price: 79.90,
+        color: 'Azul e Preto',
+        colors: ['Azul', 'Preto'],
+        tag: 'Destaque',
+        categories: ['pulseiras', 'destaque'],
+        image: './assets/images/produto-2.jpeg',
+        images: ['./assets/images/produto-2.jpeg', './assets/images/produto-10.jpeg'],
+        description: 'Modelo com medalha central e visual náutico de presença discreta.',
+        specs: ['Cores: azul e preto', 'Medalha São Bento', 'Acabamento de presença discreta']
     },
-    'produto-3': {
-        nome: 'Óculos Yellow Sunset',
-        preco: 69.99,
-        cor: 'Preto & Amarelo',
-        descricao: 'Armação preta com lentes amarelas translúcidas, feita para um visual solar e descontraído. É uma peça leve, moderna e perfeita para destacar looks claros, praia e fim de tarde.',
-        especificacoes: ['Proteção UV400', 'Lentes amarelas', 'Armação preta', 'Formato redondo leve', 'Visual sunset'],
-        imagens: ['./assets/images/insta-6.jpg']
+    {
+        id: 'seorf-03',
+        name: 'Pulseira Marselha',
+        price: 79.90,
+        color: 'Prata e Azul',
+        colors: ['Prata', 'Azul'],
+        tag: 'Novidade',
+        categories: ['pulseiras', 'novidade'],
+        image: './assets/images/produto-3.png',
+        images: ['./assets/images/produto-3.png', './assets/images/produto-14.jpeg'],
+        description: 'Pulseira de leitura leve, com tons frios e acabamento sofisticado.',
+        specs: ['Cores: prata e azul', 'Trama texturizada', 'Detalhe central refinado']
     },
-    'produto-4': {
-        nome: 'Óculos Breeze',
-        preco: 74.99,
-        cor: 'Preto & Marrom',
-        descricao: 'O Breeze combina armação preta com lentes marrons, criando uma leitura quente e elegante. O desenho arredondado tem aparência leve e casual, ideal para uso diário com estética praiana sofisticada.',
-        especificacoes: ['Proteção UV400', 'Lentes marrons', 'Armação preta', 'Formato redondo', 'Acabamento leve para o dia a dia'],
-        imagens: ['./assets/images/insta-5.jpg']
+    {
+        id: 'seorf-04',
+        name: 'Pulseira Havaí',
+        price: 89.90,
+        color: 'Preto e Prata',
+        colors: ['Preto', 'Prata'],
+        tag: 'Destaque',
+        categories: ['pulseiras', 'destaque'],
+        image: './assets/images/produto-4.jpeg',
+        images: ['./assets/images/produto-4.jpeg', './assets/images/produto-15.jpeg'],
+        description: 'Design preto e prata com brilho limpo para o dia a dia.',
+        specs: ['Cores: preto e prata', 'Design minimalista', 'Acabamento prateado']
     },
-    'produto-5': {
-        nome: 'Óculos Crystal Blue',
-        preco: 79.99,
-        cor: 'Preto & Ciano',
-        descricao: 'Modelo com armação preta e lentes azul ciano translúcidas, trazendo frescor visual e uma pegada beach club. A lente clara cria um efeito cristalino, moderno e fácil de combinar com tons neutros.',
-        especificacoes: ['Proteção UV400', 'Lentes ciano translúcidas', 'Armação preta', 'Visual crystal', 'Detalhe metálico lateral'],
-        imagens: ['./assets/images/insta-4.jpg']
+    {
+        id: 'seorf-05',
+        name: 'Pulseira Munique',
+        price: 69.90,
+        color: 'Dourado e Prata',
+        colors: ['Dourado', 'Prata'],
+        tag: 'Novidade',
+        categories: ['pulseiras', 'novidade'],
+        image: './assets/images/produto-5.jpeg',
+        images: ['./assets/images/produto-5.jpeg', './assets/images/produto-15.jpeg'],
+        description: 'Modelo metalizado com mistura dourada e prata em visual elegante.',
+        specs: ['Cores: dourado e prata', 'Perfil elegante', 'Detalhe metálico premium']
     },
-    'produto-6': {
-        nome: 'Óculos Crystal Grey',
-        preco: 74.99,
-        cor: 'Preto & Cinza',
-        descricao: 'Armação cinza translúcida com lentes fumê, equilibrando modernidade e discrição. O acabamento cristalizado deixa o modelo elegante, versátil e com presença premium sem exagero.',
-        especificacoes: ['Proteção UV400', 'Lentes cinza fumê', 'Armação cinza translúcida', 'Formato arredondado', 'Detalhes dourados laterais'],
-        imagens: ['./assets/images/insta-8.jpg']
+    {
+        id: 'seorf-06',
+        name: 'Colar Rio',
+        price: 99.90,
+        color: 'Preto com Prata',
+        colors: ['Preto com Prata'],
+        tag: 'Destaque',
+        categories: ['colares', 'destaque'],
+        image: './assets/images/produto-6.png',
+        images: ['./assets/images/produto-6.png', './assets/images/produto-7.png'],
+        description: 'Colar preto com detalhe prateado, limpo e marcante.',
+        specs: ['Cor: preto com prata', 'Colar de corda', 'Acabamento prateado']
     },
-};
-
-// Modal de Produto
-function abrirPaginaProduto(id) {
-    const produto = PRODUTOS_DB[id];
-    if (!produto) return;
-
-    const modal = document.getElementById('productDetailModal');
-    // Remove inline styles from close button and move to CSS
-    modal.innerHTML = `
-        <div class="container">
-            <button class="close-product-modal" onclick="fecharDetalhes()">&times;</button>
-            <div class="modal-container">
-                <div class="modal-gallery">
-                    <img src="${produto.imagens[0]}" class="main-img" id="mainModalImg">
-                    <div class="thumb-grid" style="${produto.imagens.length <= 1 ? 'display:none' : ''}">
-                        ${produto.imagens.map((img, index) => `<img src="${img}" class="thumb-img ${index === 0 ? 'active' : ''}" onclick="selectThumbnail(this, '${img}')">`).join('')}
-                    </div>
-                </div>
-                <div class="modal-info">
-                    <h2>${produto.nome}</h2>
-                    <div class="modal-price">${montarPrecoMarkup(produto.preco)}</div>
-                    <div class="modal-color"><strong>Cor:</strong> ${produto.cor}</div>
-                    <div class="modal-description">${produto.descricao}</div>
-                    
-                    <div class="modal-features">
-                        <h4>Características:</h4>
-                        <ul>
-                            ${produto.especificacoes.map(spec => `<li>${spec}</li>`).join('')}
-                        </ul>
-                    </div>
-                    <div class="modal-actions">
-                        <div class="quantity-selector">
-                            <button class="qty-btn" onclick="updateModalQuantity(-1)">-</button>
-                            <span id="modalQuantity">1</span>
-                            <button class="qty-btn" onclick="updateModalQuantity(1)">+</button>
-                        </div>
-                        <button class="btn btn-primary full-width" onclick="adicionarAoCarrinho('${produto.nome}', ${produto.preco}, parseInt(document.getElementById('modalQuantity').textContent)); fecharDetalhes();">Adicionar ao Carrinho</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-
-    // Initialize quantity for the modal
-    modal.dataset.currentQuantity = 1;
-}
-
-function updateModalQuantity(change) {
-    const modal = document.getElementById('productDetailModal');
-    let currentQuantity = parseInt(modal.dataset.currentQuantity);
-    currentQuantity += change;
-    if (currentQuantity < 1) currentQuantity = 1;
-    modal.dataset.currentQuantity = currentQuantity;
-    document.getElementById('modalQuantity').textContent = currentQuantity;
-}
-
-function selectThumbnail(element, imgSrc) {
-    document.getElementById('mainModalImg').src = imgSrc;
-    document.querySelectorAll('.thumb-img').forEach(thumb => thumb.classList.remove('active'));
-    element.classList.add('active');
-}
-
-function fecharDetalhes() {
-    const modal = document.getElementById('productDetailModal');
-    modal.classList.remove('active');
-    document.body.style.overflow = 'auto';
-}
-
-// Initialize
-document.addEventListener('DOMContentLoaded', function() {
-    initializePageLoader();
-    initializeNav();
-    initializeCart();
-    initializeFilters();
-    initializeFAQ();
-    loadCartFromStorage();
-    atualizarCarrinho();
-    if ((window.location.hash === '#cart' || window.location.hash === '#cartModal') && document.getElementById('cartModal')) {
-        abrirCarrinho();
+    {
+        id: 'seorf-07',
+        name: 'Riviera SEORF',
+        price: 89.90,
+        color: 'Azul e Preto',
+        colors: ['Azul', 'Preto'],
+        tag: 'Novo',
+        categories: ['pulseiras', 'novidade'],
+        image: './assets/images/produto-17.jpeg',
+        images: ['./assets/images/produto-17.jpeg', './assets/images/produto-18.jpeg', './assets/images/produto-7.png', './assets/images/produto-16.jpeg'],
+        description: 'Pulseira com assinatura SEORF, visual náutico e acabamento forte.',
+        specs: ['Cores: azul e preto', 'Linha Riviera', 'Visual esportivo premium']
+    },
+    {
+        id: 'seorf-08',
+        name: 'Bracelete Lisboa',
+        price: 69.98,
+        color: 'Prata',
+        colors: ['Prata'],
+        tag: '',
+        categories: ['pulseiras'],
+        image: './assets/images/produto-8.jpeg',
+        description: 'Bracelete prata de linhas simples para compor sem excesso.',
+        specs: ['Cor: prata', 'Bracelete minimalista', 'Acabamento polido']
+    },
+    {
+        id: 'seorf-09',
+        name: 'Pulseira Viena',
+        price: 69.90,
+        color: 'Vermelha',
+        colors: ['Vermelha'],
+        tag: '',
+        categories: ['pulseiras'],
+        image: './assets/images/produto-9.jpeg',
+        description: 'Versão vermelha da Viena, intensa e pronta para destacar o look.',
+        specs: ['Cor: vermelha', 'Pulseira de corda', 'Detalhe metálico']
+    },
+    {
+        id: 'seorf-10',
+        name: 'Pulseira 7 Nós',
+        price: 39.90,
+        color: 'Vermelha',
+        colors: ['Vermelha'],
+        tag: '',
+        categories: ['pulseiras'],
+        image: './assets/images/produto-11.jpeg',
+        description: 'Pulseira vermelha de sete nós, leve e cheia de personalidade.',
+        specs: ['Cor: vermelha', 'Modelo 7 nós', 'Uso casual e versátil']
+    },
+    {
+        id: 'seorf-11',
+        name: 'Pulseira Mônaco',
+        price: 69.90,
+        color: 'Azul e Preto',
+        colors: ['Azul', 'Preto'],
+        tag: 'Novo',
+        categories: ['pulseiras', 'novidade'],
+        image: './assets/images/produto-12.png',
+        images: ['./assets/images/produto-12.png', './assets/images/produto-13.png'],
+        description: 'Trama azul e preta com acabamento limpo e clima mediterrâneo.',
+        specs: ['Cores: azul e preto', 'Trama texturizada', 'Acabamento premium']
+    },
+    {
+        id: 'seorf-12',
+        name: 'Colar Salvatore',
+        price: 119.90,
+        color: 'Prata',
+        colors: ['Prata'],
+        tag: 'Destaque',
+        categories: ['colares', 'destaque'],
+        image: './assets/images/produto-19.jpeg',
+        description: 'Colar prata de presença elegante para produções mais refinadas.',
+        specs: ['Cor: prata', 'Colar premium', 'Acabamento metálico']
+    },
+    {
+        id: 'seorf-13',
+        name: 'Pulseira Zurique',
+        price: 79.90,
+        color: 'Prata',
+        colors: ['Prata'],
+        tag: 'Novo',
+        categories: ['pulseiras', 'novidade'],
+        image: './assets/images/produto-21.png',
+        description: 'Pulseira prata com visual urbano, discreto e sofisticado.',
+        specs: ['Cor: prata', 'Design limpo', 'Acabamento polido']
+    },
+    {
+        id: 'seorf-14',
+        name: 'Pulseira Rio',
+        price: 49.90,
+        color: 'Preto',
+        colors: ['Preto'],
+        tag: '',
+        categories: ['pulseiras'],
+        image: './assets/images/produto-22.png',
+        description: 'Pulseira preta essencial, fácil de usar em qualquer combinação.',
+        specs: ['Cor: preto', 'Modelo casual', 'Acabamento discreto']
+    },
+    {
+        id: 'seorf-15',
+        name: 'Colar Belém',
+        price: 79.90,
+        color: 'Prata',
+        colors: ['Prata'],
+        tag: 'Novo',
+        categories: ['colares', 'novidade'],
+        image: './assets/images/produto-23.png',
+        description: 'Colar prata leve, com brilho sutil e acabamento versátil.',
+        specs: ['Cor: prata', 'Colar leve', 'Acabamento prateado']
     }
+];
+
+let cart = [];
+let activeFilter = 'todos';
+let activeSearch = '';
+let pendingFilter = 'todos';
+let activePriceMax = Infinity;
+let pendingPriceMax = Infinity;
+let activeColorFilters = [];
+let pendingColorFilters = [];
+let modalQuantity = 1;
+let activeModalProductId = null;
+let selectedModalColor = '';
+
+document.addEventListener('DOMContentLoaded', () => {
+    initializeLoader();
+    initializeHeader();
+    initializeNavigation();
+    initializeHeroCarousel();
+    initializeProducts();
+    initializeFilters();
+    initializeCart();
+    initializeFAQ();
+    loadCart();
+    renderCart();
+    handleInitialHash();
 });
 
-function initializePageLoader() {
+function resolveAsset(path) {
+    if (!path || path.startsWith('http')) return path;
+    const script = document.querySelector('script[src$="js/script.js"]');
+    const scriptSource = script?.getAttribute('src') || './js/script.js';
+    const assetPrefix = scriptSource.startsWith('../') ? '../assets/' : './assets/';
+
+    return path.replace('./assets/', assetPrefix);
+}
+
+function formatPrice(value) {
+    return Number.isFinite(value) ? formatterBRL.format(value) : 'A definir';
+}
+
+function escapeHTML(value) {
+    return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
+function normalizeSearchText(value) {
+    return String(value)
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .trim();
+}
+
+function getProduct(productId) {
+    return products.find(product => product.id === productId);
+}
+
+function getProductImages(product) {
+    return product.images && product.images.length ? product.images : [product.image];
+}
+
+function getProductColors(product) {
+    return product.colors && product.colors.length ? product.colors : [product.color].filter(Boolean);
+}
+
+function getDefaultProductColor(product) {
+    return getProductColors(product)[0] || product.color || 'Única';
+}
+
+function createCartItemKey(productId, color) {
+    return `${productId}::${normalizeSearchText(color || '')}`;
+}
+
+function getCartItemKey(item) {
+    return item.cartId || createCartItemKey(item.id, item.color || '');
+}
+
+function initializeLoader() {
     const loader = document.getElementById('siteLoader');
     if (!loader) return;
 
+    const progress = loader.querySelector('.loader-tide');
     const skipLoader = new URLSearchParams(window.location.search).get('skipLoader') === '1';
-    const startedAt = Date.now();
-    const minVisibleTime = 3200;
-    const maxWaitTime = 10000;
-    const progressBar = loader.querySelector('.site-loader-line');
-    const progressPercent = loader.querySelector('[data-loader-percent]');
-    let visualProgress = 0;
-    let targetProgress = 7;
+    let progressValue = 0;
+    let completed = false;
 
-    const setLoaderProgress = (value) => {
-        visualProgress = Math.max(0, Math.min(100, value));
-        const roundedProgress = Math.round(visualProgress);
-
-        loader.style.setProperty('--loader-progress', `${visualProgress}%`);
-        if (progressBar) {
-            progressBar.setAttribute('aria-valuenow', roundedProgress);
-        }
-        if (progressPercent) {
-            progressPercent.textContent = `${roundedProgress}%`;
+    const setProgress = value => {
+        progressValue = Math.max(0, Math.min(100, value));
+        loader.style.setProperty('--loader-progress', `${progressValue}%`);
+        if (progress) {
+            progress.setAttribute('aria-valuenow', String(Math.round(progressValue)));
         }
     };
 
-    const progressTimer = setInterval(() => {
-        if (loader.dataset.done === 'true') return;
+    const finish = (immediate = false) => {
+        if (completed) return;
+        completed = true;
+        setProgress(100);
 
-        const elapsed = Date.now() - startedAt;
-        const timedTarget = Math.min(92, 10 + (elapsed / minVisibleTime) * 54 + (elapsed / maxWaitTime) * 28);
-        targetProgress = Math.max(targetProgress, timedTarget);
-        visualProgress += (targetProgress - visualProgress) * 0.08;
-        setLoaderProgress(visualProgress);
-    }, 80);
-
-    setLoaderProgress(0);
-
-    const hideLoader = (immediate = false) => {
-        if (loader.dataset.done === 'true') return;
-        loader.dataset.done = 'true';
-        targetProgress = 100;
-        setLoaderProgress(100);
-
-        const finish = () => {
-            clearInterval(progressTimer);
+        const removeLoader = () => {
             document.body.classList.remove('is-loading');
-
             if (immediate) {
                 loader.remove();
                 return;
             }
-
             loader.classList.add('site-loader--hidden');
             loader.setAttribute('aria-hidden', 'true');
-            setTimeout(() => loader.remove(), 900);
+            setTimeout(() => loader.remove(), 760);
         };
 
-        if (immediate) {
-            finish();
-            return;
-        }
-
-        const elapsed = Date.now() - startedAt;
-        const progressFinishDelay = immediate ? 0 : 650;
-        setTimeout(finish, Math.max(0, minVisibleTime - elapsed) + progressFinishDelay);
+        setTimeout(removeLoader, immediate ? 0 : 360);
     };
 
     if (skipLoader) {
-        hideLoader(true);
+        finish(true);
         return;
     }
 
-    const heroVideos = Array.from(document.querySelectorAll('.hero-video'));
-    const waitForVideos = Promise.all(heroVideos.map(waitForVideoReady)).then(() => {
-        heroVideos.forEach(playHeroVideo);
-        return Promise.all(heroVideos.map(waitForVideoFrame));
-    });
+    const timer = setInterval(() => {
+        if (completed) {
+            clearInterval(timer);
+            return;
+        }
+        progressValue += (88 - progressValue) * 0.08;
+        setProgress(progressValue);
+    }, 70);
 
-    const fallbackTimeout = new Promise(resolve => setTimeout(resolve, maxWaitTime));
-
-    Promise.race([waitForVideos, fallbackTimeout]).then(() => hideLoader());
+    setProgress(8);
+    window.addEventListener('load', () => setTimeout(finish, 900), { once: true });
+    setTimeout(finish, 4200);
 }
 
-function waitForVideoReady(video) {
-    return new Promise(resolve => {
-        if (!video || video.readyState >= 3) {
-            resolve();
+function initializeHeader() {
+    const header = document.querySelector('[data-site-header]');
+    if (!header) return;
+
+    const updateHeader = () => {
+        header.classList.toggle('is-scrolled', window.scrollY > 16);
+    };
+
+    updateHeader();
+    window.addEventListener('scroll', updateHeader, { passive: true });
+}
+
+function initializeNavigation() {
+    const header = document.querySelector('[data-site-header]');
+    const menu = document.getElementById('primaryNav');
+    const toggle = document.querySelector('.menu-toggle');
+
+    if (toggle && menu) {
+        toggle.addEventListener('click', () => {
+            const isOpen = menu.classList.toggle('active');
+            toggle.classList.toggle('active', isOpen);
+            toggle.setAttribute('aria-expanded', String(isOpen));
+            if (header) header.classList.toggle('menu-open', isOpen);
+        });
+    }
+
+    document.querySelectorAll('[data-scroll-to]').forEach(button => {
+        button.addEventListener('click', () => scrollToSection(button.dataset.scrollTo));
+    });
+
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+        link.addEventListener('click', () => closeMobileMenu());
+    });
+}
+
+function closeMobileMenu() {
+    const header = document.querySelector('[data-site-header]');
+    const menu = document.getElementById('primaryNav');
+    const toggle = document.querySelector('.menu-toggle');
+
+    if (menu) menu.classList.remove('active');
+    if (toggle) {
+        toggle.classList.remove('active');
+        toggle.setAttribute('aria-expanded', 'false');
+    }
+    if (header) header.classList.remove('menu-open');
+}
+
+function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (!section) return;
+
+    const offset = Number.parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height'), 10) || 76;
+    const top = section.getBoundingClientRect().top + window.scrollY - offset + 2;
+    window.scrollTo({ top, behavior: 'smooth' });
+}
+
+function initializeHeroCarousel() {
+    const carousel = document.querySelector('[data-promo-carousel]');
+    if (!carousel) return;
+
+    const track = carousel.querySelector('.promo-carousel');
+    const slides = [...carousel.querySelectorAll('.promo-slide')];
+    const dots = [...carousel.querySelectorAll('[data-promo-dot]')];
+    if (slides.length <= 1) return;
+
+    let activeIndex = slides.findIndex(slide => slide.classList.contains('active'));
+    if (activeIndex < 0) activeIndex = 0;
+    let slideTimer = null;
+
+    const setActiveSlide = index => {
+        activeIndex = (index + slides.length) % slides.length;
+        slides.forEach((slide, slideIndex) => {
+            const isActive = slideIndex === activeIndex;
+            slide.classList.toggle('active', isActive);
+            slide.setAttribute('aria-hidden', String(!isActive));
+        });
+        dots.forEach((dot, dotIndex) => {
+            dot.classList.toggle('active', dotIndex === activeIndex);
+            dot.setAttribute('aria-current', dotIndex === activeIndex ? 'true' : 'false');
+        });
+        if (track) track.style.setProperty('--promo-index', String(activeIndex));
+    };
+
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            setActiveSlide(index);
+            clearInterval(slideTimer);
+            slideTimer = setInterval(() => setActiveSlide(activeIndex + 1), 5000);
+        });
+    });
+
+    setActiveSlide(activeIndex);
+
+    slideTimer = setInterval(() => setActiveSlide(activeIndex + 1), 5000);
+}
+
+function initializeProducts() {
+    const grid = document.getElementById('productsGrid');
+    if (!grid) return;
+
+    const limit = Number.parseInt(grid.dataset.limit || '', 10);
+    const visibleProducts = Number.isFinite(limit) ? products.slice(0, limit) : products;
+
+    grid.innerHTML = visibleProducts.map(product => createProductCard(product)).join('');
+
+    grid.addEventListener('click', event => {
+        const addButton = event.target.closest('[data-add-product]');
+        if (addButton) {
+            addToCart(addButton.dataset.addProduct);
             return;
         }
 
-        const readyEvents = ['canplay', 'playing', 'canplaythrough', 'loadeddata', 'error'];
-        let isResolved = false;
-
-        const markReady = () => {
-            if (isResolved) return;
-            isResolved = true;
-            readyEvents.forEach(eventName => video.removeEventListener(eventName, markReady));
-            resolve();
-        };
-
-        readyEvents.forEach(eventName => video.addEventListener(eventName, markReady, { once: true }));
-        video.muted = true;
-        video.defaultMuted = true;
-        video.setAttribute('muted', '');
-        video.setAttribute('playsinline', '');
-        video.setAttribute('preload', 'auto');
-
-        try {
-            video.load();
-        } catch (error) {
-            markReady();
+        const openButton = event.target.closest('[data-open-product]');
+        if (openButton) {
+            openProductModal(openButton.dataset.openProduct);
         }
-
-        playHeroVideo(video);
     });
 }
 
-function waitForVideoFrame(video) {
-    return new Promise(resolve => {
-        if (!video || video.readyState < 2) {
-            resolve();
-            return;
-        }
+function createProductCard(product) {
+    const [primaryImage] = getProductImages(product);
+    const searchableText = normalizeSearchText([
+        product.name,
+        product.color,
+        product.tag,
+        product.description,
+        product.categories.join(' ')
+    ].join(' '));
+    const tagMarkup = product.tag ? `<span class="product-tag">${escapeHTML(product.tag)}</span>` : '';
 
-        if ('requestVideoFrameCallback' in video) {
-            const timeout = setTimeout(resolve, 450);
-            video.requestVideoFrameCallback(() => {
-                clearTimeout(timeout);
-                resolve();
-            });
-            return;
-        }
-
-        requestAnimationFrame(() => requestAnimationFrame(resolve));
-    });
-}
-
-function playHeroVideo(video) {
-    if (!video) return;
-
-    const playPromise = video.play();
-    if (playPromise && typeof playPromise.catch === 'function') {
-        playPromise.catch(() => {});
-    }
-}
-
-// Navigation
-function initializeNav() {
-    const hamburger = document.querySelector('.hamburger');
-    const navMenu = document.querySelector('.nav-menu');
-
-    if (hamburger) {
-        hamburger.addEventListener('click', () => {
-            if (window.innerWidth <= 768) {
-                fecharCarrinho();
-            }
-
-            navMenu.classList.toggle('active');
-            hamburger.classList.toggle('active');
-        });
-    }
-
-    // Close menu when link is clicked
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', () => {
-            navMenu.classList.remove('active');
-            hamburger.classList.remove('active');
-        });
-    });
-}
-
-function fecharMenuMobile() {
-    const hamburger = document.querySelector('.hamburger');
-    const navMenu = document.querySelector('.nav-menu');
-
-    if (navMenu) navMenu.classList.remove('active');
-    if (hamburger) hamburger.classList.remove('active');
-}
-
-// Cart Functions
-function initializeCart() {
-    const cartIcons = document.querySelectorAll('.cart-icon');
-    const closeCartBtn = document.querySelector('.close-cart');
-    const cartModal = document.getElementById('cartModal');
-
-    if (cartIcons.length && cartModal) {
-        cartIcons.forEach(cartIcon => cartIcon.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (cartModal.classList.contains('active')) {
-                fecharCarrinho();
-            } else {
-                abrirCarrinho();
-            }
-        }));
-    }
-
-    if (closeCartBtn) {
-        closeCartBtn.addEventListener('click', fecharCarrinho);
-    }
-
-    if (cartModal) {
-        cartModal.addEventListener('click', (e) => {
-            if (e.target === cartModal) {
-                fecharCarrinho();
-            }
-        });
-    }
-}
-
-function abrirCarrinho() {
-    const cartModal = document.getElementById('cartModal');
-    if (cartModal) {
-        cartModal.classList.add('active');
-    }
-}
-
-function fecharCarrinho() {
-    const cartModal = document.getElementById('cartModal');
-    if (cartModal) {
-        cartModal.classList.remove('active');
-    }
-}
-
-function adicionarAoCarrinho(nome, preco, quantidade = 1) {
-    const item = cart.find(item => item.nome === nome);
-    
-    if (item) {
-        item.quantidade += quantidade;
-    } else {
-        cart.push({
-            id: cart.length,
-            nome: nome,
-            preco: preco,
-            quantidade: quantidade
-        });
-    }
-
-    salvarCarrinhoStorage();
-    atualizarCarrinho();
-    
-    // Animation feedback
-    mostrarNotificacao('Produto adicionado ao carrinho!');
-    
-    // Shake icon effect
-    const cartIcons = document.querySelectorAll('.cart-icon');
-    cartIcons.forEach(cartIcon => {
-        cartIcon.classList.remove('cart-shake');
-        void cartIcon.offsetWidth; // Trigger reflow to restart animation
-        cartIcon.classList.add('cart-shake');
-    });
-}
-
-function removerDoCarrinho(id) {
-    cart = cart.filter(item => item.id !== id);
-    salvarCarrinhoStorage();
-    atualizarCarrinho();
-}
-
-function atualizarQuantidade(id, quantidade) {
-    const item = cart.find(item => item.id === id);
-    if (item) {
-        if (quantidade > 0) {
-            item.quantidade = quantidade;
-        } else {
-            removerDoCarrinho(id);
-        }
-        salvarCarrinhoStorage();
-        atualizarCarrinho();
-    }
-}
-
-function atualizarCarrinho() {
-    const cartItemsDiv = document.getElementById('cartItems');
-    const cartCounts = document.querySelectorAll('.cart-count');
-    const subtotalSpan = document.getElementById('subtotal');
-    const totalSpan = document.getElementById('total');
-
-    // Update count
-    const totalItems = cart.reduce((sum, item) => sum + item.quantidade, 0);
-    cartCounts.forEach(cartCount => {
-        cartCount.textContent = totalItems;
-    });
-
-    // Update items
-    if (cartItemsDiv) {
-        if (cart.length === 0) {
-            cartItemsDiv.innerHTML = '<p class="empty-cart">Seu carrinho está vazio</p>';
-        } else {
-            cartItemsDiv.innerHTML = cart.map(item => `
-                <div class="cart-item">
-                    <div class="cart-item-info">
-                        <h4>${item.nome}</h4>
-                        <p>${formatarPreco(item.preco)}</p>
-                    </div>
-                    <div class="cart-item-controls">
-                        <button class="qty-btn" onclick="atualizarQuantidade(${item.id}, ${item.quantidade - 1})">−</button>
-                        <span style="width: 25px; text-align: center;">${item.quantidade}</span>
-                        <button class="qty-btn" onclick="atualizarQuantidade(${item.id}, ${item.quantidade + 1})">+</button>
-                        <button class="qty-btn" onclick="removerDoCarrinho(${item.id})" style="background: #f0f0f0; color: #d32f2f;">×</button>
-                    </div>
+    return `
+        <article class="product-card" data-product-id="${product.id}" data-search="${escapeHTML(searchableText)}" data-categories="${product.categories.join(' ')}">
+            <div class="product-media">
+                <img src="${resolveAsset(primaryImage)}" alt="${escapeHTML(product.name)}" loading="lazy">
+                ${tagMarkup}
+                <button class="icon-action product-quick-add" type="button" data-add-product="${product.id}" aria-label="Adicionar ${escapeHTML(product.name)} ao carrinho">
+                    <i class="fas fa-plus" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="product-info">
+                <h3>${escapeHTML(product.name)}</h3>
+                <div class="product-meta">
+                    <strong class="product-price">${formatPrice(product.price)}</strong>
+                    <span class="product-color">${escapeHTML(product.color)}</span>
                 </div>
-            `).join('');
-        }
-    }
-
-    // Update totals
-    const subtotal = cart.reduce((sum, item) => sum + (item.preco * item.quantidade), 0);
-    if (subtotalSpan) {
-        subtotalSpan.textContent = formatarPreco(subtotal);
-    }
-    if (totalSpan) {
-        totalSpan.textContent = formatarPreco(subtotal);
-    }
+                <button class="product-open" type="button" data-open-product="${product.id}">Ver detalhes</button>
+            </div>
+        </article>
+    `;
 }
 
-function salvarCarrinhoStorage() {
-    localStorage.setItem('velaris_cart', JSON.stringify(cart));
+function getProductPriceRange() {
+    const prices = products.map(product => product.price).filter(Number.isFinite);
+    if (!prices.length) return { min: 0, max: 0 };
+
+    return {
+        min: Math.floor(Math.min(...prices)),
+        max: Math.ceil(Math.max(...prices))
+    };
 }
 
-function loadCartFromStorage() {
-    const savedCart = localStorage.getItem('velaris_cart');
-    if (savedCart) {
-        cart = JSON.parse(savedCart);
-    }
+function getCategoryLabel(filter) {
+    const labels = {
+        destaque: 'Destaques',
+        novidade: 'Novidades',
+        colares: 'Colares',
+        pulseiras: 'Pulseiras'
+    };
+
+    return labels[filter] || 'Todos';
 }
 
-function finalizarCompra() {
-    if (cart.length === 0) {
-        mostrarNotificacao('Seu carrinho está vazio!');
-        return;
-    }
+function updateFilterSummary() {
+    const summary = document.querySelector('[data-filter-summary]');
+    if (!summary) return;
 
-    const observacoes = document.getElementById('observacoes').value;
-    
-    // Build message
-    let mensagem = 'Olá! Gostaria de realizar o seguinte pedido:\n\n';
-    
-    cart.forEach(item => {
-        const totalItem = (item.preco * item.quantidade).toFixed(2);
-        mensagem += `🕶️ Produto: ${item.nome}\n`;
-        mensagem += `   Quantidade: ${item.quantidade}\n`;
-        mensagem += `   Valor: ${formatarPreco(item.preco)}\n\n`;
+    const { max } = getProductPriceRange();
+    const parts = [];
+    if (activeFilter !== 'todos') parts.push(getCategoryLabel(activeFilter));
+    if (Number.isFinite(activePriceMax) && activePriceMax < max) parts.push(`até ${formatPrice(activePriceMax)}`);
+    if (activeColorFilters.length) parts.push(activeColorFilters.join(', '));
+
+    summary.textContent = parts.length ? parts.join(' · ') : 'Todos os produtos';
+}
+
+function updateFilterCounts() {
+    document.querySelectorAll('[data-filter-count]').forEach(element => {
+        const category = element.dataset.filterCount || '';
+        const total = products.filter(product => product.categories.includes(category)).length;
+        element.textContent = String(total);
     });
-
-    const total = cart.reduce((sum, item) => sum + (item.preco * item.quantidade), 0);
-    mensagem += `💰 Total do pedido: ${formatarPreco(total)}\n\n`;
-    
-    if (observacoes) {
-        mensagem += `📝 Observações: ${observacoes}\n\n`;
-    }
-
-    mensagem += 'Gostaria de confirmar disponibilidade.';
-
-    // URL encode and open WhatsApp
-    const urlEncodedMessage = encodeURIComponent(mensagem);
-    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${urlEncodedMessage}`;
-    
-    window.open(whatsappUrl, '_blank');
-    
-    // Clear cart after sending
-    setTimeout(() => {
-        cart = [];
-        salvarCarrinhoStorage();
-        atualizarCarrinho();
-        fecharCarrinho();
-        mostrarNotificacao('Pedido enviado com sucesso!');
-    }, 500);
 }
 
-// Filters
+function productMatchesSelectedColors(product) {
+    if (!activeColorFilters.length) return true;
+
+    const searchableColors = normalizeSearchText([
+        product.color,
+        ...getProductColors(product)
+    ].join(' '));
+
+    return activeColorFilters.some(color => searchableColors.includes(normalizeSearchText(color)));
+}
+
 function initializeFilters() {
-    const filterToggle = document.getElementById('filterToggle');
-    const filterMenu = document.getElementById('filterMenu');
-    const filtroButtons = document.querySelectorAll('.filtro-btn');
+    const filterButtons = document.querySelectorAll('.filter-btn');
     const searchInput = document.getElementById('searchInput');
     const clearSearchBtn = document.getElementById('clearSearchBtn');
+    const grid = document.getElementById('productsGrid');
+    const filterToggle = document.querySelector('[data-filter-toggle]');
+    const filterPanel = document.getElementById('catalogFilterPanel');
+    const applyFiltersBtn = document.querySelector('[data-apply-filters]');
+    const resetFilterButtons = document.querySelectorAll('[data-reset-filters]');
+    const colorButtons = document.querySelectorAll('[data-color-filter]');
+    const priceInput = document.getElementById('priceMaxInput');
+    const priceMinLabel = document.querySelector('[data-price-min-label]');
+    const priceCurrent = document.querySelector('[data-price-current]');
+    const redirectSearch = searchInput?.dataset.searchMode === 'redirect';
+    const searchTarget = searchInput?.dataset.searchTarget || './produtos.index/';
+    const scrollTarget = searchInput?.dataset.searchSection || 'produtos';
+    const priceRange = getProductPriceRange();
+    const hasApplyButton = Boolean(applyFiltersBtn);
 
-    atualizarContadoresFiltros();
+    const updateCategoryButtons = () => {
+        filterButtons.forEach(item => {
+            item.classList.toggle('active', item.dataset.filter === pendingFilter);
+        });
+    };
 
-    if (filterToggle && filterMenu) {
+    const updatePriceDisplay = () => {
+        if (priceMinLabel) priceMinLabel.textContent = `A partir de ${formatPrice(priceRange.min)}`;
+        if (priceCurrent) {
+            priceCurrent.textContent = pendingPriceMax >= priceRange.max ? 'Todos os preços' : `Até ${formatPrice(pendingPriceMax)}`;
+        }
+    };
+
+    const resetFilters = ({ includeSearch = true, apply = true } = {}) => {
+        activeFilter = 'todos';
+        pendingFilter = 'todos';
+        activePriceMax = priceRange.max;
+        pendingPriceMax = priceRange.max;
+        activeColorFilters = [];
+        pendingColorFilters = [];
+        if (includeSearch) {
+            activeSearch = '';
+            if (searchInput) searchInput.value = '';
+        }
+        if (priceInput) priceInput.value = String(priceRange.max);
+        colorButtons.forEach(button => button.classList.remove('active'));
+        updateCategoryButtons();
+        updatePriceDisplay();
+        updateFilterSummary();
+        if (apply) applyProductFilters();
+    };
+
+    updateFilterCounts();
+
+    if (priceInput && Number.isFinite(priceRange.max)) {
+        priceInput.min = String(priceRange.min);
+        priceInput.max = String(priceRange.max);
+        priceInput.value = String(priceRange.max);
+        activePriceMax = priceRange.max;
+        pendingPriceMax = priceRange.max;
+        updatePriceDisplay();
+    }
+
+    if (filterToggle && filterPanel) {
         filterToggle.addEventListener('click', () => {
-            filterToggle.classList.toggle('active');
-            filterMenu.classList.toggle('active');
+            const isOpen = filterToggle.classList.toggle('active');
+            filterPanel.classList.toggle('active', isOpen);
+            filterPanel.setAttribute('aria-hidden', String(!isOpen));
+            filterToggle.setAttribute('aria-expanded', String(isOpen));
         });
     }
 
-    filtroButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            filtroButtons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            
-            const filtro = btn.dataset.filtro;
-            filtrarProdutos(filtro, searchInput.value);
-            
-            // Rola para a seção de produtos ao filtrar
-            scrollToSection('produtos');
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            pendingFilter = button.dataset.filter || 'todos';
+            updateCategoryButtons();
 
-            // Fecha o menu após filtrar (opcional, melhora mobile UX)
-            if (window.innerWidth < 768) {
-                filterToggle.classList.remove('active');
-                filterMenu.classList.remove('active');
+            if (!hasApplyButton) {
+                activeFilter = pendingFilter;
+                applyProductFilters();
+                scrollToSection(scrollTarget);
             }
         });
+    });
+
+    colorButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const color = button.dataset.colorFilter || '';
+            button.classList.toggle('active');
+            pendingColorFilters = button.classList.contains('active')
+                ? [...new Set([...pendingColorFilters, color])]
+                : pendingColorFilters.filter(item => item !== color);
+        });
+    });
+
+    if (priceInput) {
+        priceInput.addEventListener('input', event => {
+            pendingPriceMax = Number(event.target.value);
+            updatePriceDisplay();
+        });
+    }
+
+    if (applyFiltersBtn) {
+        applyFiltersBtn.addEventListener('click', () => {
+            activeFilter = pendingFilter;
+            activePriceMax = pendingPriceMax;
+            activeColorFilters = [...pendingColorFilters];
+            applyProductFilters();
+            updateFilterSummary();
+            scrollToSection(scrollTarget);
+        });
+    }
+
+    resetFilterButtons.forEach(button => {
+        button.addEventListener('click', () => resetFilters());
     });
 
     if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-            const activeFiltro = document.querySelector('.filtro-btn.active').dataset.filtro;
-            filtrarProdutos(activeFiltro, e.target.value);
+        const params = new URLSearchParams(window.location.search);
+        const initialSearch = params.get('busca') || params.get('q') || '';
+        if (initialSearch && !redirectSearch) {
+            searchInput.value = initialSearch;
+            activeSearch = normalizeSearchText(initialSearch);
+        }
+
+        searchInput.addEventListener('input', event => {
+            activeSearch = normalizeSearchText(event.target.value);
+            if (!redirectSearch) applyProductFilters();
         });
 
-        searchInput.addEventListener('keydown', (e) => {
-            if (e.key !== 'Enter') return;
+        searchInput.addEventListener('keydown', event => {
+            if (event.key !== 'Enter') return;
+            event.preventDefault();
+            closeMobileMenu();
 
-            e.preventDefault();
+            if (redirectSearch) {
+                const query = event.target.value.trim();
+                window.location.href = query ? `${searchTarget}?busca=${encodeURIComponent(query)}` : searchTarget;
+                return;
+            }
 
-            const activeFiltroBtn = document.querySelector('.filtro-btn.active');
-            const activeFiltro = activeFiltroBtn ? activeFiltroBtn.dataset.filtro : 'todos';
-
-            filtrarProdutos(activeFiltro, e.target.value.trim());
-            fecharMenuMobile();
+            scrollToSection(scrollTarget);
             searchInput.blur();
-            scrollToSection('produtos');
         });
     }
 
     if (clearSearchBtn) {
-        clearSearchBtn.addEventListener('click', limparPesquisaProdutos);
-    }
-}
-
-function atualizarContadoresFiltros(searchTerm = '') {
-    const botoes = document.querySelectorAll('.filtro-btn');
-    const produtos = document.querySelectorAll('.produto-card');
-
-    botoes.forEach(btn => {
-        const cat = btn.dataset.filtro;
-        let count = 0;
-
-        produtos.forEach(p => {
-            const matchesFiltro = cat === 'todos' || p.dataset.filtro.includes(cat);
-            const matchesSearch = !searchTerm || p.querySelector('.produto-info h3').textContent.toLowerCase().includes(searchTerm.toLowerCase());
-            if (matchesFiltro && matchesSearch) count++;
+        clearSearchBtn.addEventListener('click', () => {
+            resetFilters();
         });
+    }
 
-        let countSpan = btn.querySelector('.filter-count');
-        if (!countSpan) {
-            countSpan = document.createElement('span');
-            countSpan.className = 'filter-count';
-            btn.appendChild(countSpan);
-        }
-        countSpan.textContent = `(${count})`;
-    });
+    updateCategoryButtons();
+    updateFilterSummary();
+    if (grid) applyProductFilters();
 }
 
-function filtrarProdutos(filtro, searchTerm = '') {
-    const produtos = document.querySelectorAll('.produto-card');
+function applyProductFilters() {
+    const cards = document.querySelectorAll('.product-card');
     const noResults = document.getElementById('noResults');
-    let visibleCount = 0;
-    
-    produtos.forEach(produto => {
-        let mostrar = true;
+    let visible = 0;
 
-        // Filter by category
-        if (filtro !== 'todos' && !produto.dataset.filtro.includes(filtro)) {
-            mostrar = false;
-        }
+    cards.forEach(card => {
+        const product = getProduct(card.dataset.productId);
+        const categories = card.dataset.categories || '';
+        const searchableText = card.dataset.search || '';
+        const matchesFilter = activeFilter === 'todos' || categories.includes(activeFilter);
+        const matchesSearch = !activeSearch || searchableText.includes(activeSearch);
+        const matchesPrice = !product || !Number.isFinite(activePriceMax) || product.price <= activePriceMax;
+        const matchesColor = !product || productMatchesSelectedColors(product);
+        const shouldShow = matchesFilter && matchesSearch && matchesPrice && matchesColor;
 
-        // Filter by search
-        if (searchTerm) {
-            const nomeProduto = produto.querySelector('.produto-info h3').textContent.toLowerCase();
-            if (!nomeProduto.includes(searchTerm.toLowerCase())) {
-                mostrar = false;
-            }
-        }
-
-        if (produto._filterTimer) {
-            clearTimeout(produto._filterTimer);
-        }
-
-        if (mostrar) {
-            visibleCount++;
-            produto.style.display = 'flex';
-            requestAnimationFrame(() => {
-                produto.classList.remove('product-hidden');
-            });
-        } else {
-            produto.classList.add('product-hidden');
-            produto._filterTimer = setTimeout(() => {
-                if (produto.classList.contains('product-hidden')) {
-                    produto.style.display = 'none';
-                }
-            }, 300);
-        }
+        card.classList.toggle('product-hidden', !shouldShow);
+        card.style.display = shouldShow ? '' : 'none';
+        if (shouldShow) visible += 1;
     });
 
-    atualizarContadoresFiltros(searchTerm);
-
-    if (noResults) {
-        if (visibleCount === 0) {
-            noResults.classList.remove('hidden');
-        } else {
-            noResults.classList.add('hidden');
-        }
-    }
+    if (noResults) noResults.classList.toggle('hidden', visible !== 0);
 }
 
-function limparPesquisaProdutos() {
-    const searchInput = document.getElementById('searchInput');
-    const filtroButtons = document.querySelectorAll('.filtro-btn');
-    const todosBtn = document.querySelector('.filtro-btn[data-filtro="todos"]');
-    const filterToggle = document.getElementById('filterToggle');
-    const filterMenu = document.getElementById('filterMenu');
+function initializeCart() {
+    const cartTriggers = document.querySelectorAll('.cart-trigger, .cart-icon');
+    const cartModal = document.getElementById('cartModal');
+    const closeButton = document.querySelector('.close-cart');
+    const checkoutButton = document.getElementById('checkoutButton');
 
-    if (searchInput) searchInput.value = '';
-
-    filtroButtons.forEach(btn => btn.classList.remove('active'));
-    if (todosBtn) todosBtn.classList.add('active');
-
-    filtrarProdutos('todos', '');
-    if (filterToggle) filterToggle.classList.remove('active');
-    if (filterMenu) filterMenu.classList.remove('active');
-    scrollToSection('produtos');
-}
-
-// FAQ Accordion
-function initializeFAQ() {
-    const faqItems = document.querySelectorAll('.faq-item');
-    
-    faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
-        question.addEventListener('click', () => {
-            const isActive = item.classList.contains('active');
-            
-            // Fecha todos os outros
-            faqItems.forEach(otherItem => otherItem.classList.remove('active'));
-            
-            // Abre o atual se não estava ativo
-            if (!isActive) item.classList.add('active');
+    cartTriggers.forEach(trigger => {
+        trigger.addEventListener('click', event => {
+            if (!cartModal) return;
+            event.preventDefault();
+            openCart();
         });
     });
+
+    if (closeButton) closeButton.addEventListener('click', closeCart);
+
+    if (cartModal) {
+        cartModal.addEventListener('click', event => {
+            if (event.target.matches('[data-close-cart]')) closeCart();
+        });
+    }
+
+    if (checkoutButton) checkoutButton.addEventListener('click', checkout);
 }
 
-// Scroll to section
-function scrollToSection(sectionId) {
-    const section = document.getElementById(sectionId);
-    if (section) {
-        const targetPosition = section.getBoundingClientRect().top + window.pageYOffset - 100; // Offset para a navbar
-        const startPosition = window.pageYOffset;
-        const distance = targetPosition - startPosition;
-        const duration = 500; // Duração em ms (mais lento = mais cinematográfico)
-        let start = null;
+function openCart() {
+    const cartModal = document.getElementById('cartModal');
+    if (!cartModal) return;
 
-        function step(timestamp) {
-            if (!start) start = timestamp;
-            const progress = timestamp - start;
-            window.scrollTo(0, easeInOutQuad(progress, startPosition, distance, duration));
-            if (progress < duration) window.requestAnimationFrame(step);
-        }
+    cartModal.classList.add('active');
+    cartModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+}
 
-        // Função de Easing (Quad) para suavidade cinematográfica
-        function easeInOutQuad(t, b, c, d) {
-            t /= d / 2;
-            if (t < 1) return c / 2 * t * t + b;
-            t--;
-            return -c / 2 * (t * (t - 2) - 1) + b;
-        }
+function closeCart() {
+    const cartModal = document.getElementById('cartModal');
+    if (!cartModal) return;
 
-        window.requestAnimationFrame(step);
+    cartModal.classList.remove('active');
+    cartModal.setAttribute('aria-hidden', 'true');
+    if (!document.querySelector('.product-modal.active')) {
+        document.body.classList.remove('modal-open');
     }
 }
 
-// Notification
-function mostrarNotificacao(mensagem) {
-    const notif = document.createElement('div');
-    notif.style.cssText = `
-        position: fixed;
-        top: 100px;
-        right: 20px;
-        background: var(--primary);
-        color: white;
-        padding: 1rem 2rem;
-        border-radius: 2px;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-        z-index: 10000;
-        animation: slideInLeft 0.3s ease-out;
+function addToCart(productId, quantity = 1, selectedColor = '') {
+    const product = getProduct(productId);
+    if (!product) return;
+
+    const color = selectedColor || getDefaultProductColor(product);
+    const cartId = createCartItemKey(productId, color);
+    const item = cart.find(entry => getCartItemKey(entry) === cartId);
+    if (item) {
+        item.quantity += quantity;
+    } else {
+        cart.push({
+            cartId,
+            id: product.id,
+            name: product.name,
+            color,
+            price: product.price,
+            quantity
+        });
+    }
+
+    saveCart();
+    renderCart();
+    showToast('Produto adicionado ao carrinho.');
+}
+
+function removeFromCart(cartItemKey) {
+    cart = cart.filter(item => getCartItemKey(item) !== cartItemKey);
+    saveCart();
+    renderCart();
+}
+
+function updateCartQuantity(cartItemKey, quantity) {
+    const item = cart.find(entry => getCartItemKey(entry) === cartItemKey);
+    if (!item) return;
+
+    if (quantity <= 0) {
+        removeFromCart(cartItemKey);
+        return;
+    }
+
+    item.quantity = quantity;
+    saveCart();
+    renderCart();
+}
+
+function renderCart() {
+    const cartItems = document.getElementById('cartItems');
+    const countElements = document.querySelectorAll('.cart-count');
+    const subtotalElement = document.getElementById('subtotal');
+    const totalElement = document.getElementById('total');
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const subtotal = cart.reduce((sum, item) => sum + (Number.isFinite(item.price) ? item.price : 0) * item.quantity, 0);
+    const hasPricedItems = cart.some(item => Number.isFinite(item.price));
+
+    countElements.forEach(element => {
+        element.textContent = String(totalItems);
+    });
+
+    if (subtotalElement) subtotalElement.textContent = hasPricedItems ? formatPrice(subtotal) : 'A definir';
+    if (totalElement) totalElement.textContent = hasPricedItems ? formatPrice(subtotal) : 'A definir';
+
+    if (!cartItems) return;
+
+    if (!cart.length) {
+        cartItems.innerHTML = '<p class="empty-cart">Seu carrinho está vazio.</p>';
+        return;
+    }
+
+    cartItems.innerHTML = cart.map(item => {
+        const cartItemKey = getCartItemKey(item);
+
+        return `
+        <article class="cart-item">
+            <div>
+                <h4>${escapeHTML(item.name)}</h4>
+                <p>${escapeHTML(item.color || 'Cor única')} · ${formatPrice(item.price)} cada</p>
+            </div>
+            <div class="cart-controls">
+                <button class="qty-btn" type="button" data-cart-decrease="${escapeHTML(cartItemKey)}" aria-label="Diminuir quantidade">
+                    <i class="fas fa-minus" aria-hidden="true"></i>
+                </button>
+                <span class="qty-value">${item.quantity}</span>
+                <button class="qty-btn" type="button" data-cart-increase="${escapeHTML(cartItemKey)}" aria-label="Aumentar quantidade">
+                    <i class="fas fa-plus" aria-hidden="true"></i>
+                </button>
+                <button class="qty-btn remove-btn" type="button" data-cart-remove="${escapeHTML(cartItemKey)}" aria-label="Remover produto">
+                    <i class="fas fa-trash" aria-hidden="true"></i>
+                </button>
+            </div>
+        </article>
     `;
-    notif.textContent = mensagem;
-    document.body.appendChild(notif);
+    }).join('');
+
+    cartItems.querySelectorAll('[data-cart-decrease]').forEach(button => {
+        button.addEventListener('click', () => {
+            const item = cart.find(entry => getCartItemKey(entry) === button.dataset.cartDecrease);
+            if (item) updateCartQuantity(getCartItemKey(item), item.quantity - 1);
+        });
+    });
+
+    cartItems.querySelectorAll('[data-cart-increase]').forEach(button => {
+        button.addEventListener('click', () => {
+            const item = cart.find(entry => getCartItemKey(entry) === button.dataset.cartIncrease);
+            if (item) updateCartQuantity(getCartItemKey(item), item.quantity + 1);
+        });
+    });
+
+    cartItems.querySelectorAll('[data-cart-remove]').forEach(button => {
+        button.addEventListener('click', () => removeFromCart(button.dataset.cartRemove));
+    });
+}
+
+function saveCart() {
+    localStorage.setItem(SEORF.cartKey, JSON.stringify(cart));
+}
+
+function loadCart() {
+    try {
+        const saved = localStorage.getItem(SEORF.cartKey);
+        cart = saved ? JSON.parse(saved) : [];
+        cart = cart.map(item => {
+            const product = getProduct(item.id);
+            const color = item.color || (product ? getDefaultProductColor(product) : '');
+
+            return {
+                ...item,
+                color,
+                cartId: item.cartId || createCartItemKey(item.id, color)
+            };
+        });
+    } catch {
+        cart = [];
+    }
+}
+
+function checkout() {
+    if (!cart.length) {
+        showToast('Seu carrinho está vazio.');
+        return;
+    }
+
+    const note = document.getElementById('observacoes')?.value.trim();
+    const hasAllPrices = cart.every(item => Number.isFinite(item.price));
+    const total = cart.reduce((sum, item) => sum + (Number.isFinite(item.price) ? item.price : 0) * item.quantity, 0);
+    const lines = [
+        'Olá! Gostaria de realizar este pedido na SEORF:',
+        ''
+    ];
+
+    cart.forEach(item => {
+        lines.push(`Produto: ${item.name}`);
+        lines.push(`Cor: ${item.color || 'Cor única'}`);
+        lines.push(`Quantidade: ${item.quantity}`);
+        lines.push(`Valor unitário: ${formatPrice(item.price)}`);
+        lines.push('');
+    });
+
+    lines.push(hasAllPrices ? `Total: ${formatPrice(total)}` : 'Total: a confirmar');
+    if (note) {
+        lines.push('');
+        lines.push(`Observações: ${note}`);
+    }
+    lines.push('');
+    lines.push('Você pode confirmar a disponibilidade?');
+
+    window.open(`https://wa.me/${SEORF.whatsapp}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank', 'noopener');
 
     setTimeout(() => {
-        notif.style.animation = 'fadeOut 0.3s ease-out';
-        setTimeout(() => notif.remove(), 300);
-    }, 3000);
+        cart = [];
+        saveCart();
+        renderCart();
+        closeCart();
+        showToast('Pedido enviado para o WhatsApp.');
+    }, 500);
 }
 
-// Image lazy loading
-window.addEventListener('load', () => {
-    const images = document.querySelectorAll('img');
-    images.forEach(img => {
-        img.addEventListener('load', function() {
-            this.style.opacity = '1';
+function openProductModal(productId) {
+    const product = getProduct(productId);
+    const modal = document.getElementById('productDetailModal');
+    if (!product || !modal) return;
+
+    activeModalProductId = product.id;
+    modalQuantity = 1;
+    selectedModalColor = getDefaultProductColor(product);
+    modal.innerHTML = createProductModal(product);
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+
+    modal.querySelector('.close-product-modal')?.addEventListener('click', closeProductModal);
+    modal.querySelector('[data-modal-decrease]')?.addEventListener('click', () => updateModalQuantity(-1));
+    modal.querySelector('[data-modal-increase]')?.addEventListener('click', () => updateModalQuantity(1));
+    modal.querySelector('[data-modal-add]')?.addEventListener('click', () => {
+        addToCart(activeModalProductId, modalQuantity, selectedModalColor);
+    });
+    modal.querySelectorAll('[data-modal-color]').forEach(button => {
+        button.addEventListener('click', () => {
+            selectedModalColor = button.dataset.modalColor || selectedModalColor;
+            modal.querySelectorAll('[data-modal-color]').forEach(item => item.classList.remove('active'));
+            button.classList.add('active');
         });
     });
-});
-
-// Scroll animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.animation = 'fadeInUp 0.6s ease-out';
-            observer.unobserve(entry.target);
-        }
+    modal.querySelectorAll('[data-modal-image]').forEach(button => {
+        button.addEventListener('click', () => {
+            const image = button.dataset.modalImage;
+            const mainImage = modal.querySelector('[data-main-modal-image]');
+            if (mainImage) mainImage.src = resolveAsset(image);
+            modal.querySelectorAll('[data-modal-image]').forEach(item => item.classList.remove('active'));
+            button.classList.add('active');
+        });
     });
-}, observerOptions);
 
-document.querySelectorAll('.produto-card, .colecao-card, .faq-item').forEach(el => {
-    observer.observe(el);
-});
+    modal.addEventListener('click', event => {
+        if (event.target === modal) closeProductModal();
+    }, { once: true });
+}
 
-// Prevent cart count increment glitch
-document.addEventListener('click', (e) => {
-    if (document.getElementById('cartModal') && (e.target.matches('.cart-icon') || e.target.closest('.cart-icon'))) {
-        e.preventDefault();
+function createProductModal(product) {
+    const images = getProductImages(product);
+    const [primaryImage] = images;
+    const colors = getProductColors(product);
+
+    return `
+        <section class="product-modal-panel" role="dialog" aria-modal="true" aria-labelledby="productModalTitle">
+            <button class="icon-action close-product-modal" type="button" aria-label="Fechar detalhes">
+                <i class="fas fa-xmark" aria-hidden="true"></i>
+            </button>
+            <div class="product-modal-layout">
+                <div class="modal-media">
+                    <img src="${resolveAsset(primaryImage)}" alt="${escapeHTML(product.name)}" data-main-modal-image>
+                    ${images.length > 1 ? `
+                        <div class="modal-thumbs">
+                            ${images.map((image, index) => `
+                                <button class="${index === 0 ? 'active' : ''}" type="button" data-modal-image="${image}" aria-label="Ver imagem ${index + 1} de ${escapeHTML(product.name)}">
+                                    <img src="${resolveAsset(image)}" alt="">
+                                </button>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                </div>
+                <div class="modal-copy">
+                    <p class="eyebrow">${escapeHTML(product.tag)}</p>
+                    <h2 id="productModalTitle">${escapeHTML(product.name)}</h2>
+                    <strong class="modal-price">${formatPrice(product.price)}</strong>
+                    <p class="modal-description">${escapeHTML(product.description)}</p>
+                    <div class="modal-color-options">
+                        <span>Cor disponível</span>
+                        <div class="modal-color-list">
+                            ${colors.map((color, index) => `
+                                <button class="${index === 0 ? 'active' : ''}" type="button" data-modal-color="${escapeHTML(color)}">
+                                    ${escapeHTML(color)}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <ul class="modal-specs">
+                        ${product.specs.map(spec => `<li>${escapeHTML(spec)}</li>`).join('')}
+                    </ul>
+                    <div class="modal-actions">
+                        <div class="quantity-control">
+                            <button class="qty-btn" type="button" data-modal-decrease aria-label="Diminuir quantidade">
+                                <i class="fas fa-minus" aria-hidden="true"></i>
+                            </button>
+                            <span class="qty-value" data-modal-quantity>${modalQuantity}</span>
+                            <button class="qty-btn" type="button" data-modal-increase aria-label="Aumentar quantidade">
+                                <i class="fas fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <button class="btn btn-dark full-width" type="button" data-modal-add>
+                            <i class="fas fa-bag-shopping" aria-hidden="true"></i>
+                            Adicionar ao carrinho
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    `;
+}
+
+function updateModalQuantity(change) {
+    modalQuantity = Math.max(1, modalQuantity + change);
+    const quantityElement = document.querySelector('[data-modal-quantity]');
+    if (quantityElement) quantityElement.textContent = String(modalQuantity);
+}
+
+function closeProductModal() {
+    const modal = document.getElementById('productDetailModal');
+    if (!modal) return;
+
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    modal.innerHTML = '';
+    activeModalProductId = null;
+    selectedModalColor = '';
+    if (!document.getElementById('cartModal')?.classList.contains('active')) {
+        document.body.classList.remove('modal-open');
     }
+}
+
+function initializeFAQ() {
+    document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('click', () => {
+            const item = question.closest('.faq-item');
+            const list = question.closest('.faq-list');
+            const isActive = item.classList.contains('active');
+
+            list?.querySelectorAll('.faq-item').forEach(entry => entry.classList.remove('active'));
+            item.classList.toggle('active', !isActive);
+        });
+    });
+}
+
+function handleInitialHash() {
+    if (window.location.hash === '#cartModal' || window.location.hash === '#cart') {
+        openCart();
+    }
+}
+
+function showToast(message) {
+    const root = document.getElementById('toastRoot');
+    if (!root) return;
+
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    root.appendChild(toast);
+
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(-8px)';
+        setTimeout(() => toast.remove(), 220);
+    }, 2600);
+}
+
+document.addEventListener('keydown', event => {
+    if (event.key !== 'Escape') return;
+    closeProductModal();
+    closeCart();
+    closeMobileMenu();
 });
