@@ -23,6 +23,8 @@
     --radius: 8px;
     --header-height: 76px;
     --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    --font-sans: "Segoe UI", Arial, sans-serif;
 }
 
 html {
@@ -61,7 +63,7 @@ body {
     overflow-x: hidden;
     background: var(--foam);
     color: var(--text);
-    font-family: "Segoe UI", Arial, sans-serif;
+    font-family: var(--font-sans);
     line-height: 1.6;
     letter-spacing: 0;
 }
@@ -104,10 +106,10 @@ a {
 .eyebrow {
     color: var(--sea-dark);
     font-size: 0.78rem;
-    font-weight: 700;
+    font-weight: 500;
     letter-spacing: 0;
-    line-height: 1.2;
-    text-transform: uppercase;
+    line-height: 1.25;
+    text-transform: none;
 }
 
 h1,
@@ -115,7 +117,7 @@ h2,
 h3,
 h4 {
     color: var(--ink);
-    font-family: Georgia, "Times New Roman", serif;
+    font-family: var(--font-serif);
     font-weight: 400;
     letter-spacing: 0;
     line-height: 1.02;
@@ -124,6 +126,51 @@ h4 {
 
 p {
     letter-spacing: 0;
+}
+
+.price-badge {
+    --price-accent: var(--sea-dark);
+    width: max-content;
+    max-width: 100%;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.28rem;
+    padding: 0.36rem 0.56rem 0.4rem;
+    border: 1px solid rgba(45, 116, 111, 0.2);
+    border-radius: var(--radius);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(111, 183, 180, 0.12));
+    color: var(--ink);
+    box-shadow: 0 12px 24px rgba(20, 40, 65, 0.08);
+    font-weight: 700;
+    font-variant-numeric: lining-nums tabular-nums;
+    letter-spacing: 0;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.price-currency {
+    color: var(--price-accent);
+    font-family: var(--font-sans);
+    font-size: 0.68em;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.price-amount {
+    font-family: var(--font-serif);
+    font-size: 1.38em;
+    font-weight: 700;
+    line-height: 0.9;
+}
+
+.price-badge--pending {
+    color: var(--muted);
+}
+
+.price-pending {
+    font-family: var(--font-sans);
+    font-size: 0.88rem;
+    font-weight: 800;
 }
 
 .btn {
@@ -282,7 +329,7 @@ p {
 
 .loader-copy strong {
     color: var(--ink);
-    font-family: Georgia, "Times New Roman", serif;
+    font-family: var(--font-serif);
     font-size: 2.15rem;
     font-weight: 400;
     letter-spacing: 0;
@@ -383,7 +430,7 @@ p {
 }
 
 .brand-word {
-    font-family: Georgia, "Times New Roman", serif;
+    font-family: var(--font-serif);
     font-size: 1.22rem;
     line-height: 1;
     letter-spacing: 0;
@@ -633,6 +680,7 @@ p {
     background: rgba(255, 255, 255, 0.66);
     color: var(--ink);
     cursor: pointer;
+    font-weight: 500;
     transition: background 220ms var(--ease), color 220ms var(--ease), border-color 220ms var(--ease), transform 220ms var(--ease);
 }
 
@@ -649,7 +697,7 @@ p {
 
 .products-grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 1.15rem;
 }
 
@@ -658,17 +706,42 @@ p {
 }
 
 .product-card {
+    --image-shift-x: 0px;
+    --image-shift-y: 0px;
+    --image-tilt: 0deg;
     min-width: 0;
     overflow: hidden;
     border: 1px solid rgba(20, 40, 65, 0.1);
     border-radius: var(--radius);
     background: var(--white);
     box-shadow: 0 16px 40px rgba(20, 40, 65, 0.06);
-    transition: transform 220ms var(--ease), box-shadow 220ms var(--ease), opacity 220ms var(--ease);
+    animation: productCardEntrance 640ms var(--ease) backwards;
+    transition: transform 220ms var(--ease), box-shadow 220ms var(--ease), opacity 220ms var(--ease), border-color 220ms var(--ease);
+}
+
+.product-card:nth-child(2) {
+    animation-delay: 45ms;
+}
+
+.product-card:nth-child(3) {
+    animation-delay: 90ms;
+}
+
+.product-card:nth-child(4) {
+    animation-delay: 135ms;
+}
+
+.product-card:nth-child(5) {
+    animation-delay: 180ms;
+}
+
+.product-card:nth-child(n + 6) {
+    animation-delay: 220ms;
 }
 
 .product-card:hover {
-    transform: translateY(-5px);
+    border-color: rgba(45, 116, 111, 0.2);
+    transform: translateY(-6px);
     box-shadow: var(--shadow-soft);
 }
 
@@ -676,44 +749,107 @@ p {
     opacity: 0;
     transform: translateY(8px);
     pointer-events: none;
+    animation: none;
+}
+
+@keyframes productCardEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .product-media {
+    --hover-x: 50%;
+    --hover-y: 50%;
     position: relative;
     aspect-ratio: 1 / 1;
     overflow: hidden;
-    background: var(--white);
+    isolation: isolate;
+    background:
+        radial-gradient(circle at 50% 18%, rgba(111, 183, 180, 0.15), transparent 38%),
+        linear-gradient(145deg, rgba(251, 250, 246, 0.95), var(--white));
+}
+
+.product-media::before,
+.product-media::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+}
+
+.product-media::before {
+    inset: 0;
+    z-index: 1;
+    background:
+        radial-gradient(circle at var(--hover-x) var(--hover-y), rgba(111, 183, 180, 0.22), transparent 36%),
+        linear-gradient(180deg, rgba(20, 40, 65, 0), rgba(20, 40, 65, 0.04));
+    opacity: 0;
+    transition: opacity 320ms var(--ease);
+}
+
+.product-media::after {
+    inset: -45%;
+    z-index: 2;
+    background: linear-gradient(115deg, transparent 38%, rgba(255, 255, 255, 0.56) 50%, transparent 62%);
+    opacity: 0;
+    transform: translateX(-38%) rotate(10deg);
+    transition: opacity 240ms var(--ease), transform 680ms var(--ease);
 }
 
 .product-media img {
+    position: relative;
+    z-index: 0;
     width: 100%;
     height: 100%;
     padding: 0.8rem;
     object-fit: contain;
-    transition: transform 520ms var(--ease);
+    filter: drop-shadow(0 16px 22px rgba(8, 21, 34, 0.08));
+    transform: translate3d(var(--image-shift-x), var(--image-shift-y), 0) rotate(var(--image-tilt)) scale(1);
+    transition: transform 540ms var(--ease), filter 340ms var(--ease);
+    will-change: transform;
+}
+
+.product-card:hover .product-media::before {
+    opacity: 1;
+}
+
+.product-card:hover .product-media::after {
+    opacity: 1;
+    transform: translateX(36%) rotate(10deg);
 }
 
 .product-card:hover .product-media img {
-    transform: scale(1.03);
+    filter: drop-shadow(0 24px 30px rgba(8, 21, 34, 0.16));
+    transform: translate3d(var(--image-shift-x), calc(var(--image-shift-y) - 6px), 0) rotate(calc(var(--image-tilt) - 1deg)) scale(1.075);
 }
 
 .product-tag {
     position: absolute;
+    z-index: 3;
     top: 0.72rem;
     left: 0.72rem;
     max-width: calc(100% - 1.44rem);
     padding: 0.35rem 0.55rem;
+    border: 1px solid rgba(20, 40, 65, 0.12);
     border-radius: var(--radius);
-    background: rgba(251, 250, 246, 0.9);
+    background: rgba(251, 250, 246, 0.86);
     color: var(--ink);
     font-size: 0.72rem;
-    font-weight: 800;
-    line-height: 1.1;
+    font-weight: 500;
+    line-height: 1.12;
+    box-shadow: 0 10px 24px rgba(8, 21, 34, 0.08);
     backdrop-filter: blur(10px);
 }
 
 .product-quick-add {
     position: absolute;
+    z-index: 3;
     right: 0.72rem;
     bottom: 0.72rem;
     border-color: rgba(255, 255, 255, 0.72);
@@ -723,6 +859,7 @@ p {
 
 .product-favorite {
     position: absolute;
+    z-index: 3;
     top: 0.72rem;
     right: 0.72rem;
     border-color: rgba(255, 255, 255, 0.72);
@@ -746,7 +883,7 @@ p {
 .product-info h3 {
     min-height: 2.35em;
     color: var(--ink);
-    font-family: "Segoe UI", Arial, sans-serif;
+    font-family: var(--font-sans);
     font-size: 1.02rem;
     font-weight: 700;
     line-height: 1.18;
@@ -755,16 +892,19 @@ p {
 
 .product-meta {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
     gap: 0.8rem;
 }
 
 .product-price {
-    color: var(--ink);
-    font-size: 1.16rem;
-    font-weight: 800;
-    line-height: 1;
+    --price-accent: var(--sea-dark);
+    flex: 0 0 auto;
+    font-size: 0.9rem;
+}
+
+.product-price .price-amount {
+    font-size: 1.42em;
 }
 
 .product-color {
@@ -806,7 +946,7 @@ p {
 
 .no-results h3 {
     margin-top: 0.7rem;
-    font-family: "Segoe UI", Arial, sans-serif;
+    font-family: var(--font-sans);
     font-size: 1.2rem;
     font-weight: 800;
 }
@@ -1106,7 +1246,7 @@ p {
     padding: 0 0.25rem;
     color: var(--ink);
     font-size: 0.82rem;
-    font-weight: 800;
+    font-weight: 600;
 }
 
 .filter-chip-list,
@@ -1124,6 +1264,11 @@ p {
     gap: 0.65rem;
     padding: 0.5rem 0.62rem;
     font-size: 0.88rem;
+    line-height: 1.1;
+}
+
+.filter-chip span {
+    font-weight: 500;
 }
 
 .filter-chip strong {
@@ -1136,6 +1281,7 @@ p {
     background: rgba(20, 40, 65, 0.08);
     color: inherit;
     font-size: 0.76rem;
+    font-weight: 600;
     line-height: 1;
 }
 
@@ -1183,7 +1329,7 @@ p {
     color: var(--ink);
     cursor: pointer;
     font-size: 0.84rem;
-    font-weight: 700;
+    font-weight: 500;
     transition: background 220ms var(--ease), border-color 220ms var(--ease), color 220ms var(--ease), transform 220ms var(--ease);
 }
 
@@ -1320,7 +1466,8 @@ p {
 .inspiration-section {
     padding: 5.6rem 0;
     background:
-        linear-gradient(90deg, var(--ink) 0%, var(--ink) 42%, var(--shell) 42%, var(--shell) 100%);
+        linear-gradient(90deg, rgba(8, 21, 34, 0.86) 0%, rgba(8, 21, 34, 0.72) 44%, rgba(8, 21, 34, 0.36) 100%),
+        url("../assets/images/img-5.jpg") center / cover no-repeat;
 }
 
 .inspiration-layout {
@@ -1514,7 +1661,7 @@ p {
     background: transparent;
     color: var(--ink);
     cursor: pointer;
-    font-family: Georgia, "Times New Roman", serif;
+    font-family: var(--font-serif);
     font-size: 1.12rem;
     font-weight: 400;
     line-height: 1.25;
@@ -1645,16 +1792,32 @@ p {
 
 .cart-item h4 {
     color: var(--ink);
-    font-family: "Segoe UI", Arial, sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.98rem;
     font-weight: 800;
     line-height: 1.2;
 }
 
-.cart-item p {
+.cart-item-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.34rem;
     margin-top: 0.25rem;
     color: var(--muted);
     font-size: 0.86rem;
+}
+
+.cart-item-separator {
+    color: rgba(109, 122, 131, 0.56);
+}
+
+.cart-unit-price {
+    color: var(--ink);
+    font-size: 0.84rem;
+    font-weight: 700;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
 }
 
 .favorite-item {
@@ -1708,7 +1871,7 @@ p {
 
 .favorite-item h4 {
     color: var(--ink);
-    font-family: "Segoe UI", Arial, sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.98rem;
     font-weight: 800;
     line-height: 1.18;
@@ -1721,10 +1884,12 @@ p {
     line-height: 1.25;
 }
 
-.favorite-item strong {
+.favorite-price {
     color: var(--ink);
-    font-size: 1rem;
-    line-height: 1;
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
 }
 
 .favorite-item-actions {
@@ -1797,6 +1962,15 @@ p {
 
 .cart-summary span {
     color: var(--muted);
+}
+
+.cart-total-price {
+    color: var(--ink);
+    font-size: 1rem;
+    font-weight: 800;
+    line-height: 1;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
 }
 
 .cart-note {
@@ -1992,10 +2166,17 @@ p {
 }
 
 .modal-price {
-    margin: 1rem 0;
-    color: var(--ink);
-    font-size: 1.7rem;
-    font-weight: 900;
+    --price-accent: var(--ink);
+    align-self: flex-start;
+    margin: 1rem 0 1.15rem;
+    padding: 0.52rem 0.72rem 0.6rem;
+    border-color: rgba(20, 40, 65, 0.18);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(111, 183, 180, 0.16));
+    font-size: 1.06rem;
+}
+
+.modal-price .price-amount {
+    font-size: 1.72em;
 }
 
 .modal-description {
@@ -2238,13 +2419,13 @@ p {
 
 .value-card span {
     color: var(--coral);
-    font-family: Georgia, "Times New Roman", serif;
+    font-family: var(--font-serif);
     font-size: 2rem;
 }
 
 .value-card h3 {
     margin-top: 0.8rem;
-    font-family: "Segoe UI", Arial, sans-serif;
+    font-family: var(--font-sans);
     font-size: 1.08rem;
     font-weight: 800;
 }
@@ -2336,7 +2517,7 @@ p {
 .site-footer h3 {
     margin-bottom: 0.9rem;
     color: var(--white);
-    font-family: "Segoe UI", Arial, sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.98rem;
     font-weight: 800;
 }
@@ -2416,7 +2597,9 @@ p {
     }
 
     .inspiration-section {
-        background: var(--ink);
+        background:
+            linear-gradient(180deg, rgba(8, 21, 34, 0.88), rgba(8, 21, 34, 0.54)),
+            url("../assets/images/img-5.jpeg") center / cover no-repeat;
     }
 
     .inspiration-copy {
@@ -2742,7 +2925,8 @@ p {
     }
 
     .product-price {
-        font-size: 1rem;
+        padding: 0.3rem 0.46rem 0.34rem;
+        font-size: 0.82rem;
     }
 
     .product-color {

@@ -231,6 +231,53 @@ function formatPrice(value) {
     return Number.isFinite(value) ? formatterBRL.format(value) : 'A definir';
 }
 
+function getPriceParts(value) {
+    if (!Number.isFinite(value)) return null;
+
+    const parts = formatterBRL.formatToParts(value);
+    const currency = parts.find(part => part.type === 'currency')?.value || 'R$';
+    const amount = parts
+        .filter(part => part.type !== 'currency' && part.type !== 'literal')
+        .map(part => part.value)
+        .join('');
+
+    return { currency, amount };
+}
+
+function renderPriceInner(value) {
+    const price = getPriceParts(value);
+
+    if (!price) {
+        return '<span class="price-pending" aria-hidden="true">A definir</span>';
+    }
+
+    return `
+        <span class="price-currency" aria-hidden="true">${escapeHTML(price.currency)}</span>
+        <span class="price-amount" aria-hidden="true">${escapeHTML(price.amount)}</span>
+    `;
+}
+
+function renderPrice(value, className = '') {
+    const classes = ['price-badge', className, Number.isFinite(value) ? '' : 'price-badge--pending']
+        .filter(Boolean)
+        .join(' ');
+
+    return `<strong class="${classes}" aria-label="${escapeHTML(formatPrice(value))}">${renderPriceInner(value)}</strong>`;
+}
+
+function renderPlainPrice(value, className = '') {
+    return `<strong class="${className}">${escapeHTML(formatPrice(value))}</strong>`;
+}
+
+function setPlainPriceElement(element, value) {
+    if (!element) return;
+
+    element.classList.remove('price-badge', 'price-badge--pending');
+    element.classList.add('cart-total-price');
+    element.removeAttribute('aria-label');
+    element.textContent = formatPrice(value);
+}
+
 function escapeHTML(value) {
     return String(value)
         .replace(/&/g, '&amp;')
@@ -519,6 +566,7 @@ function initializeProducts() {
     const visibleProducts = Number.isFinite(limit) ? products.slice(0, limit) : products;
 
     grid.innerHTML = visibleProducts.map(product => createProductCard(product)).join('');
+    initializeProductImageMotion(grid);
 
     grid.addEventListener('click', event => {
         const favoriteButton = event.target.closest('[data-toggle-favorite]');
@@ -537,6 +585,39 @@ function initializeProducts() {
         if (openButton) {
             openProductModal(openButton.dataset.openProduct);
         }
+    });
+}
+
+function initializeProductImageMotion(grid) {
+    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!canHover || reduceMotion) return;
+
+    grid.querySelectorAll('.product-card').forEach(card => {
+        const media = card.querySelector('.product-media');
+        if (!media) return;
+
+        card.addEventListener('pointermove', event => {
+            const rect = card.getBoundingClientRect();
+            const x = (event.clientX - rect.left) / rect.width - 0.5;
+            const y = (event.clientY - rect.top) / rect.height - 0.5;
+            const hoverX = ((x + 0.5) * 100).toFixed(1);
+            const hoverY = ((y + 0.5) * 100).toFixed(1);
+
+            card.style.setProperty('--image-shift-x', `${(x * 10).toFixed(2)}px`);
+            card.style.setProperty('--image-shift-y', `${(y * 8).toFixed(2)}px`);
+            card.style.setProperty('--image-tilt', `${(x * 2.4).toFixed(2)}deg`);
+            media.style.setProperty('--hover-x', `${hoverX}%`);
+            media.style.setProperty('--hover-y', `${hoverY}%`);
+        });
+
+        card.addEventListener('pointerleave', () => {
+            card.style.setProperty('--image-shift-x', '0px');
+            card.style.setProperty('--image-shift-y', '0px');
+            card.style.setProperty('--image-tilt', '0deg');
+            media.style.setProperty('--hover-x', '50%');
+            media.style.setProperty('--hover-y', '50%');
+        });
     });
 }
 
@@ -567,7 +648,7 @@ function createProductCard(product) {
             <div class="product-info">
                 <h3>${escapeHTML(product.name)}</h3>
                 <div class="product-meta">
-                    <strong class="product-price">${formatPrice(product.price)}</strong>
+                    ${renderPrice(product.price, 'product-price')}
                     <span class="product-color">${escapeHTML(product.color)}</span>
                 </div>
                 <button class="product-open" type="button" data-open-product="${product.id}">Ver detalhes</button>
@@ -983,7 +1064,7 @@ function renderFavorites() {
                     <h4>${escapeHTML(product.name)}</h4>
                     <p>${escapeHTML(product.color || 'Cor única')}</p>
                 </div>
-                <strong>${formatPrice(product.price)}</strong>
+                ${renderPlainPrice(product.price, 'favorite-price')}
                 <div class="favorite-item-actions">
                     <button class="favorite-detail-btn" type="button" data-favorite-open="${product.id}">Detalhes</button>
                     <button class="qty-btn" type="button" data-favorite-add="${product.id}" aria-label="Adicionar ${escapeHTML(product.name)} ao carrinho">
@@ -1090,8 +1171,8 @@ function renderCart() {
         element.textContent = String(totalItems);
     });
 
-    if (subtotalElement) subtotalElement.textContent = hasAllPrices ? formatPrice(subtotal) : 'A definir';
-    if (totalElement) totalElement.textContent = hasAllPrices ? formatPrice(subtotal) : 'A definir';
+    setPlainPriceElement(subtotalElement, hasAllPrices ? subtotal : NaN);
+    setPlainPriceElement(totalElement, hasAllPrices ? subtotal : NaN);
 
     if (!cartItems) return;
 
@@ -1107,7 +1188,12 @@ function renderCart() {
         <article class="cart-item">
             <div>
                 <h4>${escapeHTML(item.name)}</h4>
-                <p>${escapeHTML(item.color || 'Cor única')} · ${formatPrice(item.price)} cada</p>
+                <p class="cart-item-meta">
+                    <span>${escapeHTML(item.color || 'Cor única')}</span>
+                    <span class="cart-item-separator">·</span>
+                    ${renderPlainPrice(item.price, 'cart-unit-price')}
+                    <span>cada</span>
+                </p>
             </div>
             <div class="cart-controls">
                 <button class="qty-btn" type="button" data-cart-decrease="${escapeHTML(cartItemKey)}" aria-label="Diminuir quantidade">
@@ -1283,7 +1369,7 @@ function createProductModal(product) {
                 <div class="modal-copy">
                     ${product.tag ? `<p class="eyebrow">${escapeHTML(product.tag)}</p>` : ''}
                     <h2 id="productModalTitle">${escapeHTML(product.name)}</h2>
-                    <strong class="modal-price">${formatPrice(product.price)}</strong>
+                    ${renderPrice(product.price, 'modal-price')}
                     <p class="modal-description">${escapeHTML(product.description)}</p>
                     <div class="modal-color-options">
                         <span>Cor disponível</span>
