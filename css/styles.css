@@ -1581,7 +1581,7 @@ p {
 
 .faq-question {
     width: 100%;
-    min-height: 72px;
+    min-height: 68px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1590,10 +1590,10 @@ p {
     background: transparent;
     color: var(--ink);
     cursor: pointer;
-    font-family: var(--font-serif);
-    font-size: 1.12rem;
-    font-weight: 400;
-    line-height: 1.25;
+    font-family: var(--font-sans);
+    font-size: 1.16rem;
+    font-weight: 700;
+    line-height: 1.22;
     text-align: left;
 }
 
@@ -1629,9 +1629,17 @@ p {
     transition: max-height 260ms var(--ease), padding 260ms var(--ease);
 }
 
+.faq-answer p {
+    max-width: 620px;
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 0.92rem;
+    line-height: 1.45;
+}
+
 .faq-item.active .faq-answer {
-    max-height: 200px;
-    padding-bottom: 1.2rem;
+    max-height: 140px;
+    padding-bottom: 0.9rem;
 }
 
 .cart-modal {
@@ -1954,10 +1962,14 @@ p {
 }
 
 .close-product-modal {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    z-index: 2;
+    position: fixed;
+    top: max(1rem, env(safe-area-inset-top));
+    right: max(1rem, env(safe-area-inset-right));
+    z-index: 3300;
+    border-color: rgba(20, 40, 65, 0.18);
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 14px 34px rgba(8, 21, 34, 0.18);
+    backdrop-filter: blur(12px);
 }
 
 .product-modal-layout {

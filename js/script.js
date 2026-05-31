@@ -812,7 +812,14 @@ function initializeFilters() {
 
             if (redirectSearch) {
                 const query = event.target.value.trim();
-                window.location.href = query ? `${searchTarget}?busca=${encodeURIComponent(query)}` : searchTarget;
+                if (!query) {
+                    window.location.href = searchTarget;
+                    return;
+                }
+
+                const targetUrl = new URL(searchTarget, window.location.href);
+                targetUrl.searchParams.set('busca', query);
+                window.location.href = targetUrl.href;
                 return;
             }
 
