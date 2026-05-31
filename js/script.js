@@ -20,7 +20,7 @@ const products = [
         categories: ['pulseiras', 'destaque', 'novidade'],
         image: './assets/images/produto-1.jpeg',
         description: 'Pulseira preta com detalhe dourado, elegante e fácil de combinar.',
-        specs: ['Cor: preto com dourado', 'Pulseira de corda', 'Acabamento metálico premium']
+        specs: ['Visual elegante', 'Pulseira de corda', 'Acabamento metálico premium']
     },
     {
         id: 'seorf-02',
@@ -33,7 +33,7 @@ const products = [
         image: './assets/images/produto-2.jpeg',
         images: ['./assets/images/produto-2.jpeg', './assets/images/produto-10.jpeg'],
         description: 'Modelo com medalha central e presença discreta para composições elegantes.',
-        specs: ['Cores: azul e preto', 'Medalha São Bento', 'Acabamento de presença discreta']
+        specs: ['Presença discreta', 'Medalha São Bento', 'Acabamento de presença discreta']
     },
     {
         id: 'seorf-03',
@@ -46,7 +46,7 @@ const products = [
         image: './assets/images/produto-3.png',
         images: ['./assets/images/produto-3.png', './assets/images/produto-14.jpeg'],
         description: 'Pulseira de leitura leve, com tons frios e acabamento sofisticado.',
-        specs: ['Cores: prata e azul', 'Trama texturizada', 'Detalhe central refinado']
+        specs: ['Leitura leve', 'Trama texturizada', 'Detalhe central refinado']
     },
     {
         id: 'seorf-04',
@@ -57,9 +57,9 @@ const products = [
         tag: 'Destaque',
         categories: ['pulseiras', 'destaque'],
         image: './assets/images/produto-4.jpeg',
-        images: ['./assets/images/produto-4.jpeg', './assets/images/produto-15.jpeg'],
+        images: ['./assets/images/produto-4.jpeg', './assets/images/produto-20.png'],
         description: 'Design preto e prata com brilho limpo para o dia a dia.',
-        specs: ['Cores: preto e prata', 'Design minimalista', 'Acabamento prateado']
+        specs: ['Brilho limpo', 'Design minimalista', 'Acabamento prateado']
     },
     {
         id: 'seorf-05',
@@ -72,7 +72,7 @@ const products = [
         image: './assets/images/produto-5.jpeg',
         images: ['./assets/images/produto-5.jpeg', './assets/images/produto-15.jpeg'],
         description: 'Modelo metalizado com mistura dourada e prata em visual elegante.',
-        specs: ['Cores: dourado e prata', 'Perfil elegante', 'Detalhe metálico premium']
+        specs: ['Mistura metalizada', 'Perfil elegante', 'Detalhe metálico premium']
     },
     {
         id: 'seorf-06',
@@ -83,9 +83,9 @@ const products = [
         tag: 'Destaque',
         categories: ['colares', 'destaque'],
         image: './assets/images/produto-6.png',
-        images: ['./assets/images/produto-6.png', './assets/images/produto-7.png'],
+        images: ['./assets/images/produto-6.png'],
         description: 'Colar preto com detalhe prateado, limpo e marcante.',
-        specs: ['Cor: preto com prata', 'Colar de corda', 'Acabamento prateado']
+        specs: ['Visual marcante', 'Colar de corda', 'Acabamento prateado']
     },
     {
         id: 'seorf-07',
@@ -98,7 +98,7 @@ const products = [
         image: './assets/images/produto-17.jpeg',
         images: ['./assets/images/produto-17.jpeg', './assets/images/produto-18.jpeg', './assets/images/produto-7.png', './assets/images/produto-16.jpeg'],
         description: 'Pulseira com assinatura SEORF, visual marcante e acabamento forte.',
-        specs: ['Cores: azul e preto', 'Linha Riviera', 'Visual esportivo premium']
+        specs: ['Assinatura SEORF', 'Linha Riviera', 'Visual esportivo premium']
     },
     {
         id: 'seorf-08',
@@ -110,7 +110,7 @@ const products = [
         categories: ['pulseiras'],
         image: './assets/images/produto-8.jpeg',
         description: 'Bracelete prata de linhas simples para compor sem excesso.',
-        specs: ['Cor: prata', 'Bracelete minimalista', 'Acabamento polido']
+        specs: ['Linhas simples', 'Bracelete minimalista', 'Acabamento polido']
     },
     {
         id: 'seorf-09',
@@ -122,7 +122,7 @@ const products = [
         categories: ['pulseiras'],
         image: './assets/images/produto-9.jpeg',
         description: 'Versão vermelha da Viena, intensa e pronta para destacar o look.',
-        specs: ['Cor: vermelha', 'Pulseira de corda', 'Detalhe metálico']
+        specs: ['Destaque no look', 'Pulseira de corda', 'Detalhe metálico']
     },
     {
         id: 'seorf-10',
@@ -134,7 +134,7 @@ const products = [
         categories: ['pulseiras'],
         image: './assets/images/produto-11.jpeg',
         description: 'Pulseira vermelha de sete nós, leve e cheia de personalidade.',
-        specs: ['Cor: vermelha', 'Modelo 7 nós', 'Uso casual e versátil']
+        specs: ['Leve e expressiva', 'Modelo 7 nós', 'Uso casual e versátil']
     },
     {
         id: 'seorf-11',
@@ -147,7 +147,7 @@ const products = [
         image: './assets/images/produto-12.png',
         images: ['./assets/images/produto-12.png', './assets/images/produto-13.png'],
         description: 'Trama azul e preta com acabamento limpo e presença versátil.',
-        specs: ['Cores: azul e preto', 'Trama texturizada', 'Acabamento premium']
+        specs: ['Presença versátil', 'Trama texturizada', 'Acabamento premium']
     },
     {
         id: 'seorf-12',
@@ -159,7 +159,7 @@ const products = [
         categories: ['colares', 'destaque'],
         image: './assets/images/produto-19.jpeg',
         description: 'Colar prata de presença elegante para produções mais refinadas.',
-        specs: ['Cor: prata', 'Colar premium', 'Acabamento metálico']
+        specs: ['Presença refinada', 'Colar premium', 'Acabamento metálico']
     },
     {
         id: 'seorf-13',
@@ -171,7 +171,7 @@ const products = [
         categories: ['pulseiras', 'novidade'],
         image: './assets/images/produto-21.png',
         description: 'Pulseira prata com visual urbano, discreto e sofisticado.',
-        specs: ['Cor: prata', 'Design limpo', 'Acabamento polido']
+        specs: ['Visual urbano', 'Design limpo', 'Acabamento polido']
     },
     {
         id: 'seorf-14',
@@ -183,7 +183,7 @@ const products = [
         categories: ['colares', 'novidade'],
         image: './assets/images/produto-23.png',
         description: 'Colar prata leve, com brilho sutil e acabamento versátil.',
-        specs: ['Cor: prata', 'Colar leve', 'Acabamento prateado']
+        specs: ['Brilho sutil', 'Colar leve', 'Acabamento prateado']
     }
 ];
 
