@@ -1,7 +1,8 @@
 const SEORF = {
     whatsapp: '5598985254472',
     instagram: 'https://instagram.com/useseorf',
-    cartKey: 'seorf_cart_v1'
+    cartKey: 'seorf_cart_v1',
+    favoriteKey: 'seorf_favorites_v1'
 };
 
 const formatterBRL = new Intl.NumberFormat('pt-BR', {
@@ -198,18 +199,22 @@ let pendingColorFilters = [];
 let modalQuantity = 1;
 let activeModalProductId = null;
 let selectedModalColor = '';
+let favoriteProductIds = [];
 
 document.addEventListener('DOMContentLoaded', () => {
     initializeLoader();
     initializeHeader();
     initializeNavigation();
     initializeHeroCarousel();
+    loadFavorites();
     initializeProducts();
     initializeFilters();
     initializeCart();
+    initializeFavorites();
     initializeFAQ();
     loadCart();
     renderCart();
+    renderFavorites();
     handleInitialHash();
 });
 
@@ -516,6 +521,12 @@ function initializeProducts() {
     grid.innerHTML = visibleProducts.map(product => createProductCard(product)).join('');
 
     grid.addEventListener('click', event => {
+        const favoriteButton = event.target.closest('[data-toggle-favorite]');
+        if (favoriteButton) {
+            toggleFavorite(favoriteButton.dataset.toggleFavorite);
+            return;
+        }
+
         const addButton = event.target.closest('[data-add-product]');
         if (addButton) {
             addToCart(addButton.dataset.addProduct);
@@ -539,12 +550,16 @@ function createProductCard(product) {
         product.categories.join(' ')
     ].join(' '));
     const tagMarkup = product.tag ? `<span class="product-tag">${escapeHTML(product.tag)}</span>` : '';
+    const isFavorite = isFavoriteProduct(product.id);
 
     return `
         <article class="product-card" data-product-id="${product.id}" data-search="${escapeHTML(searchableText)}" data-categories="${product.categories.join(' ')}">
             <div class="product-media">
                 <img src="${resolveAsset(primaryImage)}" alt="${escapeHTML(product.name)}" loading="lazy">
                 ${tagMarkup}
+                <button class="icon-action product-favorite ${isFavorite ? 'active' : ''}" type="button" data-toggle-favorite="${product.id}" aria-label="${isFavorite ? `Remover ${escapeHTML(product.name)} dos favoritos` : `Adicionar ${escapeHTML(product.name)} aos favoritos`}" aria-pressed="${isFavorite}">
+                    <i class="fas fa-heart" aria-hidden="true"></i>
+                </button>
                 <button class="icon-action product-quick-add" type="button" data-add-product="${product.id}" aria-label="Adicionar ${escapeHTML(product.name)} ao carrinho">
                     <i class="fas fa-plus" aria-hidden="true"></i>
                 </button>
@@ -822,6 +837,10 @@ function openCart() {
     const cartModal = document.getElementById('cartModal');
     if (!cartModal) return;
 
+    if (document.getElementById('favoritesModal')?.classList.contains('active')) {
+        closeFavorites();
+    }
+
     cartModal.classList.add('active');
     cartModal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('modal-open');
@@ -833,8 +852,183 @@ function closeCart() {
 
     cartModal.classList.remove('active');
     cartModal.setAttribute('aria-hidden', 'true');
-    if (!document.querySelector('.product-modal.active')) {
+    if (!document.querySelector('.product-modal.active, .cart-modal.active')) {
         document.body.classList.remove('modal-open');
+    }
+}
+
+function initializeFavorites() {
+    const favoriteTriggers = document.querySelectorAll('.favorites-trigger');
+    const favoritesModal = document.getElementById('favoritesModal');
+    const closeButton = document.querySelector('.close-favorites');
+
+    favoriteTriggers.forEach(trigger => {
+        trigger.addEventListener('click', event => {
+            if (!favoritesModal) return;
+            event.preventDefault();
+            openFavorites();
+        });
+    });
+
+    if (closeButton) closeButton.addEventListener('click', closeFavorites);
+
+    if (favoritesModal) {
+        favoritesModal.addEventListener('click', event => {
+            if (event.target.matches('[data-close-favorites]')) closeFavorites();
+        });
+    }
+}
+
+function openFavorites() {
+    const favoritesModal = document.getElementById('favoritesModal');
+    if (!favoritesModal) return;
+
+    renderFavorites();
+    if (document.getElementById('cartModal')?.classList.contains('active')) {
+        closeCart();
+    }
+
+    favoritesModal.classList.add('active');
+    favoritesModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+}
+
+function closeFavorites() {
+    const favoritesModal = document.getElementById('favoritesModal');
+    if (!favoritesModal) return;
+
+    favoritesModal.classList.remove('active');
+    favoritesModal.setAttribute('aria-hidden', 'true');
+    if (!document.querySelector('.product-modal.active, .cart-modal.active')) {
+        document.body.classList.remove('modal-open');
+    }
+}
+
+function isFavoriteProduct(productId) {
+    return favoriteProductIds.includes(productId);
+}
+
+function toggleFavorite(productId) {
+    const product = getProduct(productId);
+    if (!product) return;
+
+    const shouldRemove = isFavoriteProduct(productId);
+    favoriteProductIds = shouldRemove
+        ? favoriteProductIds.filter(id => id !== productId)
+        : [productId, ...favoriteProductIds];
+
+    saveFavorites();
+    renderFavorites();
+    showToast(shouldRemove ? 'Produto removido dos favoritos.' : 'Produto salvo nos favoritos.');
+}
+
+function removeFavorite(productId) {
+    if (!isFavoriteProduct(productId)) return;
+
+    favoriteProductIds = favoriteProductIds.filter(id => id !== productId);
+    saveFavorites();
+    renderFavorites();
+    showToast('Produto removido dos favoritos.');
+}
+
+function renderFavoriteButtons() {
+    const favoriteCount = String(favoriteProductIds.length);
+
+    document.querySelectorAll('.favorite-count').forEach(element => {
+        element.textContent = favoriteCount;
+    });
+
+    document.querySelectorAll('[data-toggle-favorite]').forEach(button => {
+        const productId = button.dataset.toggleFavorite;
+        const product = getProduct(productId);
+        const isFavorite = isFavoriteProduct(productId);
+
+        button.classList.toggle('active', isFavorite);
+        button.setAttribute('aria-pressed', String(isFavorite));
+        if (product) {
+            button.setAttribute(
+                'aria-label',
+                isFavorite
+                    ? `Remover ${product.name} dos favoritos`
+                    : `Adicionar ${product.name} aos favoritos`
+            );
+        }
+    });
+}
+
+function renderFavorites() {
+    const favoriteItems = document.getElementById('favoriteItems');
+    const favoriteProducts = favoriteProductIds.map(getProduct).filter(Boolean);
+
+    renderFavoriteButtons();
+
+    if (!favoriteItems) return;
+
+    if (!favoriteProducts.length) {
+        favoriteItems.innerHTML = '<p class="empty-cart">Nenhum produto curtido ainda.</p>';
+        return;
+    }
+
+    favoriteItems.innerHTML = favoriteProducts.map(product => {
+        const [primaryImage] = getProductImages(product);
+
+        return `
+        <article class="favorite-item">
+            <button class="favorite-item-media" type="button" data-favorite-open="${product.id}" aria-label="Ver detalhes de ${escapeHTML(product.name)}">
+                <img src="${resolveAsset(primaryImage)}" alt="${escapeHTML(product.name)}" loading="lazy">
+            </button>
+            <div class="favorite-item-copy">
+                <div>
+                    ${product.tag ? `<span class="favorite-item-tag">${escapeHTML(product.tag)}</span>` : ''}
+                    <h4>${escapeHTML(product.name)}</h4>
+                    <p>${escapeHTML(product.color || 'Cor única')}</p>
+                </div>
+                <strong>${formatPrice(product.price)}</strong>
+                <div class="favorite-item-actions">
+                    <button class="favorite-detail-btn" type="button" data-favorite-open="${product.id}">Detalhes</button>
+                    <button class="qty-btn" type="button" data-favorite-add="${product.id}" aria-label="Adicionar ${escapeHTML(product.name)} ao carrinho">
+                        <i class="fas fa-bag-shopping" aria-hidden="true"></i>
+                    </button>
+                    <button class="qty-btn remove-btn" type="button" data-favorite-remove="${product.id}" aria-label="Remover ${escapeHTML(product.name)} dos favoritos">
+                        <i class="fas fa-trash" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </article>
+    `;
+    }).join('');
+
+    favoriteItems.querySelectorAll('[data-favorite-open]').forEach(button => {
+        button.addEventListener('click', () => {
+            closeFavorites();
+            openProductModal(button.dataset.favoriteOpen);
+        });
+    });
+
+    favoriteItems.querySelectorAll('[data-favorite-add]').forEach(button => {
+        button.addEventListener('click', () => {
+            addToCart(button.dataset.favoriteAdd);
+        });
+    });
+
+    favoriteItems.querySelectorAll('[data-favorite-remove]').forEach(button => {
+        button.addEventListener('click', () => removeFavorite(button.dataset.favoriteRemove));
+    });
+}
+
+function saveFavorites() {
+    localStorage.setItem(SEORF.favoriteKey, JSON.stringify(favoriteProductIds));
+}
+
+function loadFavorites() {
+    try {
+        const saved = localStorage.getItem(SEORF.favoriteKey);
+        const parsed = saved ? JSON.parse(saved) : [];
+        favoriteProductIds = Array.isArray(parsed)
+            ? [...new Set(parsed.map(String).filter(id => getProduct(id)))]
+            : [];
+    } catch {
+        favoriteProductIds = [];
     }
 }
 
@@ -1225,7 +1419,7 @@ function closeProductModal() {
     modal.innerHTML = '';
     activeModalProductId = null;
     selectedModalColor = '';
-    if (!document.getElementById('cartModal')?.classList.contains('active')) {
+    if (!document.querySelector('.cart-modal.active')) {
         document.body.classList.remove('modal-open');
     }
 }
@@ -1246,6 +1440,11 @@ function initializeFAQ() {
 function handleInitialHash() {
     if (window.location.hash === '#cartModal' || window.location.hash === '#cart') {
         openCart();
+        return;
+    }
+
+    if (window.location.hash === '#favoritesModal' || window.location.hash === '#favoritos') {
+        openFavorites();
         return;
     }
 
@@ -1274,6 +1473,7 @@ function showToast(message) {
 document.addEventListener('keydown', event => {
     if (event.key !== 'Escape') return;
     closeProductModal();
+    closeFavorites();
     closeCart();
     closeMobileMenu();
 });

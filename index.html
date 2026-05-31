@@ -53,6 +53,10 @@
             </nav>
 
             <div class="nav-actions">
+                <a href="#favoritesModal" class="icon-action favorites-trigger" aria-label="Abrir favoritos">
+                    <i class="fas fa-heart" aria-hidden="true"></i>
+                    <span class="favorite-count">0</span>
+                </a>
                 <a href="#cartModal" class="icon-action cart-trigger" aria-label="Abrir carrinho">
                     <i class="fas fa-bag-shopping" aria-hidden="true"></i>
                     <span class="cart-count">0</span>
@@ -338,6 +342,22 @@
             </div>
         </section>
     </main>
+
+    <div id="favoritesModal" class="cart-modal favorites-modal" aria-hidden="true">
+        <div class="cart-backdrop" data-close-favorites></div>
+        <aside class="cart-panel favorites-panel" role="dialog" aria-modal="true" aria-labelledby="favoritesTitle">
+            <div class="cart-header">
+                <div>
+                    <span class="eyebrow">Produtos salvos</span>
+                    <h2 id="favoritesTitle">Favoritos</h2>
+                </div>
+                <button class="icon-action close-favorites" type="button" aria-label="Fechar favoritos">
+                    <i class="fas fa-xmark" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="favorite-items" id="favoriteItems"></div>
+        </aside>
+    </div>
 
     <div id="cartModal" class="cart-modal" aria-hidden="true">
         <div class="cart-backdrop" data-close-cart></div>
