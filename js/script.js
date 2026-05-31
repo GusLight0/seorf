@@ -566,7 +566,6 @@ function initializeProducts() {
     const visibleProducts = Number.isFinite(limit) ? products.slice(0, limit) : products;
 
     grid.innerHTML = visibleProducts.map(product => createProductCard(product)).join('');
-    initializeProductImageMotion(grid);
 
     grid.addEventListener('click', event => {
         const favoriteButton = event.target.closest('[data-toggle-favorite]');
@@ -585,39 +584,6 @@ function initializeProducts() {
         if (openButton) {
             openProductModal(openButton.dataset.openProduct);
         }
-    });
-}
-
-function initializeProductImageMotion(grid) {
-    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!canHover || reduceMotion) return;
-
-    grid.querySelectorAll('.product-card').forEach(card => {
-        const media = card.querySelector('.product-media');
-        if (!media) return;
-
-        card.addEventListener('pointermove', event => {
-            const rect = card.getBoundingClientRect();
-            const x = (event.clientX - rect.left) / rect.width - 0.5;
-            const y = (event.clientY - rect.top) / rect.height - 0.5;
-            const hoverX = ((x + 0.5) * 100).toFixed(1);
-            const hoverY = ((y + 0.5) * 100).toFixed(1);
-
-            card.style.setProperty('--image-shift-x', `${(x * 10).toFixed(2)}px`);
-            card.style.setProperty('--image-shift-y', `${(y * 8).toFixed(2)}px`);
-            card.style.setProperty('--image-tilt', `${(x * 2.4).toFixed(2)}deg`);
-            media.style.setProperty('--hover-x', `${hoverX}%`);
-            media.style.setProperty('--hover-y', `${hoverY}%`);
-        });
-
-        card.addEventListener('pointerleave', () => {
-            card.style.setProperty('--image-shift-x', '0px');
-            card.style.setProperty('--image-shift-y', '0px');
-            card.style.setProperty('--image-tilt', '0deg');
-            media.style.setProperty('--hover-x', '50%');
-            media.style.setProperty('--hover-y', '50%');
-        });
     });
 }
 
