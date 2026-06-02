@@ -84,7 +84,7 @@ const products = [
         tag: 'Destaque',
         categories: ['colares', 'destaque'],
         image: './assets/images/produto-6.png',
-        images: ['./assets/images/produto-6.png'],
+        images: ['./assets/images/produto-6.png', './assets/images/produto-24.jpeg'],
         description: 'Colar preto com detalhe prateado, limpo e marcante.',
         specs: ['Visual marcante', 'Colar de corda', 'Acabamento prateado']
     },
