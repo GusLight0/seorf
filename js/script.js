@@ -185,6 +185,18 @@ const products = [
         image: './assets/images/produto-23.png',
         description: 'Colar prata leve, com brilho sutil e acabamento versátil.',
         specs: ['Brilho sutil', 'Colar leve', 'Acabamento prateado']
+    },
+    {
+        id: 'seorf-15',
+        name: 'Pulseira Capri',
+        price: 79.90,
+        color: 'Vermelha',
+        colors: ['Vermelha'],
+        tag: 'Novo',
+        categories: ['pulseiras', 'novidade'],
+        image: './assets/images/produto-25.jpeg',
+        description: 'Pulseira vermelha de corda com acabamento prateado, leve e marcante.',
+        specs: ['Corda vermelha texturizada', 'Ajuste deslizante', 'Acabamento prateado']
     }
 ];
 

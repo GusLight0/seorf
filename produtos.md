@@ -97,3 +97,10 @@
 - Descrição: Colar prata leve, com brilho sutil e acabamento versátil.
 - Cor: Prata
 - Preço: R$ 79,90
+
+## Produto 15
+- Imagem: `assets/images/produto-25.jpeg`
+- Nome: Pulseira Capri
+- Descrição: Pulseira vermelha de corda com acabamento prateado, leve e marcante.
+- Cor: Vermelha
+- Preço: R$ 79,90
