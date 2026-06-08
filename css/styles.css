@@ -58,6 +58,116 @@ html {
     background: linear-gradient(180deg, var(--sea-dark), var(--coral));
 }
 
+/* ==================== SCROLL REVEAL ANIMATIONS ==================== */
+
+@keyframes revealFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(28px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes revealFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes revealScale {
+    from {
+        opacity: 0;
+        transform: scale(0.94);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes textRevealFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(28px);
+}
+
+.scroll-reveal.is-visible {
+    animation: revealFadeUp 0.8s var(--ease) forwards;
+}
+
+.scroll-reveal--fade {
+    opacity: 0;
+}
+
+.scroll-reveal--fade.is-visible {
+    animation: revealFadeIn 0.8s var(--ease) forwards;
+}
+
+.scroll-reveal--scale {
+    opacity: 0;
+    transform: scale(0.94);
+}
+
+.scroll-reveal--scale.is-visible {
+    animation: revealScale 0.8s var(--ease) forwards;
+}
+
+/* Delay staggering para múltiplos elementos */
+.scroll-reveal:nth-child(1) { animation-delay: 0ms; }
+.scroll-reveal:nth-child(2) { animation-delay: 80ms; }
+.scroll-reveal:nth-child(3) { animation-delay: 160ms; }
+.scroll-reveal:nth-child(4) { animation-delay: 240ms; }
+.scroll-reveal:nth-child(5) { animation-delay: 320ms; }
+.scroll-reveal:nth-child(6) { animation-delay: 400ms; }
+.scroll-reveal:nth-child(7) { animation-delay: 480ms; }
+.scroll-reveal:nth-child(8) { animation-delay: 560ms; }
+
+/* Smooth transitions para todos os elementos */
+a, button, input, textarea, select {
+    transition: color 220ms var(--ease), background 220ms var(--ease), border-color 220ms var(--ease), box-shadow 220ms var(--ease);
+}
+
+/* Melhorias de transitions de header */
+.site-header {
+    transition: background 260ms var(--ease), box-shadow 260ms var(--ease), backdrop-filter 260ms var(--ease);
+}
+
+/* Smooth scroll behavior para links internos */
+a[href^="#"] {
+    scroll-behavior: smooth;
+}
+
+/* Animações especiais para section-heading */
+.section-heading.scroll-reveal h2 {
+    animation: textRevealFadeUp 0.8s var(--ease) forwards;
+}
+
+.section-heading.scroll-reveal p {
+    animation: textRevealFadeUp 0.8s var(--ease) forwards;
+    animation-delay: 80ms;
+}
+
+.section-heading.scroll-reveal .eyebrow {
+    animation: revealFadeIn 0.6s var(--ease) forwards;
+    animation-delay: 0ms;
+}
+
 body {
     min-width: 320px;
     overflow-x: hidden;

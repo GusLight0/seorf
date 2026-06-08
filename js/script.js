@@ -218,6 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeHeader();
     initializeNavigation();
     initializeHeroCarousel();
+    initializeScrollReveal();
     loadFavorites();
     initializeProducts();
     initializeFilters();
@@ -720,6 +721,15 @@ function initializeFilters() {
         }
     };
 
+    const closeFilterPanel = () => {
+        if (!filterToggle || !filterPanel) return;
+
+        filterToggle.classList.remove('active');
+        filterPanel.classList.remove('active');
+        filterPanel.setAttribute('aria-hidden', 'true');
+        filterToggle.setAttribute('aria-expanded', 'false');
+    };
+
     const resetFilters = ({ includeSearch = true, apply = true } = {}) => {
         activeFilter = 'todos';
         pendingFilter = 'todos';
@@ -796,6 +806,7 @@ function initializeFilters() {
             activeColorFilters = [...pendingColorFilters];
             applyProductFilters();
             updateFilterSummary();
+            closeFilterPanel();
             scrollToSection(scrollTarget);
         });
     }
@@ -1539,6 +1550,79 @@ function showToast(message) {
         toast.style.transform = 'translateY(-8px)';
         setTimeout(() => toast.remove(), 220);
     }, 2600);
+}
+
+function initializeScrollReveal() {
+    // Adicionar classe de scroll-reveal aos elementos das seções
+    const revealSelectors = [
+        // Seção de produtos
+        '.products-grid > *',
+        '.section-heading',
+        '.catalog-filter-shell',
+        // Seção de coleções
+        '.collection-tile',
+        // Seção de inspiração
+        '.inspiration-copy h2',
+        '.inspiration-copy p',
+        '.inspiration-copy .btn',
+        '.inspiration-item',
+        // Seção sobre
+        '.about-preview-grid > *',
+        // Outros elementos
+        '.contact-strip-grid > *'
+    ];
+
+    revealSelectors.forEach(selector => {
+        document.querySelectorAll(selector).forEach((el, index) => {
+            if (!el.classList.contains('scroll-reveal')) {
+                el.classList.add('scroll-reveal');
+            }
+        });
+    });
+
+    // Criar Intersection Observer para ativar animações
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Adicionar classe is-visible para ativar a animação
+                entry.target.classList.add('is-visible');
+                
+                // Se for section-heading, adicionar também aos filhos
+                if (entry.target.classList.contains('section-heading')) {
+                    entry.target.querySelectorAll('.eyebrow, h2, p').forEach(child => {
+                        child.classList.add('is-visible');
+                    });
+                }
+                
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Observar todos os elementos com scroll-reveal
+    document.querySelectorAll('.scroll-reveal').forEach(el => {
+        observer.observe(el);
+    });
+
+    // Observar novos produtos adicionados dinamicamente
+    const productsGrid = document.getElementById('productsGrid');
+    if (productsGrid) {
+        const productObserver = new MutationObserver(() => {
+            document.querySelectorAll('.scroll-reveal:not(.is-visible)').forEach(el => {
+                observer.observe(el);
+            });
+        });
+
+        productObserver.observe(productsGrid, {
+            childList: true,
+            subtree: true
+        });
+    }
 }
 
 document.addEventListener('keydown', event => {
