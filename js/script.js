@@ -218,6 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeHeader();
     initializeNavigation();
     initializeHeroCarousel();
+    initializeArtistShowcase();
     initializeScrollReveal();
     loadFavorites();
     initializeProducts();
@@ -414,7 +415,15 @@ function initializeNavigation() {
     }
 
     document.querySelectorAll('[data-scroll-to]').forEach(button => {
-        button.addEventListener('click', () => scrollToSection(button.dataset.scrollTo));
+        button.addEventListener('click', () => {
+            const videoSelector = button.dataset.playVideo;
+            if (videoSelector) {
+                const video = document.querySelector(videoSelector);
+                video?.play().catch(() => {});
+            }
+
+            scrollToSection(button.dataset.scrollTo);
+        });
     });
 
     document.querySelectorAll('.nav-menu a').forEach(link => {
@@ -569,6 +578,115 @@ function initializeHeroCarousel() {
     setActiveSlide(activeIndex);
 
     slideTimer = setInterval(() => setActiveSlide(activeIndex + 1), 5000);
+}
+
+function initializeArtistShowcase() {
+    const showcase = document.querySelector('[data-artist-showcase]');
+    const video = showcase?.querySelector('[data-artist-video]');
+    if (!showcase || !video) return;
+
+    const artists = [
+        {
+            name: 'Felipe Amorim',
+            role: 'Cantor',
+            source: './assets/videos/video-patrocinador-1.mp4',
+            headline: 'Acessórios que acompanham o seu ritmo.',
+            description: 'Felipe Amorim apresenta sua escolha SEORF com personalidade e presença.'
+        },
+        {
+            name: 'Lipe Lucena',
+            role: 'Cantor',
+            source: './assets/videos/video-patrocinador-2.mp4',
+            headline: 'Presença nos detalhes, dentro e fora do palco.',
+            description: 'Lipe Lucena combina música e estilo em uma recomendação direta dos acessórios SEORF.'
+        },
+        {
+            name: 'Jotave',
+            role: 'Cantor',
+            source: './assets/videos/video-patrocinador-3.mp4',
+            headline: 'Identidade para completar cada composição.',
+            description: 'Jotave mostra como os acessórios SEORF entram em uma composição autêntica e atual.'
+        },
+        {
+            name: 'Eric Land',
+            role: 'Cantor',
+            source: './assets/videos/video-patrocinador-4.mp4',
+            headline: 'Estilo marcante em todos os momentos.',
+            description: 'Eric Land encerra a sequência de recomendações com a identidade marcante da SEORF.'
+        }
+    ];
+
+    const name = showcase.querySelector('[data-artist-name]');
+    const role = showcase.querySelector('[data-artist-role]');
+    const headline = showcase.querySelector('[data-artist-headline]');
+    const description = showcase.querySelector('[data-artist-description]');
+    const count = showcase.querySelector('[data-artist-count]');
+    const dots = [...showcase.querySelectorAll('[data-artist-video-index]')];
+    const previous = showcase.querySelector('[data-artist-prev]');
+    const next = showcase.querySelector('[data-artist-next]');
+    const playButton = showcase.querySelector('[data-artist-play]');
+    const videoFrame = showcase.querySelector('.artist-video-frame');
+    let activeIndex = 0;
+
+    const setActiveArtist = (index, shouldPlay = false) => {
+        activeIndex = (index + artists.length) % artists.length;
+        const artist = artists[activeIndex];
+
+        video.pause();
+        video.src = resolveAsset(artist.source);
+        video.setAttribute('aria-label', `Vídeo da parceria entre ${artist.name} e SEORF`);
+        video.load();
+
+        if (name) name.textContent = artist.name;
+        if (role) role.textContent = artist.role;
+        if (headline) headline.textContent = artist.headline;
+        if (description) description.textContent = artist.description;
+        if (count) count.textContent = `${String(activeIndex + 1).padStart(2, '0')} / ${String(artists.length).padStart(2, '0')}`;
+        videoFrame?.classList.remove('is-playing');
+
+        dots.forEach((dot, dotIndex) => {
+            const isActive = dotIndex === activeIndex;
+            dot.classList.toggle('active', isActive);
+            dot.setAttribute('aria-selected', String(isActive));
+            dot.tabIndex = isActive ? 0 : -1;
+        });
+
+        if (shouldPlay) {
+            video.play().catch(() => {});
+        }
+    };
+
+    previous?.addEventListener('click', () => setActiveArtist(activeIndex - 1, true));
+    next?.addEventListener('click', () => setActiveArtist(activeIndex + 1, true));
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => setActiveArtist(index, true));
+    });
+    playButton?.addEventListener('click', () => {
+        video.play().catch(() => {});
+    });
+    video.addEventListener('play', () => videoFrame?.classList.add('is-playing'));
+    video.addEventListener('pause', () => videoFrame?.classList.remove('is-playing'));
+    video.addEventListener('ended', () => setActiveArtist(activeIndex + 1, true));
+
+    const gallery = document.querySelector('[data-artist-gallery]');
+    const galleryPrevious = document.querySelector('[data-gallery-prev]');
+    const galleryNext = document.querySelector('[data-gallery-next]');
+
+    if (gallery) {
+        const moveGallery = direction => {
+            gallery.scrollBy({
+                left: gallery.clientWidth * 0.82 * direction,
+                behavior: 'smooth'
+            });
+        };
+
+        galleryPrevious?.addEventListener('click', () => moveGallery(-1));
+        galleryNext?.addEventListener('click', () => moveGallery(1));
+        gallery.addEventListener('keydown', event => {
+            if (event.key === 'ArrowLeft') moveGallery(-1);
+            if (event.key === 'ArrowRight') moveGallery(1);
+        });
+    }
 }
 
 function initializeProducts() {
@@ -1561,15 +1679,18 @@ function initializeScrollReveal() {
         '.catalog-filter-shell',
         // Seção de coleções
         '.collection-tile',
+        // Seção de artistas
+        '.artists-heading > *',
+        '.artist-feature',
+        '.artist-gallery-heading > *',
+        '.artist-gallery-item',
         // Seção de inspiração
         '.inspiration-copy h2',
         '.inspiration-copy p',
         '.inspiration-copy .btn',
         '.inspiration-item',
         // Seção sobre
-        '.about-preview-grid > *',
-        // Outros elementos
-        '.contact-strip-grid > *'
+        '.about-preview-grid > *'
     ];
 
     revealSelectors.forEach(selector => {

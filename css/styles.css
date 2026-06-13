@@ -692,9 +692,17 @@ p {
 .hero-content {
     width: calc(100vw - 40px);
     max-width: 1240px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 370px);
+    align-items: end;
+    gap: clamp(2rem, 6vw, 6rem);
     margin: 0 auto;
-    padding: 0 0 7.6rem;
+    padding: calc(var(--header-height) + 2rem) 0 6.4rem;
     color: var(--white);
+}
+
+.hero-copy {
+    min-width: 0;
 }
 
 .hero-content .eyebrow,
@@ -723,6 +731,119 @@ p {
     flex-wrap: wrap;
     gap: 0.65rem;
     margin-top: 1.35rem;
+}
+
+.hero-artist-card {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4.35;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.34);
+    border-radius: calc(var(--radius) * 2);
+    background: var(--ink-deep);
+    color: var(--white);
+    cursor: pointer;
+    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.34);
+    text-align: left;
+    isolation: isolate;
+}
+
+.hero-artist-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+.hero-artist-card img {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 52% 38%;
+    transition: transform 700ms var(--ease);
+}
+
+.hero-artist-card:hover img {
+    transform: scale(1.035);
+}
+
+.hero-artist-shade {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+        linear-gradient(180deg, rgba(8, 21, 34, 0.2), transparent 38%),
+        linear-gradient(180deg, transparent 45%, rgba(8, 21, 34, 0.92));
+}
+
+.hero-artist-topline {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.5rem 0.62rem;
+    border: 1px solid rgba(255, 255, 255, 0.26);
+    border-radius: var(--radius);
+    background: rgba(8, 21, 34, 0.62);
+    font-size: 0.72rem;
+    backdrop-filter: blur(12px);
+}
+
+.hero-artist-caption {
+    position: absolute;
+    right: 1.1rem;
+    bottom: 1.1rem;
+    left: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+}
+
+.hero-play-icon {
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.46);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.94);
+    color: var(--ink);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.24);
+}
+
+.hero-artist-caption > span:last-child {
+    display: grid;
+}
+
+.hero-artist-caption small {
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.7rem;
+    font-style: normal;
+}
+
+.hero-artist-caption strong {
+    margin-top: 0.1rem;
+    color: var(--white);
+    font-family: var(--font-serif);
+    font-size: 1.65rem;
+    font-weight: 500;
+    line-height: 1;
+}
+
+.hero-artist-caption em {
+    margin-top: 0.2rem;
+    color: #d5f4ef;
+    font-size: 0.72rem;
+    font-style: normal;
 }
 
 .hero-index {
@@ -1502,11 +1623,462 @@ p {
     color: rgba(255, 255, 255, 0.85);
 }
 
-.inspiration-section {
-    padding: 5.6rem 0;
+.artists-section {
+    padding: 6.5rem 0;
+    overflow: hidden;
     background:
-        linear-gradient(90deg, rgba(8, 21, 34, 0.86) 0%, rgba(8, 21, 34, 0.72) 44%, rgba(8, 21, 34, 0.36) 100%),
-        url("../assets/images/img-5.jpg") center / cover no-repeat;
+        linear-gradient(180deg, rgba(8, 21, 34, 0.91), rgba(8, 21, 34, 0.97)),
+        radial-gradient(circle at 82% 20%, rgba(111, 183, 180, 0.24), transparent 34%),
+        url("../assets/images/patrocinador-seorf.jpeg") center top / cover no-repeat,
+        var(--ink-deep);
+    color: var(--white);
+}
+
+.artists-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 2.4rem;
+}
+
+.artists-heading .section-heading {
+    margin-bottom: 0;
+}
+
+.artists-heading .eyebrow {
+    color: #aee1dc;
+}
+
+.artists-heading h2 {
+    color: var(--white);
+}
+
+.artists-heading .section-heading p:not(.eyebrow) {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.artists-label {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 0.82rem;
+    backdrop-filter: blur(12px);
+}
+
+.artist-feature {
+    width: min(100%, 1120px);
+    min-width: 0;
+    overflow: hidden;
+    margin-inline: auto;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: calc(var(--radius) * 2);
+    background: rgba(8, 21, 34, 0.72);
+    box-shadow: 0 32px 90px rgba(0, 0, 0, 0.24);
+    backdrop-filter: blur(16px);
+}
+
+.artist-showcase-layout {
+    display: grid;
+    grid-template-columns: minmax(300px, 0.72fr) minmax(0, 1.28fr);
+    min-height: 640px;
+}
+
+.artist-media-column {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.045);
+}
+
+.artist-video-frame {
+    position: relative;
+    width: 100%;
+    max-width: 310px;
+    aspect-ratio: 9 / 16;
+    display: grid;
+    place-items: center;
+    align-self: center;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at center, rgba(45, 116, 111, 0.16), transparent 42%),
+        #03070b;
+}
+
+.artist-video-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    box-shadow: inset -1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.artist-video-frame video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    background: #03070b;
+}
+
+.artist-media-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 0.72rem;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: var(--radius);
+    background: rgba(8, 21, 34, 0.72);
+    color: var(--white);
+    font-size: 0.76rem;
+    backdrop-filter: blur(12px);
+    pointer-events: none;
+}
+
+.artist-video-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 4;
+    width: 78px;
+    height: 78px;
+    display: grid;
+    place-items: center;
+    gap: 0.2rem;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.62);
+    border-radius: 50%;
+    background: rgba(251, 250, 246, 0.94);
+    color: var(--ink);
+    cursor: pointer;
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+    transform: translate(-50%, -50%);
+    transition: opacity 220ms var(--ease), transform 220ms var(--ease), background 220ms var(--ease);
+}
+
+.artist-video-play:hover {
+    background: var(--white);
+    transform: translate(-50%, -50%) scale(1.06);
+}
+
+.artist-video-play span {
+    position: absolute;
+    top: calc(100% + 0.65rem);
+    color: var(--white);
+    font-size: 0.72rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+.artist-video-frame.is-playing .artist-video-play {
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(0.86);
+}
+
+.artist-video-info {
+    min-width: 0;
+    margin-top: auto;
+    padding: 1.45rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.artist-video-info .eyebrow {
+    color: #aee1dc;
+}
+
+.artist-video-info h3 {
+    margin-top: 0.65rem;
+    color: var(--white);
+    font-size: clamp(2rem, 2.7vw, 2.75rem);
+    line-height: 0.92;
+}
+
+.artist-role {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-top: 1.15rem;
+    color: #d5f4ef;
+    font-size: 0.92rem;
+    font-weight: 700;
+}
+
+.artist-role span {
+    color: var(--coral);
+}
+
+.artist-story-panel {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    padding: clamp(2rem, 5vw, 4.5rem);
+    background:
+        radial-gradient(circle at 80% 12%, rgba(111, 183, 180, 0.14), transparent 30%),
+        rgba(20, 40, 65, 0.36);
+}
+
+.artist-story-copy {
+    max-width: 640px;
+}
+
+.artist-story-copy .eyebrow {
+    color: #aee1dc;
+}
+
+.artist-story-copy h4 {
+    margin-top: 0.8rem;
+    color: var(--white);
+    font-family: var(--font-serif);
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    font-weight: 400;
+    line-height: 0.96;
+}
+
+.artist-description {
+    max-width: 610px;
+    margin-top: 1.4rem;
+    color: rgba(255, 255, 255, 0.76);
+    font-size: 1.02rem;
+}
+
+.artist-story-note {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-top: 2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 0.82rem;
+}
+
+.artist-story-note i {
+    color: var(--coral);
+    font-size: 1.1rem;
+}
+
+.artist-video-footer {
+    width: 100%;
+    margin-top: auto;
+    padding: 1.1rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius);
+    background: rgba(8, 21, 34, 0.48);
+}
+
+.artist-video-navigation-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.artist-video-navigation-head > div:first-child {
+    display: grid;
+    gap: 0.15rem;
+}
+
+.artist-video-navigation-head small {
+    color: rgba(255, 255, 255, 0.46);
+    font-size: 0.68rem;
+}
+
+.artist-video-navigation-head [data-artist-count] {
+    color: rgba(255, 255, 255, 0.58);
+    font-size: 0.78rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.artist-video-arrows,
+.artist-gallery-actions > div {
+    display: flex;
+    gap: 0.45rem;
+}
+
+.artist-video-arrows button,
+.artist-gallery-actions button {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--white);
+    cursor: pointer;
+}
+
+.artist-video-arrows button:hover,
+.artist-gallery-actions button:hover {
+    border-color: rgba(255, 255, 255, 0.44);
+    background: rgba(255, 255, 255, 0.16);
+}
+
+.artist-video-dots {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.artist-video-dots button {
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    align-items: center;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.artist-video-dots button span {
+    width: 9px;
+    height: 9px;
+    display: block;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: background 220ms var(--ease), border-color 220ms var(--ease), transform 220ms var(--ease);
+}
+
+.artist-video-dots button.active span {
+    background: var(--sea);
+    border-color: #d5f4ef;
+    transform: scale(1.35);
+}
+
+.artist-video-hint {
+    margin-top: 0.55rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.7rem;
+}
+
+.artist-gallery-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin: 4rem 0 1.4rem;
+}
+
+.artist-gallery-heading h3 {
+    margin-top: 0.45rem;
+    color: var(--white);
+    font-size: 2.4rem;
+}
+
+.artist-gallery-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.artist-gallery-actions > p {
+    max-width: 390px;
+    color: rgba(255, 255, 255, 0.66);
+    text-align: right;
+}
+
+.artist-gallery {
+    display: grid;
+    grid-auto-columns: calc((100% - 3rem) / 4);
+    grid-auto-flow: column;
+    gap: 1rem;
+    padding-bottom: 0.3rem;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+}
+
+.artist-gallery::-webkit-scrollbar {
+    display: none;
+}
+
+.artist-gallery-item {
+    position: relative;
+    min-width: 0;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: var(--radius);
+    background: var(--ink-deep);
+    scroll-snap-align: start;
+}
+
+.artist-gallery-item::after {
+    content: "";
+    position: absolute;
+    inset: 45% 0 0;
+    background: linear-gradient(180deg, transparent, rgba(3, 7, 11, 0.84));
+    pointer-events: none;
+}
+
+.artist-gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 700ms var(--ease);
+}
+
+.artist-gallery-item:hover img {
+    transform: scale(1.035);
+}
+
+.artist-gallery-item figcaption {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    left: 1rem;
+    z-index: 1;
+    color: var(--white);
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    line-height: 1.05;
+}
+
+.inspiration-section {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    padding: 5.6rem 0;
+    background: var(--ink-deep);
+}
+
+.inspiration-section::before,
+.inspiration-section::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.inspiration-section::before {
+    z-index: -2;
+    background: url("../assets/images/img-5.jpg") center 62% / cover no-repeat;
+    transform: scale(1.01);
+}
+
+.inspiration-section::after {
+    z-index: -1;
+    background:
+        linear-gradient(90deg, rgba(8, 21, 34, 0.94) 0%, rgba(8, 21, 34, 0.78) 44%, rgba(8, 21, 34, 0.48) 100%),
+        linear-gradient(180deg, rgba(8, 21, 34, 0.08), rgba(8, 21, 34, 0.38));
 }
 
 .inspiration-layout {
@@ -1643,30 +2215,6 @@ p {
 
 .text-link:hover::after {
     width: 64px;
-}
-
-.contact-strip {
-    padding: 3.5rem 0;
-    background: var(--palm);
-    color: var(--white);
-}
-
-.contact-strip-grid {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-}
-
-.contact-strip .eyebrow {
-    color: #dcf6e9;
-}
-
-.contact-strip h2 {
-    max-width: 680px;
-    margin-top: 0.5rem;
-    color: var(--white);
-    font-size: 2.3rem;
 }
 
 .faq-section {
@@ -2644,9 +3192,17 @@ p {
     }
 
     .inspiration-section {
+        background: var(--ink-deep);
+    }
+
+    .inspiration-section::before {
+        background-position: 42% center;
+    }
+
+    .inspiration-section::after {
         background:
-            linear-gradient(180deg, rgba(8, 21, 34, 0.88), rgba(8, 21, 34, 0.54)),
-            url("../assets/images/img-5.jpeg") center / cover no-repeat;
+            linear-gradient(180deg, rgba(8, 21, 34, 0.93) 0%, rgba(8, 21, 34, 0.73) 52%, rgba(8, 21, 34, 0.58) 100%),
+            linear-gradient(90deg, rgba(8, 21, 34, 0.24), rgba(8, 21, 34, 0.08));
     }
 
     .inspiration-copy {
@@ -2752,7 +3308,9 @@ p {
     }
 
     .hero-content {
-        padding-bottom: 6.8rem;
+        grid-template-columns: minmax(0, 1fr) minmax(230px, 300px);
+        gap: 1.5rem;
+        padding-bottom: 6rem;
     }
 
     .hero-content h1 {
@@ -2827,6 +3385,54 @@ p {
         grid-template-rows: none;
     }
 
+    .artists-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .artists-heading .section-heading {
+        width: 100%;
+    }
+
+    .artist-showcase-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .artist-media-column {
+        border-right: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .artist-video-frame {
+        width: 100%;
+        max-width: 360px;
+        height: auto;
+    }
+
+    .artist-story-panel {
+        min-height: 500px;
+        padding: 2.2rem;
+    }
+
+    .artist-story-copy h4 {
+        font-size: clamp(2.5rem, 7vw, 3.6rem);
+    }
+
+    .artist-gallery-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .artist-gallery-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .artist-gallery-actions > p {
+        text-align: left;
+    }
+
     .collection-tile,
     .collection-tile.tall {
         grid-row: auto;
@@ -2873,23 +3479,40 @@ p {
         grid-template-columns: 1fr;
     }
 
-    .contact-strip-grid {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-
     .page-hero-content h1 {
         font-size: 3.2rem;
     }
 }
 
 @media (max-width: 560px) {
+    .artists-section {
+        background:
+            linear-gradient(180deg, rgba(8, 21, 34, 0.93), rgba(8, 21, 34, 0.98)),
+            url("../assets/images/patrocinador-seorf.jpeg") 58% top / auto 100% no-repeat,
+            var(--ink-deep);
+    }
+
+    .inspiration-section::before {
+        background-position: 38% center;
+        background-size: auto 100%;
+    }
+
+    .inspiration-section::after {
+        background:
+            linear-gradient(180deg, rgba(8, 21, 34, 0.95) 0%, rgba(8, 21, 34, 0.76) 48%, rgba(8, 21, 34, 0.66) 100%),
+            linear-gradient(90deg, rgba(8, 21, 34, 0.3), rgba(8, 21, 34, 0.08));
+    }
+
     .hero-section {
-        min-height: 640px;
+        min-height: 960px;
     }
 
     .hero-content {
-        padding-bottom: 5.35rem;
+        grid-template-columns: 1fr;
+        align-content: center;
+        gap: 1.35rem;
+        padding-top: calc(var(--header-height) + 2rem);
+        padding-bottom: 6.2rem;
     }
 
     .catalog-hero {
@@ -2898,7 +3521,21 @@ p {
     }
 
     .hero-content h1 {
-        font-size: 4.45rem;
+        font-size: 4rem;
+    }
+
+    .hero-artist-card {
+        width: min(100%, 310px);
+        aspect-ratio: 4 / 5;
+        justify-self: center;
+    }
+
+    .hero-artist-card img {
+        object-position: 52% 34%;
+    }
+
+    .hero-artist-caption strong {
+        font-size: 1.35rem;
     }
 
     .promo-copy h1 {
@@ -2947,20 +3584,23 @@ p {
     }
 
     .hero-index {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        display: flex;
+        align-items: center;
+        justify-content: center;
         gap: 0.35rem;
-        bottom: 0.65rem;
-        font-size: 0.64rem;
+        bottom: 0.72rem;
+        font-size: 0.68rem;
     }
 
     .hero-index span {
-        padding: 0.34rem 0.3rem;
+        flex: 0 1 auto;
+        min-height: 38px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.48rem 0.58rem;
         text-align: center;
-    }
-
-    .hero-index span:last-child {
-        grid-column: auto;
+        white-space: nowrap;
     }
 
     .hero-actions .btn {
@@ -2976,6 +3616,7 @@ p {
     .products-section,
     .catalog-products,
     .collections-section,
+    .artists-section,
     .inspiration-section,
     .about-preview,
     .faq-section,
@@ -3082,6 +3723,67 @@ p {
         height: 300px;
     }
 
+    .artists-heading {
+        gap: 1rem;
+        margin-bottom: 1.4rem;
+    }
+
+    .artist-video-frame {
+        width: 100%;
+        max-width: 340px;
+        height: auto;
+    }
+
+    .artist-video-footer {
+        padding: 0.9rem;
+    }
+
+    .artist-video-info h3 {
+        font-size: 2.25rem;
+    }
+
+    .artist-story-panel {
+        min-height: 0;
+        padding: 1.35rem;
+    }
+
+    .artist-story-copy h4 {
+        font-size: 2.2rem;
+        line-height: 1;
+    }
+
+    .artist-story-note {
+        margin-top: 1.4rem;
+    }
+
+    .artist-description {
+        font-size: 0.94rem;
+    }
+
+    .artist-video-play {
+        width: 68px;
+        height: 68px;
+    }
+
+    .artist-gallery-heading {
+        margin-top: 2.8rem;
+    }
+
+    .artist-gallery-heading h3 {
+        font-size: 2rem;
+    }
+
+    .artist-gallery {
+        width: calc(100vw - 14px);
+        grid-auto-columns: minmax(250px, 78vw);
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        gap: 0.75rem;
+        margin-right: -14px;
+        padding-right: 14px;
+        overflow-x: auto;
+    }
+
     .collection-tile h3 {
         font-size: 1.62rem;
     }
@@ -3099,10 +3801,6 @@ p {
     .inspiration-item.large,
     .inspiration-item.wide {
         grid-column: span 2;
-    }
-
-    .contact-strip h2 {
-        font-size: 1.85rem;
     }
 
     .cart-panel {
