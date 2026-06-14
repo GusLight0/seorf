@@ -14,7 +14,7 @@ const products = [
     {
         id: 'seorf-01',
         name: 'Pulseira Viena',
-        price: 69.90,
+        price: 79.90,
         color: 'Preto com Dourado',
         colors: ['Preto com Dourado'],
         tag: 'Destaque',
@@ -26,7 +26,7 @@ const products = [
     {
         id: 'seorf-02',
         name: 'Pulseira São Bento',
-        price: 79.90,
+        price: 89.90,
         color: 'Azul e Preto',
         colors: ['Azul', 'Preto'],
         tag: 'Destaque',
@@ -39,7 +39,7 @@ const products = [
     {
         id: 'seorf-03',
         name: 'Pulseira Marselha',
-        price: 79.90,
+        price: 89.90,
         color: 'Prata e Azul',
         colors: ['Prata', 'Azul'],
         tag: 'Novidade',
@@ -52,7 +52,7 @@ const products = [
     {
         id: 'seorf-04',
         name: 'Pulseira Havaí',
-        price: 89.90,
+        price: 99.90,
         color: 'Preto e Prata',
         colors: ['Preto', 'Prata'],
         tag: 'Destaque',
@@ -65,7 +65,7 @@ const products = [
     {
         id: 'seorf-05',
         name: 'Pulseira Munique',
-        price: 69.90,
+        price: 79.90,
         color: 'Dourado e Prata',
         colors: ['Dourado', 'Prata'],
         tag: 'Novidade',
@@ -78,7 +78,7 @@ const products = [
     {
         id: 'seorf-06',
         name: 'Colar Rio',
-        price: 99.90,
+        price: 109.90,
         color: 'Preto com Prata',
         colors: ['Preto com Prata'],
         tag: 'Destaque',
@@ -91,7 +91,7 @@ const products = [
     {
         id: 'seorf-07',
         name: 'Riviera SEORF',
-        price: 89.90,
+        price: 99.90,
         color: 'Azul e Preto',
         colors: ['Azul', 'Preto'],
         tag: 'Novo',
@@ -104,7 +104,7 @@ const products = [
     {
         id: 'seorf-08',
         name: 'Bracelete Lisboa',
-        price: 69.98,
+        price: 79.98,
         color: 'Prata',
         colors: ['Prata'],
         tag: '',
@@ -116,7 +116,7 @@ const products = [
     {
         id: 'seorf-09',
         name: 'Pulseira Viena',
-        price: 69.90,
+        price: 79.90,
         color: 'Vermelha',
         colors: ['Vermelha'],
         tag: '',
@@ -128,7 +128,7 @@ const products = [
     {
         id: 'seorf-10',
         name: 'Pulseira 7 Nós',
-        price: 39.90,
+        price: 49.90,
         color: 'Vermelha',
         colors: ['Vermelha'],
         tag: '',
@@ -140,7 +140,7 @@ const products = [
     {
         id: 'seorf-11',
         name: 'Pulseira Mônaco',
-        price: 69.90,
+        price: 79.90,
         color: 'Azul e Preto',
         colors: ['Azul', 'Preto'],
         tag: 'Novo',
@@ -153,7 +153,7 @@ const products = [
     {
         id: 'seorf-12',
         name: 'Colar Salvatore',
-        price: 119.90,
+        price: 129.90,
         color: 'Prata',
         colors: ['Prata'],
         tag: 'Destaque',
@@ -165,7 +165,7 @@ const products = [
     {
         id: 'seorf-13',
         name: 'Pulseira Zurique',
-        price: 79.90,
+        price: 89.90,
         color: 'Prata',
         colors: ['Prata'],
         tag: 'Novo',
@@ -177,7 +177,7 @@ const products = [
     {
         id: 'seorf-14',
         name: 'Colar Belém',
-        price: 79.90,
+        price: 89.90,
         color: 'Prata',
         colors: ['Prata'],
         tag: 'Novo',
@@ -189,7 +189,7 @@ const products = [
     {
         id: 'seorf-15',
         name: 'Pulseira Capri',
-        price: 79.90,
+        price: 89.90,
         color: 'Vermelha',
         colors: ['Vermelha'],
         tag: 'Novo',
