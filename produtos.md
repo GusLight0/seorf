@@ -104,3 +104,10 @@
 - Descrição: Pulseira vermelha de corda com acabamento prateado, leve e marcante.
 - Cor: Vermelha
 - Preço: R$ 79,90
+
+## Produto 16
+- Imagens: `assets/images/produto-26-1.jpeg`, `assets/images/produto-26-2.jpeg`
+- Nome: Pulseira Cannes
+- Descrição: Pulseira ajustável em corda, disponível em preto ou branco, com acabamento prateado e presença elegante.
+- Cores: Preto ou Branco
+- Preço: R$ 89,90

@@ -197,6 +197,19 @@ const products = [
         image: './assets/images/produto-25.jpeg',
         description: 'Pulseira vermelha de corda com acabamento prateado, leve e marcante.',
         specs: ['Corda vermelha texturizada', 'Ajuste deslizante', 'Acabamento prateado']
+    },
+    {
+        id: 'seorf-16',
+        name: 'Pulseira Cannes',
+        price: 89.90,
+        color: 'Preto ou Branco',
+        colors: ['Preto', 'Branco'],
+        tag: 'Novo',
+        categories: ['pulseiras', 'novidade'],
+        image: './assets/images/produto-26-1.jpeg',
+        images: ['./assets/images/produto-26-1.jpeg', './assets/images/produto-26-2.jpeg'],
+        description: 'Pulseira ajustável em corda, disponível em preto ou branco, com acabamento prateado e presença elegante.',
+        specs: ['Corda ajustável', 'Duas cores disponíveis', 'Acabamento prateado']
     }
 ];
 
@@ -711,10 +724,18 @@ function initializeProducts() {
             return;
         }
 
-        const openButton = event.target.closest('[data-open-product]');
-        if (openButton) {
-            openProductModal(openButton.dataset.openProduct);
+        const card = event.target.closest('.product-card');
+        if (card && grid.contains(card)) {
+            openProductModal(card.dataset.productId);
         }
+    });
+
+    grid.addEventListener('keydown', event => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        if (!event.target.classList.contains('product-card')) return;
+
+        event.preventDefault();
+        openProductModal(event.target.dataset.productId);
     });
 }
 
@@ -731,24 +752,22 @@ function createProductCard(product) {
     const isFavorite = isFavoriteProduct(product.id);
 
     return `
-        <article class="product-card" data-product-id="${product.id}" data-search="${escapeHTML(searchableText)}" data-categories="${product.categories.join(' ')}">
+        <article class="product-card" tabindex="0" aria-label="Abrir produto ${escapeHTML(product.name)}" data-product-id="${product.id}" data-search="${escapeHTML(searchableText)}" data-categories="${product.categories.join(' ')}">
             <div class="product-media">
                 <img src="${resolveAsset(primaryImage)}" alt="${escapeHTML(product.name)}" loading="lazy">
                 ${tagMarkup}
                 <button class="icon-action product-favorite ${isFavorite ? 'active' : ''}" type="button" data-toggle-favorite="${product.id}" aria-label="${isFavorite ? `Remover ${escapeHTML(product.name)} dos favoritos` : `Adicionar ${escapeHTML(product.name)} aos favoritos`}" aria-pressed="${isFavorite}">
                     <i class="fas fa-heart" aria-hidden="true"></i>
                 </button>
-                <button class="icon-action product-quick-add" type="button" data-add-product="${product.id}" aria-label="Adicionar ${escapeHTML(product.name)} ao carrinho">
-                    <i class="fas fa-plus" aria-hidden="true"></i>
-                </button>
             </div>
             <div class="product-info">
                 <h3>${escapeHTML(product.name)}</h3>
                 <div class="product-meta">
                     ${renderPrice(product.price, 'product-price')}
-                    <span class="product-color">${escapeHTML(product.color)}</span>
                 </div>
-                <button class="product-open" type="button" data-open-product="${product.id}">Ver detalhes</button>
+                <button class="icon-action product-quick-add" type="button" data-add-product="${product.id}" aria-label="Adicionar ${escapeHTML(product.name)} ao carrinho">
+                    <i class="fas fa-plus" aria-hidden="true"></i>
+                </button>
             </div>
         </article>
     `;
@@ -1408,6 +1427,95 @@ function checkout() {
     }, 500);
 }
 
+function getProductShareUrl(productId) {
+    const url = new URL(window.location.href);
+    url.searchParams.delete('skipLoader');
+    url.hash = `produto=${encodeURIComponent(productId)}`;
+
+    return url.toString();
+}
+
+function getProductShareText(product, url = getProductShareUrl(product.id)) {
+    return `Olha esse produto da SEORF: ${product.name} (${formatPrice(product.price)}). ${url}`;
+}
+
+async function copyTextToClipboard(text) {
+    if (navigator.clipboard?.writeText && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return;
+    }
+
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'fixed';
+    textarea.style.top = '-999px';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+
+    const copied = document.execCommand('copy');
+    textarea.remove();
+
+    if (!copied) {
+        throw new Error('Copy command failed');
+    }
+}
+
+async function copyProductLink(product) {
+    try {
+        await copyTextToClipboard(getProductShareUrl(product.id));
+        showToast('Link do produto copiado.');
+    } catch {
+        showToast('Não foi possível copiar o link.');
+    }
+}
+
+async function shareProduct(product) {
+    const url = getProductShareUrl(product.id);
+
+    if (!navigator.share) {
+        await copyProductLink(product);
+        return;
+    }
+
+    try {
+        await navigator.share({
+            title: product.name,
+            text: `Olha esse produto da SEORF: ${product.name}.`,
+            url
+        });
+    } catch (error) {
+        if (error?.name !== 'AbortError') {
+            showToast('Não foi possível compartilhar agora.');
+        }
+    }
+}
+
+function shareProductOnWhatsApp(product) {
+    const url = getProductShareUrl(product.id);
+    const text = getProductShareText(product, url);
+
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
+}
+
+function setProductShareMenu(modal, isOpen) {
+    const share = modal.querySelector('[data-product-share]');
+    const toggle = modal.querySelector('[data-share-toggle]');
+    if (!share || !toggle) return;
+
+    share.classList.toggle('active', isOpen);
+    toggle.setAttribute('aria-expanded', String(isOpen));
+}
+
+function getSharedProductIdFromLocation() {
+    const hash = window.location.hash.replace(/^#/, '');
+    const hashProductId = new URLSearchParams(hash).get('produto');
+    if (hashProductId) return hashProductId;
+
+    return new URLSearchParams(window.location.search).get('produto') || '';
+}
+
 function openProductModal(productId) {
     const product = getProduct(productId);
     const modal = document.getElementById('productDetailModal');
@@ -1422,6 +1530,25 @@ function openProductModal(productId) {
     document.body.classList.add('modal-open');
 
     modal.querySelector('.close-product-modal')?.addEventListener('click', closeProductModal);
+    modal.querySelector('[data-share-toggle]')?.addEventListener('click', () => {
+        const share = modal.querySelector('[data-product-share]');
+        setProductShareMenu(modal, !share?.classList.contains('active'));
+    });
+    modal.querySelector('[data-share-copy]')?.addEventListener('click', () => {
+        setProductShareMenu(modal, false);
+        copyProductLink(product);
+    });
+    modal.querySelector('[data-share-native]')?.addEventListener('click', () => {
+        setProductShareMenu(modal, false);
+        shareProduct(product);
+    });
+    modal.querySelector('[data-share-whatsapp]')?.addEventListener('click', () => {
+        setProductShareMenu(modal, false);
+        shareProductOnWhatsApp(product);
+    });
+    if (!navigator.share) {
+        modal.querySelector('[data-share-native]')?.remove();
+    }
     modal.querySelector('[data-modal-decrease]')?.addEventListener('click', () => updateModalQuantity(-1));
     modal.querySelector('[data-modal-increase]')?.addEventListener('click', () => updateModalQuantity(1));
     modal.querySelector('[data-modal-add]')?.addEventListener('click', () => {
@@ -1446,9 +1573,14 @@ function openProductModal(productId) {
     });
     initializeProductZoom(modal);
 
-    modal.addEventListener('click', event => {
+    modal.onclick = event => {
+        const share = modal.querySelector('[data-product-share]');
+        if (share && !share.contains(event.target)) {
+            setProductShareMenu(modal, false);
+        }
+
         if (event.target === modal) closeProductModal();
-    }, { once: true });
+    };
 }
 
 function createProductModal(product) {
@@ -1458,9 +1590,30 @@ function createProductModal(product) {
 
     return `
         <section class="product-modal-panel" role="dialog" aria-modal="true" aria-labelledby="productModalTitle">
-            <button class="icon-action close-product-modal" type="button" aria-label="Fechar detalhes">
-                <i class="fas fa-xmark" aria-hidden="true"></i>
-            </button>
+            <div class="product-modal-top-actions">
+                <div class="product-share" data-product-share>
+                    <button class="icon-action share-product-modal" type="button" data-share-toggle aria-label="Compartilhar produto" aria-expanded="false" aria-controls="productShareMenu">
+                        <i class="fas fa-share-nodes" aria-hidden="true"></i>
+                    </button>
+                    <div class="product-share-menu" id="productShareMenu" role="menu" aria-label="Opções de compartilhamento">
+                        <button type="button" role="menuitem" data-share-copy>
+                            <i class="fas fa-link" aria-hidden="true"></i>
+                            Copiar link
+                        </button>
+                        <button type="button" role="menuitem" data-share-native>
+                            <i class="fas fa-share-from-square" aria-hidden="true"></i>
+                            Compartilhar
+                        </button>
+                        <button type="button" role="menuitem" data-share-whatsapp>
+                            <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                            WhatsApp
+                        </button>
+                    </div>
+                </div>
+                <button class="icon-action close-product-modal" type="button" aria-label="Fechar detalhes">
+                    <i class="fas fa-xmark" aria-hidden="true"></i>
+                </button>
+            </div>
             <div class="product-modal-layout">
                 <div class="modal-media">
                     <button class="modal-zoom" type="button" data-zoom-stage aria-label="Ampliar imagem do produto" aria-pressed="false">
@@ -1616,6 +1769,7 @@ function closeProductModal() {
 
     modal.classList.remove('active');
     modal.setAttribute('aria-hidden', 'true');
+    modal.onclick = null;
     modal.innerHTML = '';
     activeModalProductId = null;
     selectedModalColor = '';
@@ -1638,6 +1792,12 @@ function initializeFAQ() {
 }
 
 function handleInitialHash() {
+    const sharedProductId = getSharedProductIdFromLocation();
+    if (sharedProductId && getProduct(sharedProductId)) {
+        window.setTimeout(() => openProductModal(sharedProductId), 120);
+        return;
+    }
+
     if (window.location.hash === '#cartModal' || window.location.hash === '#cart') {
         openCart();
         return;
