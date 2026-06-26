@@ -78,15 +78,15 @@ const products = [
     {
         id: 'seorf-06',
         name: 'Colar Rio',
-        price: 109.90,
-        color: 'Preto com Prata',
-        colors: ['Preto com Prata'],
+        price: 99.90,
+        color: 'Prata e Dourado',
+        colors: ['Prata', 'Dourado'],
         tag: 'Destaque',
         categories: ['colares', 'destaque'],
         image: './assets/images/produto-6.png',
-        images: ['./assets/images/produto-6.png', './assets/images/produto-24.jpeg'],
+        images: ['./assets/images/produto-6.png', './assets/images/produto-24-1.jpeg', './assets/images/produto-24.jpeg'],
         description: 'Colar preto com detalhe prateado, limpo e marcante.',
-        specs: ['Visual marcante', 'Colar de corda', 'Acabamento prateado']
+        specs: ['Visual marcante', 'Colar de corda', 'Acabamento prateado e dourado']
     },
     {
         id: 'seorf-07',

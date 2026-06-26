@@ -36,10 +36,10 @@
 - Preço: R$ 69,90
 
 ## Produto 6
-- Imagens: `assets/images/produto-6.png`, `assets/images/produto-7.png`
+- Imagens: `assets/images/produto-6.png`, `assets/images/produto-24-1.jpeg`, `assets/images/produto-24.jpeg`
 - Nome: Colar Rio
 - Descrição: Colar preto com detalhe prateado, limpo e marcante.
-- Cor: Preto com Prata
+- Cores: Prata e Dourado
 - Preço: R$ 99,90
 
 ## Produto 7
