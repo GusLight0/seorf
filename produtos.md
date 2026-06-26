@@ -111,3 +111,10 @@
 - Descrição: Pulseira ajustável em corda, disponível em preto ou branco, com acabamento prateado e presença elegante.
 - Cores: Preto ou Branco
 - Preço: R$ 89,90
+
+## Produto 17
+- Imagens: `assets/images/produto-27.jpeg`
+- Nome: Pulseira Tóquio
+- Descrição: Pulseira preta com visual moderno, discreta e fácil de combinar.
+- Cor: Preto
+- Preço: R$ 99,90

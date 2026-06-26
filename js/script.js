@@ -210,6 +210,18 @@ const products = [
         images: ['./assets/images/produto-26-1.jpeg', './assets/images/produto-26-2.jpeg'],
         description: 'Pulseira ajustável em corda, disponível em preto ou branco, com acabamento prateado e presença elegante.',
         specs: ['Corda ajustável', 'Duas cores disponíveis', 'Acabamento prateado']
+    },
+    {
+        id: 'seorf-17',
+        name: 'Pulseira Tóquio',
+        price: 99.90,
+        color: 'Preto',
+        colors: ['Preto'],
+        tag: 'Novo',
+        categories: ['pulseiras', 'novidade'],
+        image: './assets/images/produto-27.jpeg',
+        description: 'Pulseira preta com visual moderno, discreta e fácil de combinar.',
+        specs: ['Visual moderno', 'Pulseira preta', 'Acabamento versátil']
     }
 ];
 
