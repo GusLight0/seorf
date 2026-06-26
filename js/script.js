@@ -78,7 +78,7 @@ const products = [
     {
         id: 'seorf-06',
         name: 'Colar Rio',
-        price: 99.90,
+        price: 109.90,
         color: 'Prata e Dourado',
         colors: ['Prata', 'Dourado'],
         tag: 'Destaque',
@@ -104,7 +104,7 @@ const products = [
     {
         id: 'seorf-08',
         name: 'Bracelete Lisboa',
-        price: 79.98,
+        price: 79.90,
         color: 'Prata',
         colors: ['Prata'],
         tag: '',
