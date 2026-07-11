@@ -118,3 +118,10 @@
 - Descrição: Pulseira preta com visual moderno, discreta e fácil de combinar.
 - Cor: Preto
 - Preço: R$ 99,90
+
+## Produto 18
+- Imagens: `assets/images/produto-28.jpeg`, `assets/images/produto-28-1.jpeg`
+- Nome: Pulseira Oslo
+- Descrição: Pulseira de corda ajustável com elo metálico central, disponível em preto e branco, unindo conforto e sofisticação para o uso diário.
+- Cores: Preto e Branco
+- Preço: R$ 89,90

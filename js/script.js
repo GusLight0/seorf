@@ -222,6 +222,19 @@ const products = [
         image: './assets/images/produto-27.jpeg',
         description: 'Pulseira preta com visual moderno, discreta e fácil de combinar.',
         specs: ['Visual moderno', 'Pulseira preta', 'Acabamento versátil']
+    },
+    {
+        id: 'seorf-18',
+        name: 'Pulseira Oslo',
+        price: 89.90,
+        color: 'Preto e Branco',
+        colors: ['Preto', 'Branco'],
+        tag: 'Novo',
+        categories: ['pulseiras', 'novidade'],
+        image: './assets/images/produto-28.jpeg',
+        images: ['./assets/images/produto-28.jpeg', './assets/images/produto-28-1.jpeg'],
+        description: 'Pulseira de corda ajustável com elo metálico central, disponível em preto e branco, unindo conforto e sofisticação para o uso diário.',
+        specs: ['Corda ajustável', 'Elo metálico', 'Duas cores disponíveis']
     }
 ];
 
