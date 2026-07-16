@@ -36,7 +36,7 @@
 - Preço: R$ 79,90
 
 ## Produto 6
-- Imagens: `assets/images/produto-6.png`, `assets/images/produto-24-1.jpeg`, `assets/images/produto-24.jpeg`
+- Imagens: `assets/images/produto-6.png`, `assets/images/produto-6-1.png`
 - Nome: Colar Rio
 - Descrição: Colar preto com detalhe prateado, limpo e marcante.
 - Cores: Prata e Dourado
@@ -78,7 +78,7 @@
 - Preço: R$ 79,90
 
 ## Produto 12
-- Imagem: `assets/images/produto-19.jpeg`
+- Imagem: `assets/images/produto-19.png`
 - Nome: Colar Salvatore
 - Descrição: Colar prata de presença elegante para produções mais refinadas.
 - Cor: Prata
@@ -125,3 +125,10 @@
 - Descrição: Pulseira de corda ajustável com elo metálico central, disponível em preto e branco, unindo conforto e sofisticação para o uso diário.
 - Cores: Preto e Branco
 - Preço: R$ 89,90
+
+# Vídeos:
+## Adicionar mais vídeos na sessão de Artistas:
+### 5º Vídeo
+- Video: `video-patrocinador-5.mp4`
+- Nome do artista: Rogerinho
+- Descrição: Rogerinho traz sua energia e recomenda os acessórios SEORF como parte do seu estilo.

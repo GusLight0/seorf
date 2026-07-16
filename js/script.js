@@ -84,7 +84,7 @@ const products = [
         tag: 'Destaque',
         categories: ['colares', 'destaque'],
         image: './assets/images/produto-6.png',
-        images: ['./assets/images/produto-6.png', './assets/images/produto-24-1.jpeg', './assets/images/produto-24.jpeg'],
+        images: ['./assets/images/produto-6.png', './assets/images/produto-6-1.png'],
         description: 'Colar preto com detalhe prateado, limpo e marcante.',
         specs: ['Visual marcante', 'Colar de corda', 'Acabamento prateado e dourado']
     },
@@ -158,7 +158,7 @@ const products = [
         colors: ['Prata'],
         tag: 'Destaque',
         categories: ['colares', 'destaque'],
-        image: './assets/images/produto-19.jpeg',
+        image: './assets/images/produto-19.png',
         description: 'Colar prata de presença elegante para produções mais refinadas.',
         specs: ['Presença refinada', 'Colar premium', 'Acabamento metálico']
     },
@@ -651,6 +651,13 @@ function initializeArtistShowcase() {
             source: './assets/videos/video-patrocinador-4.mp4',
             headline: 'Estilo marcante em todos os momentos.',
             description: 'Eric Land encerra a sequência de recomendações com a identidade marcante da SEORF.'
+        },
+        {
+            name: 'Rogerinho',
+            role: 'Cantor',
+            source: './assets/videos/video-patrocinador-5.mp4',
+            headline: 'Autenticidade que combina com qualquer palco.',
+            description: 'Rogerinho traz sua energia e recomenda os acessórios SEORF como parte do seu estilo.'
         }
     ];
 
