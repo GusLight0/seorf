@@ -22,7 +22,7 @@ Depois acesse `http://localhost:8000`.
 
 - Nome: SEORF
 - Instagram: `@useseorf`
-- WhatsApp: `+55 (98) 9 8525-4472`
+- WhatsApp: `+55 (98) 9 8882-3902`
 
 ## Atualizar produtos
 

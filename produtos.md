@@ -49,13 +49,6 @@
 - Cores: Azul e Preto
 - Preço: R$ 99,90
 
-## Produto 8
-- Imagem: `assets/images/produto-8.jpeg`
-- Nome: Bracelete Lisboa
-- Descrição: Bracelete prata de linhas simples para compor sem excesso.
-- Cor: Prata
-- Preço: R$ 79,90
-
 ## Produto 9
 - Imagem: `assets/images/produto-9.jpeg`
 - Nome: Pulseira Viena
@@ -70,33 +63,12 @@
 - Cor: Vermelha
 - Preço: R$ 49,90
 
-## Produto 11
-- Imagens: `assets/images/produto-12.png`, `assets/images/produto-13.png`
-- Nome: Pulseira Mônaco
-- Descrição: Trama azul e preta com acabamento limpo e presença versátil.
-- Cores: Azul e Preto
-- Preço: R$ 79,90
-
 ## Produto 12
 - Imagem: `assets/images/produto-19.png`
 - Nome: Colar Salvatore
 - Descrição: Colar prata de presença elegante para produções mais refinadas.
 - Cor: Prata
 - Preço: R$ 129,90
-
-## Produto 13
-- Imagem: `assets/images/produto-21.png`
-- Nome: Pulseira Zurique
-- Descrição: Pulseira prata com visual urbano, discreto e sofisticado.
-- Cor: Prata
-- Preço: R$ 89,90
-
-## Produto 14
-- Imagem: `assets/images/produto-23.png`
-- Nome: Colar Belém
-- Descrição: Colar prata leve, com brilho sutil e acabamento versátil.
-- Cor: Prata
-- Preço: R$ 89,90
 
 ## Produto 15
 - Imagem: `assets/images/produto-25.jpeg`
@@ -125,6 +97,13 @@
 - Descrição: Pulseira de corda ajustável com elo metálico central, disponível em preto e branco, unindo conforto e sofisticação para o uso diário.
 - Cores: Preto e Branco
 - Preço: R$ 89,90
+
+## Produto 19
+- Imagens: `assets/images/produto-29.PNG`
+- Nome: Colar Siena
+- Descrição: Minimalismo em sua forma mais marcante. Um detalhe discreto que transforma qualquer composição.
+- Cor: Preto
+- Preço: R$ 119,90
 
 # Vídeos:
 ## Adicionar mais vídeos na sessão de Artistas:

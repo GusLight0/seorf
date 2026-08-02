@@ -1,5 +1,5 @@
 const SEORF = {
-    whatsapp: '5598985254472',
+    whatsapp: '5598988823902',
     instagram: 'https://instagram.com/useseorf',
     cartKey: 'seorf_cart_v1',
     favoriteKey: 'seorf_favorites_v1'
@@ -102,18 +102,6 @@ const products = [
         specs: ['Assinatura SEORF', 'Linha Riviera', 'Visual esportivo premium']
     },
     {
-        id: 'seorf-08',
-        name: 'Bracelete Lisboa',
-        price: 79.90,
-        color: 'Prata',
-        colors: ['Prata'],
-        tag: '',
-        categories: ['pulseiras'],
-        image: './assets/images/produto-8.jpeg',
-        description: 'Bracelete prata de linhas simples para compor sem excesso.',
-        specs: ['Linhas simples', 'Bracelete minimalista', 'Acabamento polido']
-    },
-    {
         id: 'seorf-09',
         name: 'Pulseira Viena',
         price: 79.90,
@@ -138,19 +126,6 @@ const products = [
         specs: ['Leve e expressiva', 'Modelo 7 nós', 'Uso casual e versátil']
     },
     {
-        id: 'seorf-11',
-        name: 'Pulseira Mônaco',
-        price: 79.90,
-        color: 'Azul e Preto',
-        colors: ['Azul', 'Preto'],
-        tag: 'Novo',
-        categories: ['pulseiras', 'novidade'],
-        image: './assets/images/produto-12.png',
-        images: ['./assets/images/produto-12.png', './assets/images/produto-13.png'],
-        description: 'Trama azul e preta com acabamento limpo e presença versátil.',
-        specs: ['Presença versátil', 'Trama texturizada', 'Acabamento premium']
-    },
-    {
         id: 'seorf-12',
         name: 'Colar Salvatore',
         price: 129.90,
@@ -161,30 +136,6 @@ const products = [
         image: './assets/images/produto-19.png',
         description: 'Colar prata de presença elegante para produções mais refinadas.',
         specs: ['Presença refinada', 'Colar premium', 'Acabamento metálico']
-    },
-    {
-        id: 'seorf-13',
-        name: 'Pulseira Zurique',
-        price: 89.90,
-        color: 'Prata',
-        colors: ['Prata'],
-        tag: 'Novo',
-        categories: ['pulseiras', 'novidade'],
-        image: './assets/images/produto-21.png',
-        description: 'Pulseira prata com visual urbano, discreto e sofisticado.',
-        specs: ['Visual urbano', 'Design limpo', 'Acabamento polido']
-    },
-    {
-        id: 'seorf-14',
-        name: 'Colar Belém',
-        price: 89.90,
-        color: 'Prata',
-        colors: ['Prata'],
-        tag: 'Novo',
-        categories: ['colares', 'novidade'],
-        image: './assets/images/produto-23.png',
-        description: 'Colar prata leve, com brilho sutil e acabamento versátil.',
-        specs: ['Brilho sutil', 'Colar leve', 'Acabamento prateado']
     },
     {
         id: 'seorf-15',
@@ -235,6 +186,18 @@ const products = [
         images: ['./assets/images/produto-28.jpeg', './assets/images/produto-28-1.jpeg'],
         description: 'Pulseira de corda ajustável com elo metálico central, disponível em preto e branco, unindo conforto e sofisticação para o uso diário.',
         specs: ['Corda ajustável', 'Elo metálico', 'Duas cores disponíveis']
+    },
+    {
+        id: 'seorf-19',
+        name: 'Colar Siena',
+        price: 119.90,
+        color: 'Preto',
+        colors: ['Preto'],
+        tag: 'Novo',
+        categories: ['colares', 'novidade'],
+        image: './assets/images/produto-29.PNG',
+        description: 'Minimalismo em sua forma mais marcante. Um detalhe discreto que transforma qualquer composição.',
+        specs: ['Design minimalista', 'Detalhe discreto', 'Acabamento preto fosco']
     }
 ];
 
