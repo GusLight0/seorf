@@ -198,6 +198,42 @@ const products = [
         image: './assets/images/produto-29.PNG',
         description: 'Minimalismo em sua forma mais marcante. Um detalhe discreto que transforma qualquer composição.',
         specs: ['Design minimalista', 'Detalhe discreto', 'Acabamento preto fosco']
+    },
+    {
+        id: 'combo-01',
+        name: 'Combo Colar Rio + Pulseira Tóquio',
+        price: 199.90,
+        color: 'Preto, Prata e Dourado',
+        colors: ['Preto, Prata e Dourado'],
+        tag: 'Combo',
+        categories: ['combos', 'colares', 'pulseiras'],
+        image: './assets/combos/combo-1.PNG',
+        description: 'Colar com pingente de crucifixo prateado e pulseira de nó tricolor, ambos em cordão preto ajustável.',
+        specs: ['Colar + pulseira', 'Cordão preto ajustável', 'Detalhe metálico prateado e dourado']
+    },
+    {
+        id: 'combo-02',
+        name: 'Combo Paris',
+        price: 179.90,
+        color: 'Vermelha e Preto',
+        colors: ['Vermelha e Preto'],
+        tag: 'Combo',
+        categories: ['combos', 'pulseiras'],
+        image: './assets/combos/combo-2.PNG',
+        description: 'Dupla de pulseiras para empilhar: corda vermelha lisa e pulseira preta cravejada com detalhe prateado.',
+        specs: ['2 pulseiras', 'Corda vermelha + cravejada preta', 'Acabamento prateado']
+    },
+    {
+        id: 'combo-03',
+        name: 'Combo Palermo',
+        price: 124.80,
+        color: 'Vermelha e Preto',
+        colors: ['Vermelha e Preto'],
+        tag: 'Combo',
+        categories: ['combos', 'pulseiras'],
+        image: './assets/combos/combo-3.PNG',
+        description: 'Dupla de pulseiras: corda vermelha de nós e pulseira preta com elo metálico prateado central.',
+        specs: ['2 pulseiras', 'Corda vermelha de nós', 'Elo metálico prateado']
     }
 ];
 
@@ -783,7 +819,8 @@ function getCategoryLabel(filter) {
         destaque: 'Destaques',
         novidade: 'Novidades',
         colares: 'Colares',
-        pulseiras: 'Pulseiras'
+        pulseiras: 'Pulseiras',
+        combos: 'Combos'
     };
 
     return labels[filter] || 'Todos';

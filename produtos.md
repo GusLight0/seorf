@@ -112,3 +112,23 @@
 - Nome do artista: Rogerinho
 - Descrição: Rogerinho traz sua energia e recomenda os acessórios SEORF como parte do seu estilo.
 <!--  -->
+
+# Combos:
+## Adicionar combos aos produtos:
+### Combo 1:
+ - Imagem: `assets/combos/combo-1.PNG`
+ - Nome: Combo Colar Rio + Pulseira Tóquio
+ - Preço: R$ 199,90
+ - Descrição: curta, direta e impactadora, vc decide
+
+ ### Combo 2:
+ - Imagem: `assets/combos/combo-2.PNG`
+ - Nome: Combo Paris
+ - Preço: R$ 179,90
+ - Descrição: curta, direta e impactadora, vc decide
+
+ ### Combo 3:
+ - Imagem: `assets/combos/combo-3.PNG`
+ - Nome: Combo Palermo
+ - Preço: R$ 124,80
+ - Descrição: curta, direta e impactadora, vc decide
