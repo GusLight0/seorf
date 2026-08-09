@@ -31,8 +31,14 @@ const products = [
         colors: ['Azul', 'Preto'],
         tag: 'Destaque',
         categories: ['pulseiras', 'destaque'],
-        image: './assets/images/produto-2.jpeg',
-        images: ['./assets/images/produto-2.jpeg', './assets/images/produto-10.jpeg'],
+        image: './assets/images/sao-bento-1.PNG',
+        images: [
+            './assets/images/sao-bento-1.PNG',
+            './assets/images/sao-bento-2.PNG',
+            './assets/images/sao-bento-3.PNG',
+            './assets/images/sao-bento-4.PNG',
+            './assets/images/sao-bento-5.PNG'
+        ],
         description: 'Modelo com medalha central e presença discreta para composições elegantes.',
         specs: ['Presença discreta', 'Medalha São Bento', 'Acabamento de presença discreta']
     },
@@ -44,8 +50,13 @@ const products = [
         colors: ['Prata', 'Azul'],
         tag: 'Novidade',
         categories: ['pulseiras', 'novidade'],
-        image: './assets/images/produto-3.png',
-        images: ['./assets/images/produto-3.png', './assets/images/produto-14.jpeg'],
+        image: './assets/images/marselha-1.PNG',
+        images: [
+            './assets/images/marselha-1.PNG',
+            './assets/images/marselha-2.PNG',
+            './assets/images/produto-3.png',
+            './assets/images/produto-14.jpeg'
+        ],
         description: 'Pulseira de leitura leve, com tons frios e acabamento sofisticado.',
         specs: ['Leitura leve', 'Trama texturizada', 'Detalhe central refinado']
     },
@@ -96,8 +107,15 @@ const products = [
         colors: ['Azul', 'Preto'],
         tag: 'Novo',
         categories: ['pulseiras', 'novidade'],
-        image: './assets/images/produto-17.jpeg',
-        images: ['./assets/images/produto-17.jpeg', './assets/images/produto-18.jpeg', './assets/images/produto-7.png', './assets/images/produto-16.jpeg'],
+        image: './assets/images/riviera-1.PNG',
+        images: [
+            './assets/images/riviera-1.PNG',
+            './assets/images/riviera-2.PNG',
+            './assets/images/produto-17.jpeg',
+            './assets/images/produto-18.jpeg',
+            './assets/images/produto-7.png',
+            './assets/images/produto-16.jpeg'
+        ],
         description: 'Pulseira com assinatura SEORF, visual marcante e acabamento forte.',
         specs: ['Assinatura SEORF', 'Linha Riviera', 'Visual esportivo premium']
     },
@@ -145,7 +163,12 @@ const products = [
         colors: ['Vermelha'],
         tag: 'Novo',
         categories: ['pulseiras', 'novidade'],
-        image: './assets/images/produto-25.jpeg',
+        image: './assets/images/capri-1.PNG',
+        images: [
+            './assets/images/capri-1.PNG',
+            './assets/images/capri-2.PNG',
+            './assets/images/produto-25.jpeg'
+        ],
         description: 'Pulseira vermelha de corda com acabamento prateado, leve e marcante.',
         specs: ['Corda vermelha texturizada', 'Ajuste deslizante', 'Acabamento prateado']
     },
@@ -170,7 +193,12 @@ const products = [
         colors: ['Preto'],
         tag: 'Novo',
         categories: ['pulseiras', 'novidade'],
-        image: './assets/images/produto-27.jpeg',
+        image: './assets/images/toquio-1.PNG',
+        images: [
+            './assets/images/toquio-1.PNG',
+            './assets/images/toquio-2.PNG',
+            './assets/images/toquio-3.PNG'
+        ],
         description: 'Pulseira preta com visual moderno, discreta e fácil de combinar.',
         specs: ['Visual moderno', 'Pulseira preta', 'Acabamento versátil']
     },
@@ -182,8 +210,8 @@ const products = [
         colors: ['Preto', 'Branco'],
         tag: 'Novo',
         categories: ['pulseiras', 'novidade'],
-        image: './assets/images/produto-28.jpeg',
-        images: ['./assets/images/produto-28.jpeg', './assets/images/produto-28-1.jpeg'],
+        image: './assets/images/oslo-1.PNG',
+        images: ['./assets/images/oslo-1.PNG', './assets/images/produto-28.jpeg', './assets/images/produto-28-1.jpeg'],
         description: 'Pulseira de corda ajustável com elo metálico central, disponível em preto e branco, unindo conforto e sofisticação para o uso diário.',
         specs: ['Corda ajustável', 'Elo metálico', 'Duas cores disponíveis']
     },

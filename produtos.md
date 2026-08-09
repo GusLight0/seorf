@@ -8,14 +8,14 @@
 - Preço: R$ 79,90
 
 ## Produto 2
-- Imagens: `assets/images/produto-2.jpeg`, `assets/images/produto-10.jpeg`
+- Imagens: `assets/images/sao-bento-1.PNG`, `assets/images/sao-bento-2.PNG`, `assets/images/sao-bento-3.PNG`, `assets/images/sao-bento-4.PNG`, `assets/images/sao-bento-5.PNG`
 - Nome: Pulseira São Bento
 - Descrição: Modelo com medalha central e presença discreta para composições elegantes.
 - Cores: Azul e Preto
 - Preço: R$ 89,90
 
 ## Produto 3
-- Imagens: `assets/images/produto-3.png`, `assets/images/produto-14.jpeg`
+- Imagens: `assets/images/marselha-1.PNG`, `assets/images/marselha-2.PNG`, `assets/images/produto-3.png`, `assets/images/produto-14.jpeg`
 - Nome: Pulseira Marselha
 - Descrição: Pulseira de leitura leve, com tons frios e acabamento sofisticado.
 - Cores: Prata e Azul
@@ -43,7 +43,7 @@
 - Preço: R$ 109,90
 
 ## Produto 7
-- Imagens: `assets/images/produto-17.jpeg`, `assets/images/produto-18.jpeg`, `assets/images/produto-7.png`, `assets/images/produto-16.jpeg`
+- Imagens: `assets/images/riviera-1.PNG`, `assets/images/riviera-2.PNG`, `assets/images/produto-17.jpeg`, `assets/images/produto-18.jpeg`, `assets/images/produto-7.png`, `assets/images/produto-16.jpeg`
 - Nome: Riviera SEORF
 - Descrição: Pulseira com assinatura SEORF, visual marcante e acabamento forte.
 - Cores: Azul e Preto
@@ -71,7 +71,7 @@
 - Preço: R$ 129,90
 
 ## Produto 15
-- Imagem: `assets/images/produto-25.jpeg`
+- Imagem: `assets/images/capri-1.PNG`, `assets/images/capri-2.PNG`, `assets/images/produto-25.jpeg`
 - Nome: Pulseira Capri
 - Descrição: Pulseira vermelha de corda com acabamento prateado, leve e marcante.
 - Cor: Vermelha
@@ -85,14 +85,14 @@
 - Preço: R$ 89,90
 
 ## Produto 17
-- Imagens: `assets/images/produto-27.jpeg`
+- Imagens: `assets/images/toquio-1.PNG`, `assets/images/toquio-2.PNG`, `assets/images/toquio-3.PNG`
 - Nome: Pulseira Tóquio
 - Descrição: Pulseira preta com visual moderno, discreta e fácil de combinar.
 - Cor: Preto
 - Preço: R$ 99,90
 
 ## Produto 18
-- Imagens: `assets/images/produto-28.jpeg`, `assets/images/produto-28-1.jpeg`
+- Imagens: `assets/images/oslo-1.PNG`, `assets/images/produto-28.jpeg`, `assets/images/produto-28-1.jpeg`
 - Nome: Pulseira Oslo
 - Descrição: Pulseira de corda ajustável com elo metálico central, disponível em preto e branco, unindo conforto e sofisticação para o uso diário.
 - Cores: Preto e Branco
