@@ -305,6 +305,36 @@ h1 {
     outline: none;
 }
 
+.bio-link--featured {
+    min-height: 94px;
+    grid-template-columns: 60px minmax(0, 1fr) 40px;
+    gap: 1rem;
+    padding: 1rem;
+    border-color: rgba(78, 214, 137, 0.72);
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(229, 255, 239, 0.94)),
+        linear-gradient(90deg, rgba(37, 211, 102, 0.22), rgba(255, 255, 255, 0));
+    box-shadow: 0 22px 62px rgba(8, 21, 34, 0.24), 0 0 0 4px rgba(37, 211, 102, 0.16);
+}
+
+.bio-link--featured:hover,
+.bio-link--featured:focus-visible {
+    border-color: rgba(37, 211, 102, 0.95);
+    background:
+        linear-gradient(135deg, var(--white), rgba(233, 255, 242, 0.98)),
+        linear-gradient(90deg, rgba(37, 211, 102, 0.28), rgba(255, 255, 255, 0));
+    box-shadow: 0 30px 76px rgba(8, 21, 34, 0.3), 0 0 0 5px rgba(37, 211, 102, 0.2);
+}
+
+.bio-link--featured .link-copy strong {
+    font-size: 1.12rem;
+}
+
+.bio-link--featured .link-copy small {
+    color: #356454;
+    font-size: 0.92rem;
+}
+
 .bio-link::after {
     position: absolute;
     inset: auto 1rem 1rem auto;
@@ -337,6 +367,12 @@ h1 {
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24), 0 14px 28px rgba(8, 21, 34, 0.16);
 }
 
+.link-icon img {
+    width: 72%;
+    height: 72%;
+    object-fit: contain;
+}
+
 .link-icon--tiktok {
     background: linear-gradient(135deg, #0f1720, #142841 52%, #c56f52);
 }
@@ -347,6 +383,12 @@ h1 {
 
 .link-icon--whatsapp {
     background: linear-gradient(135deg, #1d8f5d, #2f6b55);
+}
+
+.bio-link--featured .link-icon--whatsapp {
+    width: 60px;
+    background: linear-gradient(135deg, #25d366, #128c7e);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32), 0 18px 34px rgba(18, 140, 126, 0.28);
 }
 
 .link-copy {
@@ -607,8 +649,19 @@ body.is-loading .credit-caret {
         padding: 0.78rem;
     }
 
+    .bio-link--featured {
+        grid-template-columns: 54px minmax(0, 1fr) 34px;
+        min-height: 88px;
+        gap: 0.82rem;
+        padding: 0.86rem;
+    }
+
     .link-icon {
         width: 46px;
+    }
+
+    .bio-link--featured .link-icon--whatsapp {
+        width: 54px;
     }
 
     .link-arrow {
