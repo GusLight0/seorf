@@ -32,13 +32,15 @@ const products = [
         colors: ['Azul', 'Preto'],
         tag: 'Destaque',
         categories: ['pulseiras', 'destaque'],
-        image: './assets/images/sao-bento-4.PNG',
+        image: './assets/images/sao-bento-1.jpeg',
         images: [
+            './assets/images/sao-bento-1.jpeg',
+            './assets/images/sao-bento-2.jpeg',
+            './assets/images/sao-bento-3.jpeg',
             './assets/images/sao-bento-4.PNG',
-            './assets/images/sao-bento-2.PNG',
-            './assets/images/sao-bento-3.PNG',
-            './assets/images/sao-bento-1.PNG',
-            './assets/images/sao-bento-5.PNG'
+            './assets/images/sao-bento-5.jpeg',
+            './assets/images/sao-bento-6.jpeg',
+            './assets/images/sao-bento-7.jpeg'
         ],
         description: 'Modelo com medalha central e presença discreta para composições elegantes.',
         specs: ['Presença discreta', 'Medalha São Bento', 'Acabamento de presença discreta']
@@ -69,13 +71,15 @@ const products = [
         colors: ['Preto', 'Prata'],
         tag: 'Destaque',
         categories: ['pulseiras', 'destaque'],
-        image: './assets/images/havai-prata-3.jpeg',
+        image: './assets/images/havai-preta-4.jpeg',
         images: [
-            './assets/images/havai-prata-3.jpeg',
+            './assets/images/havai-preta-4.jpeg',
+            './assets/images/havai-preta-1.png',
+            './assets/images/havai-preta-3.PNG',
             './assets/images/havai-preta-2.png',
+            './assets/images/havai-prata-3.jpeg',
             './assets/images/havai-prata-1.jpeg',
-            './assets/images/havai-prata-2.jpeg',
-            './assets/images/havai-preta-1.png'
+            './assets/images/havai-prata-2.jpeg'
         ],
         description: 'Design preto e prata com brilho limpo para o dia a dia.',
         specs: ['Brilho limpo', 'Design minimalista', 'Acabamento prateado']
@@ -218,7 +222,7 @@ const products = [
         images: [
             './assets/images/capri-1.PNG',
             './assets/images/capri-2.PNG',
-            './assets/images/produto-25.jpeg'
+            './assets/images/capri-3.jpeg'
         ],
         description: 'Pulseira vermelha de corda com acabamento prateado, leve e marcante.',
         specs: ['Corda vermelha texturizada', 'Ajuste deslizante', 'Acabamento prateado']
