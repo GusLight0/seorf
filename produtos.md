@@ -1,7 +1,7 @@
 # Produtos SEORF
 
 ## Produto 1
-- Imagem: `assets/images/produto-1.jpeg`
+- Imagens: `assets/images/viena-preta-1.jpeg`, `assets/images/viena-preta-2.jpeg`
 - Nome: Pulseira Viena
 - Descrição: Pulseira preta com detalhe dourado, elegante e fácil de combinar.
 - Cor: Preto com Dourado
@@ -15,14 +15,14 @@
 - Preço: R$ 89,90
 
 ## Produto 3
-- Imagens: `assets/images/marselha-1.PNG`, `assets/images/marselha-2.PNG`, `assets/images/produto-3.png`, `assets/images/produto-14.jpeg`
+- Imagens: `assets/images/marselha-1.PNG`, `assets/images/marselha-2.PNG`, `assets/images/marselha-prata-1.jpeg`, `assets/images/marselha-prata-2.jpeg`
 - Nome: Pulseira Marselha
 - Descrição: Pulseira de leitura leve, com tons frios e acabamento sofisticado.
 - Cores: Prata e Azul
 - Preço: R$ 89,90
 
 ## Produto 4
-- Imagens: `assets/images/produto-4.jpeg`, `assets/images/produto-15.jpeg`
+- Imagens: `assets/images/havai-preta-1.png`, `assets/images/havai-preta-2.png`, `assets/images/havai-prata-1.jpeg`, `assets/images/havai-prata-2.jpeg`, `assets/images/havai-prata-3.jpeg`
 - Nome: Pulseira Havaí
 - Descrição: Design preto e prata com brilho limpo para o dia a dia.
 - Cores: Preto e Prata
@@ -36,28 +36,28 @@
 - Preço: R$ 79,90
 
 ## Produto 6
-- Imagens: `assets/images/produto-6.png`, `assets/images/produto-6-1.png`
+- Imagens: `assets/images/rio-prata-1.jpeg`, `assets/images/rio-prata-2.jpeg`, `assets/images/rio-prata-3.jpeg`, `assets/images/rio-prata-4.jpeg`, `assets/images/rio-prata-5.jpeg`, `assets/images/rio-dourado-1.jpeg`, `assets/images/rio-dourado-2.jpeg`, `assets/images/rio-dourado-3.jpeg`, `assets/images/rio-dourado-4.jpeg`, `assets/images/rio-dourado-5.jpeg`
 - Nome: Colar Rio
 - Descrição: Colar preto com detalhe prateado, limpo e marcante.
 - Cores: Prata e Dourado
 - Preço: R$ 109,90
 
 ## Produto 7
-- Imagens: `assets/images/riviera-1.PNG`, `assets/images/riviera-2.PNG`, `assets/images/produto-17.jpeg`, `assets/images/produto-18.jpeg`, `assets/images/produto-7.png`, `assets/images/produto-16.jpeg`
+- Imagens: `assets/images/riviera-1.PNG`, `assets/images/riviera-2.PNG`, `assets/images/riviera-preta-1.jpeg`, `assets/images/riviera-preta-2.jpeg`, `assets/images/riviera-preta-3.jpeg`, `assets/images/riviera-preta-4.jpeg`, `assets/images/riviera-preta-5.jpeg`, `assets/images/riviera-azul-1.jpeg`, `assets/images/riviera-azul-2.jpeg`, `assets/images/riviera-azul-3.jpeg`, `assets/images/riviera-azul-4.jpeg`
 - Nome: Riviera SEORF
 - Descrição: Pulseira com assinatura SEORF, visual marcante e acabamento forte.
 - Cores: Azul e Preto
 - Preço: R$ 99,90
 
 ## Produto 9
-- Imagem: `assets/images/produto-9.jpeg`
+- Imagens: `assets/images/viena-vermelha-1.jpeg`, `assets/images/viena-vermelha-2.jpeg`
 - Nome: Pulseira Viena
 - Descrição: Versão vermelha da Viena, intensa e pronta para destacar o look.
 - Cor: Vermelha
 - Preço: R$ 79,90
 
 ## Produto 10
-- Imagem: `assets/images/produto-11.jpeg`
+- Imagens: `assets/images/sete-nos-1.jpeg`, `assets/images/sete-nos-2.jpeg`
 - Nome: Pulseira 7 Nós
 - Descrição: Pulseira vermelha de sete nós, leve e cheia de personalidade.
 - Cor: Vermelha
@@ -78,7 +78,7 @@
 - Preço: R$ 89,90
 
 ## Produto 16
-- Imagens: `assets/images/produto-26-1.jpeg`, `assets/images/produto-26-2.jpeg`
+- Imagem: `assets/images/cannes-preta-1.jpeg`, `assets/images/cannes-1.jpeg`, `assets/images/cannes-2.jpeg`, `assets/images/cannes-4.jpeg`, `assets/images/cannes-5.jpeg`, `assets/images/cannes-6.jpeg`
 - Nome: Pulseira Cannes
 - Descrição: Pulseira ajustável em corda, disponível em preto ou branco, com acabamento prateado e presença elegante.
 - Cores: Preto ou Branco
@@ -92,7 +92,7 @@
 - Preço: R$ 99,90
 
 ## Produto 18
-- Imagens: `assets/images/oslo-1.PNG`, `assets/images/produto-28.jpeg`, `assets/images/produto-28-1.jpeg`
+- Imagens: `assets/images/oslo-1.PNG`, `assets/images/oslo-prata-1.jpeg`
 - Nome: Pulseira Oslo
 - Descrição: Pulseira de corda ajustável com elo metálico central, disponível em preto e branco, unindo conforto e sofisticação para o uso diário.
 - Cores: Preto e Branco

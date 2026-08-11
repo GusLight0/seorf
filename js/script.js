@@ -19,7 +19,8 @@ const products = [
         colors: ['Preto com Dourado'],
         tag: 'Destaque',
         categories: ['pulseiras', 'destaque', 'novidade'],
-        image: './assets/images/produto-1.jpeg',
+        image: './assets/images/viena-preta-1.jpeg',
+        images: ['./assets/images/viena-preta-1.jpeg', './assets/images/viena-preta-2.jpeg'],
         description: 'Pulseira preta com detalhe dourado, elegante e fácil de combinar.',
         specs: ['Visual elegante', 'Pulseira de corda', 'Acabamento metálico premium']
     },
@@ -31,12 +32,12 @@ const products = [
         colors: ['Azul', 'Preto'],
         tag: 'Destaque',
         categories: ['pulseiras', 'destaque'],
-        image: './assets/images/sao-bento-1.PNG',
+        image: './assets/images/sao-bento-4.PNG',
         images: [
-            './assets/images/sao-bento-1.PNG',
+            './assets/images/sao-bento-4.PNG',
             './assets/images/sao-bento-2.PNG',
             './assets/images/sao-bento-3.PNG',
-            './assets/images/sao-bento-4.PNG',
+            './assets/images/sao-bento-1.PNG',
             './assets/images/sao-bento-5.PNG'
         ],
         description: 'Modelo com medalha central e presença discreta para composições elegantes.',
@@ -54,8 +55,8 @@ const products = [
         images: [
             './assets/images/marselha-1.PNG',
             './assets/images/marselha-2.PNG',
-            './assets/images/produto-3.png',
-            './assets/images/produto-14.jpeg'
+            './assets/images/marselha-prata-1.jpeg',
+            './assets/images/marselha-prata-2.jpeg'
         ],
         description: 'Pulseira de leitura leve, com tons frios e acabamento sofisticado.',
         specs: ['Leitura leve', 'Trama texturizada', 'Detalhe central refinado']
@@ -68,8 +69,14 @@ const products = [
         colors: ['Preto', 'Prata'],
         tag: 'Destaque',
         categories: ['pulseiras', 'destaque'],
-        image: './assets/images/produto-4.jpeg',
-        images: ['./assets/images/produto-4.jpeg', './assets/images/produto-20.png'],
+        image: './assets/images/havai-prata-3.jpeg',
+        images: [
+            './assets/images/havai-prata-3.jpeg',
+            './assets/images/havai-preta-2.png',
+            './assets/images/havai-prata-1.jpeg',
+            './assets/images/havai-prata-2.jpeg',
+            './assets/images/havai-preta-1.png'
+        ],
         description: 'Design preto e prata com brilho limpo para o dia a dia.',
         specs: ['Brilho limpo', 'Design minimalista', 'Acabamento prateado']
     },
@@ -87,37 +94,79 @@ const products = [
         specs: ['Mistura metalizada', 'Perfil elegante', 'Detalhe metálico premium']
     },
     {
-        id: 'seorf-06',
-        name: 'Colar Rio',
+        id: 'seorf-06a',
+        name: 'Colar Rio Prata',
         price: 109.90,
-        color: 'Prata e Dourado',
-        colors: ['Prata', 'Dourado'],
+        color: 'Prata',
+        colors: ['Prata'],
         tag: 'Destaque',
         categories: ['colares', 'destaque'],
-        image: './assets/images/produto-6.png',
-        images: ['./assets/images/produto-6.png', './assets/images/produto-6-1.png'],
-        description: 'Colar preto com detalhe prateado, limpo e marcante.',
-        specs: ['Visual marcante', 'Colar de corda', 'Acabamento prateado e dourado']
+        image: './assets/images/rio-prata-1.jpeg',
+        images: [
+            './assets/images/rio-prata-1.jpeg',
+            './assets/images/rio-prata-2.jpeg',
+            './assets/images/rio-prata-3.jpeg',
+            './assets/images/rio-prata-4.jpeg',
+            './assets/images/rio-prata-5.jpeg'
+        ],
+        description: 'Colar Rio na versão prata, com visual limpo e presença marcante.',
+        specs: ['Visual marcante', 'Colar de corda', 'Acabamento prateado']
     },
     {
-        id: 'seorf-07',
-        name: 'Riviera SEORF',
+        id: 'seorf-06b',
+        name: 'Colar Rio Dourado',
+        price: 109.90,
+        color: 'Dourado',
+        colors: ['Dourado'],
+        tag: 'Destaque',
+        categories: ['colares', 'destaque'],
+        image: './assets/images/rio-dourado-1.jpeg',
+        images: [
+            './assets/images/rio-dourado-1.jpeg',
+            './assets/images/rio-dourado-2.jpeg',
+            './assets/images/rio-dourado-3.jpeg',
+            './assets/images/rio-dourado-4.jpeg',
+            './assets/images/rio-dourado-5.jpeg'
+        ],
+        description: 'Colar Rio na versão dourada, com brilho sofisticado e acabamento premium.',
+        specs: ['Visual marcante', 'Colar de corda', 'Acabamento dourado']
+    },
+    {
+        id: 'seorf-07a',
+        name: 'Riviera SEORF Preto',
         price: 99.90,
-        color: 'Azul e Preto',
-        colors: ['Azul', 'Preto'],
+        color: 'Preto',
+        colors: ['Preto'],
         tag: 'Novo',
         categories: ['pulseiras', 'novidade'],
-        image: './assets/images/riviera-1.PNG',
+        image: './assets/images/riviera-preta-1.jpeg',
         images: [
-            './assets/images/riviera-1.PNG',
-            './assets/images/riviera-2.PNG',
-            './assets/images/produto-17.jpeg',
-            './assets/images/produto-18.jpeg',
-            './assets/images/produto-7.png',
-            './assets/images/produto-16.jpeg'
+            './assets/images/riviera-preta-1.jpeg',
+            './assets/images/riviera-preta-2.jpeg',
+            './assets/images/riviera-preta-3.jpeg',
+            './assets/images/riviera-preta-4.jpeg',
+            './assets/images/riviera-preta-5.jpeg'
         ],
-        description: 'Pulseira com assinatura SEORF, visual marcante e acabamento forte.',
-        specs: ['Assinatura SEORF', 'Linha Riviera', 'Visual esportivo premium']
+        description: 'Riviera SEORF em preto, com visual sóbrio e acabamento sofisticado.',
+        specs: ['Design sóbrio', 'Acabamento preto', 'Assinatura SEORF']
+    },
+    {
+        id: 'seorf-07b',
+        name: 'Riviera SEORF Azul',
+        price: 99.90,
+        color: 'Azul',
+        colors: ['Azul'],
+        tag: 'Novo',
+        categories: ['pulseiras', 'novidade'],
+        image: './assets/images/riviera-azul-1.jpeg',
+        images: [
+            './assets/images/riviera-azul-1.jpeg',
+            './assets/images/riviera-azul-2.jpeg',
+            './assets/images/riviera-azul-3.jpeg',
+            './assets/images/riviera-azul-4.jpeg'
+        ],
+        description: 'Riviera SEORF em azul, com tom vibrante e acabamento marcante.',
+        specs: ['Visual vibrante', 'Acabamento azul', 'Assinatura SEORF']
     },
     {
         id: 'seorf-09',
@@ -127,7 +176,8 @@ const products = [
         colors: ['Vermelha'],
         tag: '',
         categories: ['pulseiras'],
-        image: './assets/images/produto-9.jpeg',
+        image: './assets/images/viena-vermelha-2.jpeg',
+        images: ['./assets/images/viena-vermelha-2.jpeg', './assets/images/viena-vermelha-1.jpeg'],
         description: 'Versão vermelha da Viena, intensa e pronta para destacar o look.',
         specs: ['Destaque no look', 'Pulseira de corda', 'Detalhe metálico']
     },
@@ -139,7 +189,8 @@ const products = [
         colors: ['Vermelha'],
         tag: '',
         categories: ['pulseiras'],
-        image: './assets/images/produto-11.jpeg',
+        image: './assets/images/sete-nos-2.jpeg',
+        images: ['./assets/images/sete-nos-2.jpeg', './assets/images/sete-nos-1.jpeg'],
         description: 'Pulseira vermelha de sete nós, leve e cheia de personalidade.',
         specs: ['Leve e expressiva', 'Modelo 7 nós', 'Uso casual e versátil']
     },
@@ -180,8 +231,16 @@ const products = [
         colors: ['Preto', 'Branco'],
         tag: 'Novo',
         categories: ['pulseiras', 'novidade'],
-        image: './assets/images/produto-26-1.jpeg',
-        images: ['./assets/images/produto-26-1.jpeg', './assets/images/produto-26-2.jpeg'],
+        image: './assets/images/cannes-preta-1.jpeg',
+        images: [
+            './assets/images/cannes-preta-1.jpeg',
+            './assets/images/cannes-1.jpeg',
+            './assets/images/cannes-2.jpeg',
+            './assets/images/cannes-4.jpeg',
+            './assets/images/cannes-5.jpeg',
+            './assets/images/cannes-6.jpeg'
+            
+        ],
         description: 'Pulseira ajustável em corda, disponível em preto ou branco, com acabamento prateado e presença elegante.',
         specs: ['Corda ajustável', 'Duas cores disponíveis', 'Acabamento prateado']
     },
@@ -193,10 +252,10 @@ const products = [
         colors: ['Preto'],
         tag: 'Novo',
         categories: ['pulseiras', 'novidade'],
-        image: './assets/images/toquio-1.PNG',
+        image: './assets/images/toquio-2.PNG',
         images: [
-            './assets/images/toquio-1.PNG',
             './assets/images/toquio-2.PNG',
+            './assets/images/toquio-1.PNG',
             './assets/images/toquio-3.PNG'
         ],
         description: 'Pulseira preta com visual moderno, discreta e fácil de combinar.',
@@ -211,7 +270,7 @@ const products = [
         tag: 'Novo',
         categories: ['pulseiras', 'novidade'],
         image: './assets/images/oslo-1.PNG',
-        images: ['./assets/images/oslo-1.PNG', './assets/images/produto-28.jpeg', './assets/images/produto-28-1.jpeg'],
+        images: ['./assets/images/oslo-1.PNG', './assets/images/oslo-prata-1.jpeg'],
         description: 'Pulseira de corda ajustável com elo metálico central, disponível em preto e branco, unindo conforto e sofisticação para o uso diário.',
         specs: ['Corda ajustável', 'Elo metálico', 'Duas cores disponíveis']
     },
@@ -648,97 +707,98 @@ function initializeHeroCarousel() {
 function initializeArtistShowcase() {
     const showcase = document.querySelector('[data-artist-showcase]');
     const video = showcase?.querySelector('[data-artist-video]');
-    if (!showcase || !video) return;
 
-    const artists = [
-        {
-            name: 'Felipe Amorim',
-            role: 'Cantor',
-            source: './assets/videos/video-patrocinador-1.mp4',
-            headline: 'Acessórios que acompanham o seu ritmo.',
-            description: 'Felipe Amorim apresenta sua escolha SEORF com personalidade e presença.'
-        },
-        {
-            name: 'Lipe Lucena',
-            role: 'Cantor',
-            source: './assets/videos/video-patrocinador-2.mp4',
-            headline: 'Presença nos detalhes, dentro e fora do palco.',
-            description: 'Lipe Lucena combina música e estilo em uma recomendação direta dos acessórios SEORF.'
-        },
-        {
-            name: 'Jotave',
-            role: 'Cantor',
-            source: './assets/videos/video-patrocinador-3.mp4',
-            headline: 'Identidade para completar cada composição.',
-            description: 'Jotave mostra como os acessórios SEORF entram em uma composição autêntica e atual.'
-        },
-        {
-            name: 'Eric Land',
-            role: 'Cantor',
-            source: './assets/videos/video-patrocinador-4.mp4',
-            headline: 'Estilo marcante em todos os momentos.',
-            description: 'Eric Land encerra a sequência de recomendações com a identidade marcante da SEORF.'
-        },
-        {
-            name: 'Rogerinho',
-            role: 'Cantor',
-            source: './assets/videos/video-patrocinador-5.mp4',
-            headline: 'Autenticidade que combina com qualquer palco.',
-            description: 'Rogerinho traz sua energia e recomenda os acessórios SEORF como parte do seu estilo.'
-        }
-    ];
+    if (video) {
+        const artists = [
+            {
+                name: 'Felipe Amorim',
+                role: 'Cantor',
+                source: './assets/videos/video-patrocinador-1.mp4',
+                headline: 'Acessórios que acompanham o seu ritmo.',
+                description: 'Felipe Amorim apresenta sua escolha SEORF com personalidade e presença.'
+            },
+            {
+                name: 'Lipe Lucena',
+                role: 'Cantor',
+                source: './assets/videos/video-patrocinador-2.mp4',
+                headline: 'Presença nos detalhes, dentro e fora do palco.',
+                description: 'Lipe Lucena combina música e estilo em uma recomendação direta dos acessórios SEORF.'
+            },
+            {
+                name: 'Jotave',
+                role: 'Cantor',
+                source: './assets/videos/video-patrocinador-3.mp4',
+                headline: 'Identidade para completar cada composição.',
+                description: 'Jotave mostra como os acessórios SEORF entram em uma composição autêntica e atual.'
+            },
+            {
+                name: 'Eric Land',
+                role: 'Cantor',
+                source: './assets/videos/video-patrocinador-4.mp4',
+                headline: 'Estilo marcante em todos os momentos.',
+                description: 'Eric Land encerra a sequência de recomendações com a identidade marcante da SEORF.'
+            },
+            {
+                name: 'Rogerinho',
+                role: 'Cantor',
+                source: './assets/videos/video-patrocinador-5.mp4',
+                headline: 'Autenticidade que combina com qualquer palco.',
+                description: 'Rogerinho traz sua energia e recomenda os acessórios SEORF como parte do seu estilo.'
+            }
+        ];
 
-    const name = showcase.querySelector('[data-artist-name]');
-    const role = showcase.querySelector('[data-artist-role]');
-    const headline = showcase.querySelector('[data-artist-headline]');
-    const description = showcase.querySelector('[data-artist-description]');
-    const count = showcase.querySelector('[data-artist-count]');
-    const dots = [...showcase.querySelectorAll('[data-artist-video-index]')];
-    const previous = showcase.querySelector('[data-artist-prev]');
-    const next = showcase.querySelector('[data-artist-next]');
-    const playButton = showcase.querySelector('[data-artist-play]');
-    const videoFrame = showcase.querySelector('.artist-video-frame');
-    let activeIndex = 0;
+        const name = showcase.querySelector('[data-artist-name]');
+        const role = showcase.querySelector('[data-artist-role]');
+        const headline = showcase.querySelector('[data-artist-headline]');
+        const description = showcase.querySelector('[data-artist-description]');
+        const count = showcase.querySelector('[data-artist-count]');
+        const dots = [...showcase.querySelectorAll('[data-artist-video-index]')];
+        const previous = showcase.querySelector('[data-artist-prev]');
+        const next = showcase.querySelector('[data-artist-next]');
+        const playButton = showcase.querySelector('[data-artist-play]');
+        const videoFrame = showcase.querySelector('.artist-video-frame');
+        let activeIndex = 0;
 
-    const setActiveArtist = (index, shouldPlay = false) => {
-        activeIndex = (index + artists.length) % artists.length;
-        const artist = artists[activeIndex];
+        const setActiveArtist = (index, shouldPlay = false) => {
+            activeIndex = (index + artists.length) % artists.length;
+            const artist = artists[activeIndex];
 
-        video.pause();
-        video.src = resolveAsset(artist.source);
-        video.setAttribute('aria-label', `Vídeo da parceria entre ${artist.name} e SEORF`);
-        video.load();
+            video.pause();
+            video.src = resolveAsset(artist.source);
+            video.setAttribute('aria-label', `Vídeo da parceria entre ${artist.name} e SEORF`);
+            video.load();
 
-        if (name) name.textContent = artist.name;
-        if (role) role.textContent = artist.role;
-        if (headline) headline.textContent = artist.headline;
-        if (description) description.textContent = artist.description;
-        if (count) count.textContent = `${String(activeIndex + 1).padStart(2, '0')} / ${String(artists.length).padStart(2, '0')}`;
-        videoFrame?.classList.remove('is-playing');
+            if (name) name.textContent = artist.name;
+            if (role) role.textContent = artist.role;
+            if (headline) headline.textContent = artist.headline;
+            if (description) description.textContent = artist.description;
+            if (count) count.textContent = `${String(activeIndex + 1).padStart(2, '0')} / ${String(artists.length).padStart(2, '0')}`;
+            videoFrame?.classList.remove('is-playing');
 
-        dots.forEach((dot, dotIndex) => {
-            const isActive = dotIndex === activeIndex;
-            dot.classList.toggle('active', isActive);
-            dot.setAttribute('aria-selected', String(isActive));
-            dot.tabIndex = isActive ? 0 : -1;
+            dots.forEach((dot, dotIndex) => {
+                const isActive = dotIndex === activeIndex;
+                dot.classList.toggle('active', isActive);
+                dot.setAttribute('aria-selected', String(isActive));
+                dot.tabIndex = isActive ? 0 : -1;
+            });
+
+            if (shouldPlay) {
+                video.play().catch(() => {});
+            }
+        };
+
+        previous?.addEventListener('click', () => setActiveArtist(activeIndex - 1, true));
+        next?.addEventListener('click', () => setActiveArtist(activeIndex + 1, true));
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => setActiveArtist(index, true));
         });
-
-        if (shouldPlay) {
+        playButton?.addEventListener('click', () => {
             video.play().catch(() => {});
-        }
-    };
-
-    previous?.addEventListener('click', () => setActiveArtist(activeIndex - 1, true));
-    next?.addEventListener('click', () => setActiveArtist(activeIndex + 1, true));
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => setActiveArtist(index, true));
-    });
-    playButton?.addEventListener('click', () => {
-        video.play().catch(() => {});
-    });
-    video.addEventListener('play', () => videoFrame?.classList.add('is-playing'));
-    video.addEventListener('pause', () => videoFrame?.classList.remove('is-playing'));
-    video.addEventListener('ended', () => setActiveArtist(activeIndex + 1, true));
+        });
+        video.addEventListener('play', () => videoFrame?.classList.add('is-playing'));
+        video.addEventListener('pause', () => videoFrame?.classList.remove('is-playing'));
+        video.addEventListener('ended', () => setActiveArtist(activeIndex + 1, true));
+    }
 
     const gallery = document.querySelector('[data-artist-gallery]');
     const galleryPrevious = document.querySelector('[data-gallery-prev]');
