@@ -214,18 +214,22 @@ const products = [
         id: 'seorf-15',
         name: 'Pulseira Capri',
         price: 89.90,
-        color: 'Vermelha',
-        colors: ['Vermelha'],
+        color: 'Vermelha ou Preta com ferro dourado ou prata',
+        colors: ['Vermelha com ferro dourado', 'Vermelha com ferro prata', 'Preta com ferro dourado'],
+        optionLabel: 'Escolha a cor e a ferragem',
+        requiresSelection: true,
         tag: 'Novo',
         categories: ['pulseiras', 'novidade'],
-        image: './assets/images/capri-1.PNG',
+        image: './assets/images/capri-4.png',
         images: [
+            './assets/images/capri-4.png',
+            './assets/images/capri-3.jpeg',
+            './assets/images/capri-5.png',
             './assets/images/capri-1.PNG',
-            './assets/images/capri-2.PNG',
-            './assets/images/capri-3.jpeg'
+            './assets/images/capri-2.PNG'
         ],
-        description: 'Pulseira vermelha de corda com acabamento prateado, leve e marcante.',
-        specs: ['Corda vermelha texturizada', 'Ajuste deslizante', 'Acabamento prateado']
+        description: 'Pulseira Capri em corda texturizada, agora com opção de ferragem dourada ou prata para ajustar o acabamento ao seu estilo.',
+        specs: ['Corda vermelha ou preta texturizada', 'Ajuste deslizante', 'Escolha entre ferro dourado ou prata']
     },
     {
         id: 'seorf-16',
@@ -291,6 +295,31 @@ const products = [
         specs: ['Design minimalista', 'Detalhe discreto', 'Acabamento preto fosco']
     },
     {
+        id: 'seorf-20',
+        name: 'Pulseira Flat 4mm',
+        price: 149.90,
+        color: 'Dourado',
+        colors: ['Dourado'],
+        tag: 'Novo',
+        categories: ['pulseiras', 'novidade'],
+        image: './assets/images/pulseira-flat.jpeg',
+        description: 'Pulseira flat de 4mm banhada a 10 milésimos de ouro 10k, com brilho limpo e encaixe discreto para o dia a dia.',
+        specs: ['Banhada a 10 milésimos de ouro 10k', 'Malha flat de 4mm', 'Acabamento dourado elegante']
+    },
+    {
+        id: 'seorf-21',
+        name: 'Cordões Banhados a Ouro 18k',
+        price: 169.90,
+        color: 'Dourado',
+        colors: ['Dourado'],
+        tag: 'Novo',
+        categories: ['colares', 'novidade'],
+        image: './assets/images/cordoes-banhados-a-ouro.jpeg',
+        description: 'Cordões banhados a ouro 18k para montar uma composição limpa, elegante e pronta para usar sozinho ou com pingente.',
+        orderInstructions: 'Escolha pelo WhatsApp o modelo do cordão, o tamanho desejado e a quantidade. A SEORF confirma a montagem e a disponibilidade antes do fechamento.',
+        specs: ['Banho em ouro 18k', 'Pedido montado pelo WhatsApp', 'Modelo, tamanho e quantidade confirmados no atendimento']
+    },
+    {
         id: 'combo-01',
         name: 'Combo Colar Rio + Pulseira Tóquio',
         price: 199.90,
@@ -299,7 +328,7 @@ const products = [
         tag: 'Combo',
         categories: ['combos', 'colares', 'pulseiras'],
         image: './assets/combos/combo-1.PNG',
-        description: 'Colar com pingente de crucifixo prateado e pulseira de nó tricolor, ambos em cordão preto ajustável.',
+        description: 'Um colar marcante e uma pulseira Tóquio para fechar o visual com presença.',
         specs: ['Colar + pulseira', 'Cordão preto ajustável', 'Detalhe metálico prateado e dourado']
     },
     {
@@ -311,7 +340,7 @@ const products = [
         tag: 'Combo',
         categories: ['combos', 'pulseiras'],
         image: './assets/combos/combo-2.PNG',
-        description: 'Dupla de pulseiras para empilhar: corda vermelha lisa e pulseira preta cravejada com detalhe prateado.',
+        description: 'Duas pulseiras para compor no pulso com contraste, brilho e atitude.',
         specs: ['2 pulseiras', 'Corda vermelha + cravejada preta', 'Acabamento prateado']
     },
     {
@@ -323,7 +352,7 @@ const products = [
         tag: 'Combo',
         categories: ['combos', 'pulseiras'],
         image: './assets/combos/combo-3.PNG',
-        description: 'Dupla de pulseiras: corda vermelha de nós e pulseira preta com elo metálico prateado central.',
+        description: 'A dupla certeira entre vermelho e preto para um visual forte no dia a dia.',
         specs: ['2 pulseiras', 'Corda vermelha de nós', 'Elo metálico prateado']
     }
 ];
@@ -354,6 +383,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeCart();
     initializeFavorites();
     initializeFAQ();
+    initializeProductRouting();
     loadCart();
     renderCart();
     renderFavorites();
@@ -451,6 +481,17 @@ function getProductColors(product) {
 
 function getDefaultProductColor(product) {
     return getProductColors(product)[0] || product.color || 'Única';
+}
+
+function getProductOptionSummary(product) {
+    const colors = getProductColors(product);
+    if (!colors.length) return '';
+
+    if (product.requiresSelection || colors.length > 1) {
+        return `${colors.length} opções`;
+    }
+
+    return colors[0];
 }
 
 function createCartItemKey(productId, color) {
@@ -554,8 +595,22 @@ function initializeNavigation() {
         });
     });
 
-    document.querySelectorAll('.nav-menu a').forEach(link => {
-        link.addEventListener('click', () => closeMobileMenu());
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', event => {
+            const sectionId = link.getAttribute('href')?.replace('#', '') || '';
+            const shouldNavigateSection = sectionId
+                && !sectionId.startsWith('produto=')
+                && sectionId !== 'cartModal'
+                && sectionId !== 'favoritesModal'
+                && document.getElementById(sectionId);
+
+            closeMobileMenu();
+
+            if (shouldNavigateSection && document.body.classList.contains('product-detail-active')) {
+                event.preventDefault();
+                navigateFromProductDetail(sectionId);
+            }
+        });
     });
 
     initializeActiveNavigation();
@@ -566,21 +621,8 @@ function initializeActiveNavigation() {
     if (!navLinks.length) return;
 
     const page = document.body.dataset.page || 'home';
-    const setActiveNav = activeKey => {
-        navLinks.forEach(link => {
-            const isActive = link.dataset.navLink === activeKey;
-            link.classList.toggle('is-active', isActive);
-            if (isActive) {
-                link.setAttribute('aria-current', 'page');
-                return;
-            }
-
-            link.removeAttribute('aria-current');
-        });
-    };
-
     if (page !== 'home') {
-        setActiveNav(page);
+        setActiveNavigation(page);
         return;
     }
 
@@ -599,19 +641,23 @@ function initializeActiveNavigation() {
 
     const updateActiveFromScroll = () => {
         if (activeLockTimer) return;
+        if (document.body.classList.contains('product-detail-active')) {
+            setActiveNavigation('produtos');
+            return;
+        }
 
         const marker = window.scrollY + getHeaderOffset() + Math.min(window.innerHeight * 0.32, 220);
         const activeSection = sections.reduce((current, section) => (
             section.offsetTop <= marker ? section : current
         ), sections[0]);
 
-        setActiveNav(activeSection.id);
+        setActiveNavigation(activeSection.id);
     };
 
     const lockActiveSection = sectionId => {
         if (!document.getElementById(sectionId)) return;
 
-        setActiveNav(sectionId);
+        setActiveNavigation(sectionId);
         window.clearTimeout(activeLockTimer);
         activeLockTimer = window.setTimeout(() => {
             activeLockTimer = null;
@@ -646,6 +692,19 @@ function initializeActiveNavigation() {
     }
 }
 
+function setActiveNavigation(activeKey) {
+    document.querySelectorAll('.nav-menu a[data-nav-link]').forEach(link => {
+        const isActive = link.dataset.navLink === activeKey;
+        link.classList.toggle('is-active', isActive);
+        if (isActive) {
+            link.setAttribute('aria-current', 'page');
+            return;
+        }
+
+        link.removeAttribute('aria-current');
+    });
+}
+
 function closeMobileMenu() {
     const header = document.querySelector('[data-site-header]');
     const menu = document.getElementById('primaryNav');
@@ -660,12 +719,42 @@ function closeMobileMenu() {
 }
 
 function scrollToSection(sectionId) {
+    if (document.body.classList.contains('product-detail-active') && sectionId !== 'productDetailModal') {
+        closeProductModal({ updateUrl: false, scrollToTarget: false });
+    }
+
     const section = document.getElementById(sectionId);
     if (!section) return;
 
     const offset = Number.parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height'), 10) || 76;
     const top = section.getBoundingClientRect().top + window.scrollY - offset + 2;
     window.scrollTo({ top, behavior: 'smooth' });
+}
+
+function setPageHash(hashValue, replace = false) {
+    const url = new URL(window.location.href);
+    url.searchParams.delete('skipLoader');
+    url.hash = hashValue;
+
+    if (replace) {
+        window.history.replaceState(null, '', url);
+        return;
+    }
+
+    window.history.pushState(null, '', url);
+}
+
+function setProductDetailUrl(productId) {
+    const targetHash = `produto=${encodeURIComponent(productId)}`;
+    if (window.location.hash.replace(/^#/, '') === targetHash) return;
+
+    setPageHash(targetHash);
+}
+
+function navigateFromProductDetail(sectionId) {
+    closeProductModal({ updateUrl: false, scrollToTarget: false });
+    setPageHash(sectionId);
+    window.setTimeout(() => scrollToSection(sectionId), 40);
 }
 
 function initializeHeroCarousel() {
@@ -834,26 +923,38 @@ function initializeProducts() {
 
     grid.innerHTML = visibleProducts.map(product => createProductCard(product)).join('');
 
-    grid.addEventListener('click', event => {
+    bindProductCardActions(grid);
+}
+
+function bindProductCardActions(container) {
+    if (!container) return;
+
+    container.addEventListener('click', event => {
         const favoriteButton = event.target.closest('[data-toggle-favorite]');
-        if (favoriteButton) {
+        if (favoriteButton && container.contains(favoriteButton)) {
             toggleFavorite(favoriteButton.dataset.toggleFavorite);
             return;
         }
 
         const addButton = event.target.closest('[data-add-product]');
-        if (addButton) {
+        if (addButton && container.contains(addButton)) {
+            const product = getProduct(addButton.dataset.addProduct);
+            if (product?.requiresSelection) {
+                openProductModal(product.id);
+                return;
+            }
+
             addToCart(addButton.dataset.addProduct);
             return;
         }
 
         const card = event.target.closest('.product-card');
-        if (card && grid.contains(card)) {
+        if (card && container.contains(card)) {
             openProductModal(card.dataset.productId);
         }
     });
 
-    grid.addEventListener('keydown', event => {
+    container.addEventListener('keydown', event => {
         if (event.key !== 'Enter' && event.key !== ' ') return;
         if (!event.target.classList.contains('product-card')) return;
 
@@ -864,11 +965,15 @@ function initializeProducts() {
 
 function createProductCard(product) {
     const [primaryImage] = getProductImages(product);
+    const optionSummary = getProductOptionSummary(product);
     const searchableText = normalizeSearchText([
         product.name,
         product.color,
+        getProductColors(product).join(' '),
         product.tag,
         product.description,
+        product.orderInstructions || '',
+        product.specs.join(' '),
         product.categories.join(' ')
     ].join(' '));
     const tagMarkup = product.tag ? `<span class="product-tag">${escapeHTML(product.tag)}</span>` : '';
@@ -888,11 +993,52 @@ function createProductCard(product) {
                 <div class="product-meta">
                     ${renderPrice(product.price, 'product-price')}
                 </div>
+                ${optionSummary ? `<p class="product-option-summary">${escapeHTML(optionSummary)}</p>` : ''}
                 <button class="icon-action product-quick-add" type="button" data-add-product="${product.id}" aria-label="Adicionar ${escapeHTML(product.name)} ao carrinho">
                     <i class="fas fa-plus" aria-hidden="true"></i>
                 </button>
             </div>
         </article>
+    `;
+}
+
+function getRelatedProducts(product, limit = 4) {
+    const stableCategories = product.categories.filter(category => !['destaque', 'novidade'].includes(category));
+    const preferredCategories = stableCategories.length ? stableCategories : product.categories;
+
+    return products
+        .filter(item => item.id !== product.id)
+        .map(item => {
+            const categoryScore = item.categories.filter(category => preferredCategories.includes(category)).length;
+            const highlightScore = item.categories.some(category => product.categories.includes(category)) ? 1 : 0;
+
+            return {
+                product: item,
+                score: categoryScore * 2 + highlightScore
+            };
+        })
+        .filter(item => item.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, limit)
+        .map(item => item.product);
+}
+
+function createRelatedProducts(product) {
+    const related = getRelatedProducts(product);
+    if (!related.length) return '';
+
+    return `
+        <section class="product-related" aria-labelledby="productRelatedTitle">
+            <div class="product-related-head">
+                <div>
+                    <p class="eyebrow">Continue explorando</p>
+                    <h3 id="productRelatedTitle">Produtos relacionados</h3>
+                </div>
+            </div>
+            <div class="products-grid product-related-grid" data-related-products>
+                ${related.map(item => createProductCard(item)).join('')}
+            </div>
+        </section>
     `;
 }
 
@@ -1190,7 +1336,7 @@ function closeCart() {
 
     cartModal.classList.remove('active');
     cartModal.setAttribute('aria-hidden', 'true');
-    if (!document.querySelector('.product-modal.active, .cart-modal.active')) {
+    if (!document.querySelector('.cart-modal.active')) {
         document.body.classList.remove('modal-open');
     }
 }
@@ -1237,7 +1383,7 @@ function closeFavorites() {
 
     favoritesModal.classList.remove('active');
     favoritesModal.setAttribute('aria-hidden', 'true');
-    if (!document.querySelector('.product-modal.active, .cart-modal.active')) {
+    if (!document.querySelector('.cart-modal.active')) {
         document.body.classList.remove('modal-open');
     }
 }
@@ -1345,6 +1491,13 @@ function renderFavorites() {
 
     favoriteItems.querySelectorAll('[data-favorite-add]').forEach(button => {
         button.addEventListener('click', () => {
+            const product = getProduct(button.dataset.favoriteAdd);
+            if (product?.requiresSelection) {
+                closeFavorites();
+                openProductModal(product.id);
+                return;
+            }
+
             addToCart(button.dataset.favoriteAdd);
         });
     });
@@ -1525,10 +1678,15 @@ function checkout() {
     ];
 
     cart.forEach(item => {
+        const product = getProduct(item.id);
+
         lines.push(`Produto: ${item.name}`);
         lines.push(`Cor: ${item.color || 'Cor única'}`);
         lines.push(`Quantidade: ${item.quantity}`);
         lines.push(`Valor unitário: ${formatPrice(item.price)}`);
+        if (product?.orderInstructions) {
+            lines.push(`Montagem pelo WhatsApp: ${product.orderInstructions}`);
+        }
         lines.push('');
     });
 
@@ -1640,7 +1798,7 @@ function getSharedProductIdFromLocation() {
     return new URLSearchParams(window.location.search).get('produto') || '';
 }
 
-function openProductModal(productId) {
+function openProductModal(productId, options = {}) {
     const product = getProduct(productId);
     const modal = document.getElementById('productDetailModal');
     if (!product || !modal) return;
@@ -1649,11 +1807,53 @@ function openProductModal(productId) {
     modalQuantity = 1;
     selectedModalColor = getDefaultProductColor(product);
     modal.innerHTML = createProductModal(product);
+    modal.hidden = false;
     modal.classList.add('active');
     modal.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('modal-open');
+    document.body.classList.add('product-detail-active');
+    closeMobileMenu();
+    setActiveNavigation('produtos');
 
-    modal.querySelector('.close-product-modal')?.addEventListener('click', closeProductModal);
+    if (options.updateUrl !== false) {
+        setProductDetailUrl(product.id);
+    }
+
+    const images = getProductImages(product);
+    let activeImageIndex = 0;
+    const setActiveModalImage = index => {
+        if (!images.length) return;
+
+        activeImageIndex = (index + images.length) % images.length;
+        const image = images[activeImageIndex];
+        const mainImage = modal.querySelector('[data-main-modal-image]');
+        const counter = modal.querySelector('[data-modal-gallery-count]');
+
+        if (mainImage) {
+            mainImage.src = resolveAsset(image);
+            mainImage.classList.remove('is-switching');
+            void mainImage.offsetWidth;
+            mainImage.classList.add('is-switching');
+            window.setTimeout(() => mainImage.classList.remove('is-switching'), 220);
+        }
+
+        modal.querySelectorAll('[data-modal-image]').forEach(button => {
+            const isActive = Number(button.dataset.modalImageIndex) === activeImageIndex;
+            button.classList.toggle('active', isActive);
+            button.setAttribute('aria-current', String(isActive));
+        });
+
+        if (counter) counter.textContent = `${activeImageIndex + 1} / ${images.length}`;
+        resetProductZoom(modal);
+    };
+    const moveModalImage = direction => setActiveModalImage(activeImageIndex + direction);
+
+    modal.querySelector('.close-product-modal')?.addEventListener('click', () => closeProductModal());
+    modal.querySelectorAll('[data-product-nav]').forEach(link => {
+        link.addEventListener('click', event => {
+            event.preventDefault();
+            navigateFromProductDetail(link.dataset.productNav);
+        });
+    });
     modal.querySelector('[data-share-toggle]')?.addEventListener('click', () => {
         const share = modal.querySelector('[data-product-share]');
         setProductShareMenu(modal, !share?.classList.contains('active'));
@@ -1681,118 +1881,181 @@ function openProductModal(productId) {
     modal.querySelectorAll('[data-modal-color]').forEach(button => {
         button.addEventListener('click', () => {
             selectedModalColor = button.dataset.modalColor || selectedModalColor;
-            modal.querySelectorAll('[data-modal-color]').forEach(item => item.classList.remove('active'));
-            button.classList.add('active');
+            modal.querySelectorAll('[data-modal-color]').forEach(item => {
+                const isActive = item === button;
+                item.classList.toggle('active', isActive);
+                item.setAttribute('aria-pressed', String(isActive));
+            });
         });
     });
     modal.querySelectorAll('[data-modal-image]').forEach(button => {
         button.addEventListener('click', () => {
-            const image = button.dataset.modalImage;
-            const mainImage = modal.querySelector('[data-main-modal-image]');
-            if (mainImage) mainImage.src = resolveAsset(image);
-            resetProductZoom(modal);
-            modal.querySelectorAll('[data-modal-image]').forEach(item => item.classList.remove('active'));
-            button.classList.add('active');
+            setActiveModalImage(Number(button.dataset.modalImageIndex || 0));
         });
     });
+    modal.querySelector('[data-modal-gallery-prev]')?.addEventListener('click', () => moveModalImage(-1));
+    modal.querySelector('[data-modal-gallery-next]')?.addEventListener('click', () => moveModalImage(1));
+    modal.onkeydown = event => {
+        if (event.key === 'ArrowLeft') moveModalImage(-1);
+        if (event.key === 'ArrowRight') moveModalImage(1);
+    };
+
+    const swipeStage = modal.querySelector('[data-zoom-stage]');
+    if (swipeStage && images.length > 1) {
+        let swipeStartX = 0;
+        let swipeStartY = 0;
+
+        swipeStage.addEventListener('pointerdown', event => {
+            if (swipeStage.classList.contains('is-zoomed')) return;
+            swipeStartX = event.clientX;
+            swipeStartY = event.clientY;
+        });
+
+        swipeStage.addEventListener('pointerup', event => {
+            if (swipeStage.classList.contains('is-zoomed')) return;
+
+            const deltaX = event.clientX - swipeStartX;
+            const deltaY = event.clientY - swipeStartY;
+            if (Math.abs(deltaX) > 48 && Math.abs(deltaX) > Math.abs(deltaY) * 1.4) {
+                moveModalImage(deltaX > 0 ? -1 : 1);
+            }
+        });
+    }
     initializeProductZoom(modal);
+    bindProductCardActions(modal.querySelector('[data-related-products]'));
+    setActiveModalImage(0);
 
     modal.onclick = event => {
         const share = modal.querySelector('[data-product-share]');
         if (share && !share.contains(event.target)) {
             setProductShareMenu(modal, false);
         }
-
-        if (event.target === modal) closeProductModal();
     };
+
+    window.scrollTo({ top: 0, behavior: options.scrollBehavior || 'smooth' });
+    window.setTimeout(() => modal.focus({ preventScroll: true }), 80);
 }
 
 function createProductModal(product) {
     const images = getProductImages(product);
     const [primaryImage] = images;
     const colors = getProductColors(product);
+    const optionLabel = product.optionLabel || (colors.length > 1 ? 'Opções disponíveis' : 'Cor disponível');
+    const relatedMarkup = createRelatedProducts(product);
 
     return `
-        <section class="product-modal-panel" role="dialog" aria-modal="true" aria-labelledby="productModalTitle">
-            <div class="product-modal-top-actions">
-                <div class="product-share" data-product-share>
-                    <button class="icon-action share-product-modal" type="button" data-share-toggle aria-label="Compartilhar produto" aria-expanded="false" aria-controls="productShareMenu">
-                        <i class="fas fa-share-nodes" aria-hidden="true"></i>
-                    </button>
-                    <div class="product-share-menu" id="productShareMenu" role="menu" aria-label="Opções de compartilhamento">
-                        <button type="button" role="menuitem" data-share-copy>
-                            <i class="fas fa-link" aria-hidden="true"></i>
-                            Copiar link
+        <div class="container product-detail-container">
+            <div class="product-detail-bar">
+                <nav class="product-breadcrumb" aria-label="Caminho do produto">
+                    <a href="#home" data-product-nav="home">Início</a>
+                    <span aria-hidden="true">/</span>
+                    <a href="#produtos" data-product-nav="produtos">Produtos</a>
+                    <span aria-hidden="true">/</span>
+                    <span aria-current="page">${escapeHTML(product.name)}</span>
+                </nav>
+
+                <div class="product-modal-top-actions" aria-label="Ações do produto">
+                    <div class="product-share" data-product-share>
+                        <button class="icon-action share-product-modal" type="button" data-share-toggle aria-label="Compartilhar produto" aria-expanded="false" aria-controls="productShareMenu">
+                            <i class="fas fa-share-nodes" aria-hidden="true"></i>
                         </button>
-                        <button type="button" role="menuitem" data-share-native>
-                            <i class="fas fa-share-from-square" aria-hidden="true"></i>
-                            Compartilhar
-                        </button>
-                        <button type="button" role="menuitem" data-share-whatsapp>
-                            <i class="fab fa-whatsapp" aria-hidden="true"></i>
-                            WhatsApp
-                        </button>
-                    </div>
-                </div>
-                <button class="icon-action close-product-modal" type="button" aria-label="Fechar detalhes">
-                    <i class="fas fa-xmark" aria-hidden="true"></i>
-                </button>
-            </div>
-            <div class="product-modal-layout">
-                <div class="modal-media">
-                    <button class="modal-zoom" type="button" data-zoom-stage aria-label="Ampliar imagem do produto" aria-pressed="false">
-                        <img src="${resolveAsset(primaryImage)}" alt="${escapeHTML(product.name)}" data-main-modal-image draggable="false">
-                        <span class="modal-zoom-indicator" aria-hidden="true">
-                            <i class="fas fa-magnifying-glass-plus zoom-in-icon"></i>
-                            <i class="fas fa-magnifying-glass-minus zoom-out-icon"></i>
-                        </span>
-                    </button>
-                    ${images.length > 1 ? `
-                        <div class="modal-thumbs">
-                            ${images.map((image, index) => `
-                                <button class="${index === 0 ? 'active' : ''}" type="button" data-modal-image="${image}" aria-label="Ver imagem ${index + 1} de ${escapeHTML(product.name)}">
-                                    <img src="${resolveAsset(image)}" alt="">
-                                </button>
-                            `).join('')}
-                        </div>
-                    ` : ''}
-                </div>
-                <div class="modal-copy">
-                    ${product.tag ? `<p class="eyebrow">${escapeHTML(product.tag)}</p>` : ''}
-                    <h2 id="productModalTitle">${escapeHTML(product.name)}</h2>
-                    ${renderPrice(product.price, 'modal-price')}
-                    <p class="modal-description">${escapeHTML(product.description)}</p>
-                    <div class="modal-color-options">
-                        <span>Cor disponível</span>
-                        <div class="modal-color-list">
-                            ${colors.map((color, index) => `
-                                <button class="${index === 0 ? 'active' : ''}" type="button" data-modal-color="${escapeHTML(color)}">
-                                    ${escapeHTML(color)}
-                                </button>
-                            `).join('')}
-                        </div>
-                    </div>
-                    <ul class="modal-specs">
-                        ${product.specs.map(spec => `<li>${escapeHTML(spec)}</li>`).join('')}
-                    </ul>
-                    <div class="modal-actions">
-                        <div class="quantity-control">
-                            <button class="qty-btn" type="button" data-modal-decrease aria-label="Diminuir quantidade">
-                                <i class="fas fa-minus" aria-hidden="true"></i>
+                        <div class="product-share-menu" id="productShareMenu" role="menu" aria-label="Opções de compartilhamento">
+                            <button type="button" role="menuitem" data-share-copy>
+                                <i class="fas fa-link" aria-hidden="true"></i>
+                                Copiar link
                             </button>
-                            <span class="qty-value" data-modal-quantity>${modalQuantity}</span>
-                            <button class="qty-btn" type="button" data-modal-increase aria-label="Aumentar quantidade">
-                                <i class="fas fa-plus" aria-hidden="true"></i>
+                            <button type="button" role="menuitem" data-share-native>
+                                <i class="fas fa-share-from-square" aria-hidden="true"></i>
+                                Compartilhar
+                            </button>
+                            <button type="button" role="menuitem" data-share-whatsapp>
+                                <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                                WhatsApp
                             </button>
                         </div>
-                        <button class="btn btn-dark full-width" type="button" data-modal-add>
-                            <i class="fas fa-bag-shopping" aria-hidden="true"></i>
-                            Adicionar ao carrinho
-                        </button>
                     </div>
+                    <button class="icon-action close-product-modal" type="button" aria-label="Voltar para produtos">
+                        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                    </button>
                 </div>
             </div>
-        </section>
+
+            <section class="product-modal-panel" aria-labelledby="productModalTitle">
+                <div class="product-modal-layout">
+                    <div class="modal-media${images.length > 1 ? ' modal-media--with-thumbs' : ''}" data-modal-gallery>
+                        <button class="modal-zoom" type="button" data-zoom-stage aria-label="Ampliar imagem do produto" aria-pressed="false">
+                            <img src="${resolveAsset(primaryImage)}" alt="${escapeHTML(product.name)}" data-main-modal-image draggable="false">
+                            <span class="modal-zoom-indicator" aria-hidden="true">
+                                <i class="fas fa-magnifying-glass-plus zoom-in-icon"></i>
+                                <i class="fas fa-magnifying-glass-minus zoom-out-icon"></i>
+                            </span>
+                        </button>
+                        ${images.length > 1 ? `
+                            <div class="modal-gallery-controls" aria-label="Galeria de imagens de ${escapeHTML(product.name)}">
+                                <button class="modal-gallery-nav" type="button" data-modal-gallery-prev aria-label="Imagem anterior">
+                                    <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                                </button>
+                                <span class="modal-gallery-count" data-modal-gallery-count aria-live="polite">1 / ${images.length}</span>
+                                <button class="modal-gallery-nav" type="button" data-modal-gallery-next aria-label="Próxima imagem">
+                                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        ` : ''}
+                        ${images.length > 1 ? `
+                            <div class="modal-thumbs">
+                                ${images.map((image, index) => `
+                                    <button class="${index === 0 ? 'active' : ''}" type="button" data-modal-image="${image}" data-modal-image-index="${index}" aria-current="${index === 0}" aria-label="Ver imagem ${index + 1} de ${escapeHTML(product.name)}">
+                                        <img src="${resolveAsset(image)}" alt="">
+                                    </button>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                    </div>
+                    <div class="modal-copy">
+                        ${product.tag ? `<p class="eyebrow">${escapeHTML(product.tag)}</p>` : ''}
+                        <h2 id="productModalTitle">${escapeHTML(product.name)}</h2>
+                        ${renderPrice(product.price, 'modal-price')}
+                        <p class="modal-description">${escapeHTML(product.description)}</p>
+                        ${product.orderInstructions ? `
+                            <div class="modal-order-note">
+                                <strong>Como pedir</strong>
+                                <p>${escapeHTML(product.orderInstructions)}</p>
+                            </div>
+                        ` : ''}
+                        <div class="modal-color-options">
+                            <span>${escapeHTML(optionLabel)}</span>
+                            <div class="modal-color-list">
+                                ${colors.map((color, index) => `
+                                    <button class="${index === 0 ? 'active' : ''}" type="button" data-modal-color="${escapeHTML(color)}" aria-pressed="${index === 0}">
+                                        ${escapeHTML(color)}
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <ul class="modal-specs">
+                            ${product.specs.map(spec => `<li>${escapeHTML(spec)}</li>`).join('')}
+                        </ul>
+                        <div class="modal-actions">
+                            <div class="quantity-control">
+                                <button class="qty-btn" type="button" data-modal-decrease aria-label="Diminuir quantidade">
+                                    <i class="fas fa-minus" aria-hidden="true"></i>
+                                </button>
+                                <span class="qty-value" data-modal-quantity>${modalQuantity}</span>
+                                <button class="qty-btn" type="button" data-modal-increase aria-label="Aumentar quantidade">
+                                    <i class="fas fa-plus" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <button class="btn btn-dark full-width" type="button" data-modal-add>
+                                <i class="fas fa-bag-shopping" aria-hidden="true"></i>
+                                Adicionar ao carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            ${relatedMarkup}
+        </div>
     `;
 }
 
@@ -1802,6 +2065,8 @@ function initializeProductZoom(modal) {
 
     let pointerIsDown = false;
     let pointerMoved = false;
+    let pointerStartX = 0;
+    let pointerStartY = 0;
 
     zoomStage.addEventListener('click', event => {
         if (pointerMoved) {
@@ -1815,6 +2080,8 @@ function initializeProductZoom(modal) {
     zoomStage.addEventListener('pointerdown', event => {
         pointerIsDown = true;
         pointerMoved = false;
+        pointerStartX = event.clientX;
+        pointerStartY = event.clientY;
 
         if (zoomStage.classList.contains('is-zoomed')) {
             zoomStage.setPointerCapture?.(event.pointerId);
@@ -1823,6 +2090,12 @@ function initializeProductZoom(modal) {
     });
 
     zoomStage.addEventListener('pointermove', event => {
+        if (pointerIsDown) {
+            const deltaX = Math.abs(event.clientX - pointerStartX);
+            const deltaY = Math.abs(event.clientY - pointerStartY);
+            pointerMoved = deltaX > 8 || deltaY > 8;
+        }
+
         if (!zoomStage.classList.contains('is-zoomed')) return;
 
         if (pointerIsDown) {
@@ -1887,19 +2160,65 @@ function updateModalQuantity(change) {
     if (quantityElement) quantityElement.textContent = String(modalQuantity);
 }
 
-function closeProductModal() {
+function closeProductModal(options = {}) {
     const modal = document.getElementById('productDetailModal');
     if (!modal) return;
 
+    const wasActive = modal.classList.contains('active');
+    const {
+        updateUrl = true,
+        targetSection = 'produtos',
+        scrollToTarget = true
+    } = options;
+
     modal.classList.remove('active');
     modal.setAttribute('aria-hidden', 'true');
+    modal.hidden = true;
     modal.onclick = null;
+    modal.onkeydown = null;
     modal.innerHTML = '';
     activeModalProductId = null;
     selectedModalColor = '';
+    document.body.classList.remove('product-detail-active');
+
     if (!document.querySelector('.cart-modal.active')) {
         document.body.classList.remove('modal-open');
     }
+
+    if (!wasActive || !targetSection) return;
+
+    if (updateUrl) {
+        setPageHash(targetSection);
+    }
+
+    if (scrollToTarget) {
+        window.setTimeout(() => scrollToSection(targetSection), 40);
+    }
+}
+
+function initializeProductRouting() {
+    const syncProductRoute = () => {
+        const sharedProductId = getSharedProductIdFromLocation();
+        if (sharedProductId && getProduct(sharedProductId)) {
+            if (activeModalProductId !== sharedProductId || !document.body.classList.contains('product-detail-active')) {
+                openProductModal(sharedProductId, {
+                    updateUrl: false,
+                    scrollBehavior: 'auto'
+                });
+            }
+            return;
+        }
+
+        if (document.body.classList.contains('product-detail-active')) {
+            closeProductModal({
+                updateUrl: false,
+                scrollToTarget: false
+            });
+        }
+    };
+
+    window.addEventListener('hashchange', syncProductRoute);
+    window.addEventListener('popstate', syncProductRoute);
 }
 
 function initializeFAQ() {

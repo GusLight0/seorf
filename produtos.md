@@ -71,10 +71,10 @@
 - Preço: R$ 129,90
 
 ## Produto 15
-- Imagem: `assets/images/capri-1.PNG`, `assets/images/capri-2.PNG`, `assets/images/produto-25.jpeg`
+- Imagens: `assets/images/capri-4.png`, `assets/images/capri-3.jpeg`, `assets/images/capri-5.png`, `assets/images/capri-1.PNG`, `assets/images/capri-2.PNG`
 - Nome: Pulseira Capri
-- Descrição: Pulseira vermelha de corda com acabamento prateado, leve e marcante.
-- Cor: Vermelha
+- Descrição: Pulseira Capri em corda texturizada, agora com opção de ferragem dourada ou prata para ajustar o acabamento ao seu estilo.
+- Opções: Vermelha com ferro dourado, Vermelha com ferro prata e Preta com ferro dourado
 - Preço: R$ 89,90
 
 ## Produto 16
@@ -105,6 +105,21 @@
 - Cor: Preto
 - Preço: R$ 119,90
 
+## Produto 20
+- Imagens: `assets/images/pulseira-flat.jpeg`
+- Nome: Pulseira Flat 4mm
+- Descrição: Pulseira flat de 4mm banhada a 10 milésimos de ouro 10k, com brilho limpo e encaixe discreto para o dia a dia.
+- Cor: Dourado
+- Preço: R$ 149,90
+
+## Produto 21
+- Imagens: `assets/images/cordoes-banhados-a-ouro.jpeg`
+- Nome: Cordões Banhados a Ouro 18k
+- Descrição: Cordões banhados a ouro 18k para montar uma composição limpa, elegante e pronta para usar sozinho ou com pingente.
+- Como pedir: Escolha pelo WhatsApp o modelo do cordão, o tamanho desejado e a quantidade. A SEORF confirma a montagem e a disponibilidade antes do fechamento.
+- Cor: Dourado
+- Preço: R$ 169,90
+
 # Vídeos:
 ## Adicionar mais vídeos na sessão de Artistas:
 ### 5º Vídeo
@@ -119,16 +134,20 @@
  - Imagem: `assets/combos/combo-1.PNG`
  - Nome: Combo Colar Rio + Pulseira Tóquio
  - Preço: R$ 199,90
- - Descrição: curta, direta e impactadora, vc decide
+ - Descrição: Um colar marcante e uma pulseira Tóquio para fechar o visual com presença.
 
  ### Combo 2:
  - Imagem: `assets/combos/combo-2.PNG`
  - Nome: Combo Paris
  - Preço: R$ 179,90
- - Descrição: curta, direta e impactadora, vc decide
+ - Descrição: Duas pulseiras para compor no pulso com contraste, brilho e atitude.
 
  ### Combo 3:
  - Imagem: `assets/combos/combo-3.PNG`
  - Nome: Combo Palermo
  - Preço: R$ 124,80
- - Descrição: curta, direta e impactadora, vc decide
+ - Descrição: A dupla certeira entre vermelho e preto para um visual forte no dia a dia.
+
+# Artistas:
+# Artista Pedro Guerra
+ - Imagem: assets/images/artista-6.jpeg
