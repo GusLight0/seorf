@@ -28,13 +28,6 @@
 - Cores: Preto e Prata
 - Preço: R$ 99,90
 
-## Produto 5
-- Imagens: `assets/images/produto-5.jpeg`, `assets/images/produto-15.jpeg`
-- Nome: Pulseira Munique
-- Descrição: Modelo metalizado com mistura dourada e prata em visual elegante.
-- Cores: Dourado e Prata
-- Preço: R$ 79,90
-
 ## Produto 6
 - Imagens: `assets/images/rio-prata-1.jpeg`, `assets/images/rio-prata-2.jpeg`, `assets/images/rio-prata-3.jpeg`, `assets/images/rio-prata-4.jpeg`, `assets/images/rio-prata-5.jpeg`, `assets/images/rio-dourado-1.jpeg`, `assets/images/rio-dourado-2.jpeg`, `assets/images/rio-dourado-3.jpeg`, `assets/images/rio-dourado-4.jpeg`, `assets/images/rio-dourado-5.jpeg`
 - Nome: Colar Rio
@@ -119,6 +112,13 @@
 - Como pedir: Escolha pelo WhatsApp o modelo do cordão, o tamanho desejado e a quantidade. A SEORF confirma a montagem e a disponibilidade antes do fechamento.
 - Cor: Dourado
 - Preço: R$ 169,90
+
+## Produto 21
+- Imagens: `assets/images/produto-22.jpeg`
+- Nome: Cordões Banhados a Ouro 18k
+- Descrição: vc decide, direto e curto.
+- Cor: Prata
+- Preço: R$ 109,90
 
 # Vídeos:
 ## Adicionar mais vídeos na sessão de Artistas:

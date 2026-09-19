@@ -85,19 +85,6 @@ const products = [
         specs: ['Brilho limpo', 'Design minimalista', 'Acabamento prateado']
     },
     {
-        id: 'seorf-05',
-        name: 'Pulseira Munique',
-        price: 79.90,
-        color: 'Dourado e Prata',
-        colors: ['Dourado', 'Prata'],
-        tag: 'Novidade',
-        categories: ['pulseiras', 'novidade'],
-        image: './assets/images/produto-5.jpeg',
-        images: ['./assets/images/produto-5.jpeg', './assets/images/produto-15.jpeg'],
-        description: 'Modelo metalizado com mistura dourada e prata em visual elegante.',
-        specs: ['Mistura metalizada', 'Perfil elegante', 'Detalhe metálico premium']
-    },
-    {
         id: 'seorf-06a',
         name: 'Colar Rio Prata',
         price: 109.90,
@@ -318,6 +305,18 @@ const products = [
         description: 'Cordões banhados a ouro 18k para montar uma composição limpa, elegante e pronta para usar sozinho ou com pingente.',
         orderInstructions: 'Escolha pelo WhatsApp o modelo do cordão, o tamanho desejado e a quantidade. A SEORF confirma a montagem e a disponibilidade antes do fechamento.',
         specs: ['Banho em ouro 18k', 'Pedido montado pelo WhatsApp', 'Modelo, tamanho e quantidade confirmados no atendimento']
+    },
+    {
+        id: 'seorf-21-prata',
+        name: 'Cordões Banhados a Ouro 18k',
+        price: 109.90,
+        color: 'Prata',
+        colors: ['Prata'],
+        tag: 'Novo',
+        categories: ['colares', 'novidade'],
+        image: './assets/images/produto-22.jpeg',
+        description: 'Cordão prateado com visual limpo, discreto e fácil de combinar no dia a dia.',
+        specs: ['Acabamento prateado', 'Visual discreto', 'Uso versátil']
     },
     {
         id: 'combo-01',
@@ -1648,7 +1647,7 @@ function loadCart() {
     try {
         const saved = localStorage.getItem(SEORF.cartKey);
         cart = saved ? JSON.parse(saved) : [];
-        cart = cart.map(item => {
+        cart = cart.filter(item => getProduct(item.id)).map(item => {
             const product = getProduct(item.id);
             const color = item.color || (product ? getDefaultProductColor(product) : '');
 
