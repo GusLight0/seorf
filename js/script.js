@@ -14,7 +14,7 @@ const products = [
     {
         id: 'seorf-01',
         name: 'Pulseira Viena',
-        price: 79.90,
+        price: 89.90,
         color: 'Preto com Dourado',
         colors: ['Preto com Dourado'],
         tag: 'Destaque',
@@ -27,7 +27,7 @@ const products = [
     {
         id: 'seorf-02',
         name: 'Pulseira São Bento',
-        price: 89.90,
+        price: 94.90,
         color: 'Azul e Preto',
         colors: ['Azul', 'Preto'],
         tag: 'Destaque',
@@ -87,7 +87,7 @@ const products = [
     {
         id: 'seorf-06a',
         name: 'Colar Rio Prata',
-        price: 109.90,
+        price: 119.90,
         color: 'Prata',
         colors: ['Prata'],
         tag: 'Destaque',
@@ -106,7 +106,7 @@ const products = [
     {
         id: 'seorf-06b',
         name: 'Colar Rio Dourado',
-        price: 109.90,
+        price: 119.90,
         color: 'Dourado',
         colors: ['Dourado'],
         tag: 'Destaque',
@@ -162,7 +162,7 @@ const products = [
     {
         id: 'seorf-09',
         name: 'Pulseira Viena',
-        price: 79.90,
+        price: 89.90,
         color: 'Vermelha',
         colors: ['Vermelha'],
         tag: '',
@@ -175,7 +175,7 @@ const products = [
     {
         id: 'seorf-10',
         name: 'Pulseira 7 Nós',
-        price: 49.90,
+        price: 54.90,
         color: 'Vermelha',
         colors: ['Vermelha'],
         tag: '',
@@ -200,7 +200,7 @@ const products = [
     {
         id: 'seorf-15',
         name: 'Pulseira Capri',
-        price: 89.90,
+        price: 94.90,
         color: 'Vermelha ou Preta com ferro dourado ou prata',
         colors: ['Vermelha com ferro dourado', 'Vermelha com ferro prata', 'Preta com ferro dourado'],
         optionLabel: 'Escolha a cor e a ferragem',
@@ -259,7 +259,7 @@ const products = [
     {
         id: 'seorf-18',
         name: 'Pulseira Oslo',
-        price: 89.90,
+        price: 94.90,
         color: 'Preto e Branco',
         colors: ['Preto', 'Branco'],
         tag: 'Novo',
@@ -308,15 +308,15 @@ const products = [
     },
     {
         id: 'seorf-21-prata',
-        name: 'Cordões Banhados a Ouro 18k',
-        price: 109.90,
+        name: 'Colar Rio',
+        price: 119.90,
         color: 'Prata',
         colors: ['Prata'],
         tag: 'Novo',
         categories: ['colares', 'novidade'],
         image: './assets/images/produto-22.jpeg',
-        description: 'Cordão prateado com visual limpo, discreto e fácil de combinar no dia a dia.',
-        specs: ['Acabamento prateado', 'Visual discreto', 'Uso versátil']
+        description: 'Colar Rio com detalhe prateado, visual limpo e presença elegante.',
+        specs: ['Modelo novo', 'Acabamento prateado', 'Visual elegante']
     },
     {
         id: 'combo-01',

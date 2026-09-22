@@ -1,18 +1,20 @@
 # Produtos SEORF
 
+> ENTREGA GRÁTIS EM TODOS OS PRODUTOS
+
 ## Produto 1
 - Imagens: `assets/images/viena-preta-1.jpeg`, `assets/images/viena-preta-2.jpeg`
 - Nome: Pulseira Viena
 - Descrição: Pulseira preta com detalhe dourado, elegante e fácil de combinar.
 - Cor: Preto com Dourado
-- Preço: R$ 79,90
+- Preço: R$ 89,90
 
 ## Produto 2
 - Imagens: `assets/images/sao-bento-1.PNG`, `assets/images/sao-bento-2.PNG`, `assets/images/sao-bento-3.PNG`, `assets/images/sao-bento-4.PNG`, `assets/images/sao-bento-5.PNG`
 - Nome: Pulseira São Bento
 - Descrição: Modelo com medalha central e presença discreta para composições elegantes.
 - Cores: Azul e Preto
-- Preço: R$ 89,90
+- Preço: R$ 94,90
 
 ## Produto 3
 - Imagens: `assets/images/marselha-1.PNG`, `assets/images/marselha-2.PNG`, `assets/images/marselha-prata-1.jpeg`, `assets/images/marselha-prata-2.jpeg`
@@ -33,7 +35,7 @@
 - Nome: Colar Rio
 - Descrição: Colar preto com detalhe prateado, limpo e marcante.
 - Cores: Prata e Dourado
-- Preço: R$ 109,90
+- Preço: R$ 119,90
 
 ## Produto 7
 - Imagens: `assets/images/riviera-1.PNG`, `assets/images/riviera-2.PNG`, `assets/images/riviera-preta-1.jpeg`, `assets/images/riviera-preta-2.jpeg`, `assets/images/riviera-preta-3.jpeg`, `assets/images/riviera-preta-4.jpeg`, `assets/images/riviera-preta-5.jpeg`, `assets/images/riviera-azul-1.jpeg`, `assets/images/riviera-azul-2.jpeg`, `assets/images/riviera-azul-3.jpeg`, `assets/images/riviera-azul-4.jpeg`
@@ -47,14 +49,14 @@
 - Nome: Pulseira Viena
 - Descrição: Versão vermelha da Viena, intensa e pronta para destacar o look.
 - Cor: Vermelha
-- Preço: R$ 79,90
+- Preço: R$ 89,90
 
 ## Produto 10
 - Imagens: `assets/images/sete-nos-1.jpeg`, `assets/images/sete-nos-2.jpeg`
 - Nome: Pulseira 7 Nós
 - Descrição: Pulseira vermelha de sete nós, leve e cheia de personalidade.
 - Cor: Vermelha
-- Preço: R$ 49,90
+- Preço: R$ 54,90
 
 ## Produto 12
 - Imagem: `assets/images/produto-19.png`
@@ -68,7 +70,7 @@
 - Nome: Pulseira Capri
 - Descrição: Pulseira Capri em corda texturizada, agora com opção de ferragem dourada ou prata para ajustar o acabamento ao seu estilo.
 - Opções: Vermelha com ferro dourado, Vermelha com ferro prata e Preta com ferro dourado
-- Preço: R$ 89,90
+- Preço: R$ 94,90
 
 ## Produto 16
 - Imagem: `assets/images/cannes-preta-1.jpeg`, `assets/images/cannes-1.jpeg`, `assets/images/cannes-2.jpeg`, `assets/images/cannes-4.jpeg`, `assets/images/cannes-5.jpeg`, `assets/images/cannes-6.jpeg`
@@ -89,7 +91,7 @@
 - Nome: Pulseira Oslo
 - Descrição: Pulseira de corda ajustável com elo metálico central, disponível em preto e branco, unindo conforto e sofisticação para o uso diário.
 - Cores: Preto e Branco
-- Preço: R$ 89,90
+- Preço: R$ 94,90
 
 ## Produto 19
 - Imagens: `assets/images/produto-29.PNG`
@@ -115,10 +117,11 @@
 
 ## Produto 21
 - Imagens: `assets/images/produto-22.jpeg`
-- Nome: Cordões Banhados a Ouro 18k
-- Descrição: vc decide, direto e curto.
+- Nome: Colar Rio
+- Descrição: Colar Rio com detalhe prateado, visual limpo e presença elegante.
+- Modelo: Novo
 - Cor: Prata
-- Preço: R$ 109,90
+- Preço: R$ 119,90
 
 # Vídeos:
 ## Adicionar mais vídeos na sessão de Artistas:

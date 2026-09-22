@@ -1314,6 +1314,36 @@ p {
     transform: translateY(-1px);
 }
 
+.delivery-banner {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin: -0.55rem 0 1.2rem;
+    padding: 0.78rem 0.95rem;
+    border: 1px solid rgba(47, 107, 85, 0.22);
+    border-radius: var(--radius);
+    background: linear-gradient(90deg, rgba(111, 183, 180, 0.18), rgba(255, 255, 255, 0.82));
+    color: var(--ink);
+    font-size: 0.9rem;
+    line-height: 1.2;
+}
+
+.delivery-banner i {
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--white);
+}
+
+.delivery-banner strong {
+    font-weight: 800;
+}
+
 .catalog-grid {
     margin-top: 0.2rem;
 }
